@@ -1,123 +1,144 @@
-import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react';
-
-// ============================================
-// INFINITITECH PARTNERS - REDESIGNED WEBSITE
-// Three.js + Particles + Locomotive + ReactBits
-// ============================================
-
-// ==========================================
-// UTILITY HOOKS
-// ==========================================
+import React, { useState, useEffect, useRef } from "react";
 
 const useMousePosition = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  
+
   useEffect(() => {
     const handler = (e) => setPosition({ x: e.clientX, y: e.clientY });
-    window.addEventListener('mousemove', handler);
-    return () => window.removeEventListener('mousemove', handler);
+    window.addEventListener("mousemove", handler);
+    return () => window.removeEventListener("mousemove", handler);
   }, []);
-  
+
   return position;
 };
 
 const useInView = (threshold = 0.1) => {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
-  
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setInView(entry.isIntersecting),
-      { threshold }
+      { threshold },
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, [threshold]);
-  
+
   return [ref, inView];
 };
 
-// ==========================================
-// THREE.JS PARTICLE FIELD BACKGROUND
-// ==========================================
+const useParallax = (speed = 0.5) => {
+  const ref = useRef(null);
+  const [offset, setOffset] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ref.current) return;
+      const rect = ref.current.getBoundingClientRect();
+      const scrolled = window.innerHeight - rect.top;
+      setOffset(scrolled * speed * 0.1);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [speed]);
+
+  return [ref, offset];
+};
+
+const ParallaxLayer = ({ children, speed = 0.5, className = "" }) => {
+  const [ref, offset] = useParallax(speed);
+
+  return (
+    <div
+      ref={ref}
+      className={`parallax-layer ${className}`}
+      style={{ transform: `translateY(${offset}px)` }}
+    >
+      {children}
+    </div>
+  );
+};
 
 const ParticleField = () => {
   const canvasRef = useRef(null);
-  const mouse = useMousePosition();
-  
+  const mouseRef = useRef({ x: 0, y: 0 });
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
+
+    const ctx = canvas.getContext("2d");
     let animationId;
     let particles = [];
-    
+
+    const handleMouseMove = (e) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
     resize();
-    window.addEventListener('resize', resize);
-    
+    window.addEventListener("resize", resize);
+
     class Particle {
       constructor() {
         this.reset();
       }
-      
+
       reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
         this.z = Math.random() * 1000;
         this.size = Math.random() * 2 + 0.5;
         this.speedZ = Math.random() * 2 + 0.5;
-        this.color = Math.random() > 0.5 ? '#00ffcc' : '#ff6b35';
+        this.color = Math.random() > 0.5 ? "#00ffcc" : "#ff6b35";
       }
-      
+
       update() {
         this.z -= this.speedZ;
         if (this.z <= 0) this.reset();
-        
-        // Mouse influence
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 200) {
-          this.x -= dx * 0.02;
-          this.y -= dy * 0.02;
-        }
       }
-      
+
       draw() {
         const scale = 1000 / (1000 + this.z);
         const x = (this.x - canvas.width / 2) * scale + canvas.width / 2;
         const y = (this.y - canvas.height / 2) * scale + canvas.height / 2;
         const size = this.size * scale;
         const alpha = scale * 0.8;
-        
+
         ctx.beginPath();
         ctx.arc(x, y, size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color + Math.floor(alpha * 255).toString(16).padStart(2, '0');
+        ctx.fillStyle =
+          this.color +
+          Math.floor(alpha * 255)
+            .toString(16)
+            .padStart(2, "0");
         ctx.fill();
       }
     }
-    
+
     // Initialize particles
     for (let i = 0; i < 300; i++) {
       particles.push(new Particle());
     }
-    
+
     const animate = () => {
-      ctx.fillStyle = 'rgba(8, 12, 21, 0.15)';
+      ctx.fillStyle = "rgba(8, 12, 21, 0.15)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach(p => {
+
+      particles.forEach((p) => {
         p.update();
         p.draw();
       });
-      
-      // Draw connections
-      ctx.strokeStyle = 'rgba(0, 255, 204, 0.03)';
+
+      // Draw connections between particles
+      ctx.strokeStyle = "rgba(0, 255, 204, 0.03)";
       ctx.lineWidth = 0.5;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
@@ -132,37 +153,53 @@ const ParticleField = () => {
           }
         }
       }
-      
+
+      // Draw connections from mouse to nearby particles
+      const mouse = mouseRef.current;
+      if (mouse.x > 0 && mouse.y > 0) {
+        particles.forEach((p) => {
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            const opacity = (1 - dist / 150) * 0.5;
+            ctx.strokeStyle = `rgba(0, 255, 204, ${opacity})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(mouse.x, mouse.y);
+            ctx.lineTo(p.x, p.y);
+            ctx.stroke();
+          }
+        });
+      }
+
       animationId = requestAnimationFrame(animate);
     };
-    
+
     animate();
-    
+
     return () => {
       cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', resize);
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [mouse]);
-  
+  }, []);
+
   return (
     <canvas
       ref={canvasRef}
       style={{
-        position: 'fixed',
+        position: "fixed",
         top: 0,
         left: 0,
-        width: '100%',
-        height: '100%',
+        width: "100%",
+        height: "100%",
         zIndex: 0,
-        pointerEvents: 'none'
+        pointerEvents: "none",
       }}
     />
   );
 };
-
-// ==========================================
-// AURORA BACKGROUND (ReactBits Inspired)
-// ==========================================
 
 const AuroraBackground = () => (
   <div className="aurora-container">
@@ -172,24 +209,20 @@ const AuroraBackground = () => (
   </div>
 );
 
-// ==========================================
-// SPLIT TEXT ANIMATION (ReactBits)
-// ==========================================
-
-const SplitText = ({ text, className = '', delay = 0 }) => {
+const SplitText = ({ text, className = "", delay = 0 }) => {
   const [ref, inView] = useInView(0.3);
-  const words = text.split(' ');
-  
+  const words = text.split(" ");
+
   return (
     <span ref={ref} className={`split-text ${className}`}>
       {words.map((word, wordIndex) => (
         <span key={wordIndex} className="word-wrapper">
-          {word.split('').map((char, charIndex) => (
+          {word.split("").map((char, charIndex) => (
             <span
               key={charIndex}
-              className={`split-char ${inView ? 'animate' : ''}`}
+              className={`split-char ${inView ? "animate" : ""}`}
               style={{
-                animationDelay: `${delay + (wordIndex * 0.1) + (charIndex * 0.03)}s`
+                animationDelay: `${delay + wordIndex * 0.1 + charIndex * 0.03}s`,
               }}
             >
               {char}
@@ -202,45 +235,40 @@ const SplitText = ({ text, className = '', delay = 0 }) => {
   );
 };
 
-// ==========================================
-// BLUR TEXT ANIMATION
-// ==========================================
-
-const BlurText = ({ text, className = '', delay = 0 }) => {
+const BlurText = ({ text, className = "", delay = 0 }) => {
   const [ref, inView] = useInView(0.3);
-  
+
   return (
-    <span ref={ref} className={`blur-text ${className} ${inView ? 'in-view' : ''}`}>
-      {text.split('').map((char, i) => (
+    <span
+      ref={ref}
+      className={`blur-text ${className} ${inView ? "in-view" : ""}`}
+    >
+      {text.split("").map((char, i) => (
         <span
           key={i}
           className="blur-char"
           style={{ animationDelay: `${delay + i * 0.02}s` }}
         >
-          {char === ' ' ? '\u00A0' : char}
+          {char === " " ? "\u00A0" : char}
         </span>
       ))}
     </span>
   );
 };
 
-// ==========================================
-// MAGNETIC BUTTON (ReactBits)
-// ==========================================
-
-const MagneticButton = ({ children, href = '#', className = '' }) => {
+const MagneticButton = ({ children, href = "#", className = "" }) => {
   const buttonRef = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  
+
   const handleMouseMove = (e) => {
     const rect = buttonRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
     setPosition({ x: x * 0.3, y: y * 0.3 });
   };
-  
+
   const handleMouseLeave = () => setPosition({ x: 0, y: 0 });
-  
+
   return (
     <a
       ref={buttonRef}
@@ -249,7 +277,7 @@ const MagneticButton = ({ children, href = '#', className = '' }) => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
-        transform: `translate(${position.x}px, ${position.y}px)`
+        transform: `translate(${position.x}px, ${position.y}px)`,
       }}
     >
       <span className="magnetic-button-inner">{children}</span>
@@ -258,31 +286,29 @@ const MagneticButton = ({ children, href = '#', className = '' }) => {
   );
 };
 
-// ==========================================
-// TILT CARD (3D Effect)
-// ==========================================
-
-const TiltCard = ({ children, className = '' }) => {
+const TiltCard = ({ children, className = "" }) => {
   const cardRef = useRef(null);
-  const [transform, setTransform] = useState('');
+  const [transform, setTransform] = useState("");
   const [glare, setGlare] = useState({ x: 50, y: 50 });
-  
+
   const handleMouseMove = (e) => {
     const rect = cardRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
-    
+
     const rotateX = (y - 0.5) * -20;
     const rotateY = (x - 0.5) * 20;
-    
-    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`);
+
+    setTransform(
+      `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
+    );
     setGlare({ x: x * 100, y: y * 100 });
   };
-  
+
   const handleMouseLeave = () => {
-    setTransform('perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)');
+    setTransform("perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)");
   };
-  
+
   return (
     <div
       ref={cardRef}
@@ -294,7 +320,7 @@ const TiltCard = ({ children, className = '' }) => {
       <div
         className="tilt-card-glare"
         style={{
-          background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255,255,255,0.2) 0%, transparent 60%)`
+          background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255,255,255,0.2) 0%, transparent 60%)`,
         }}
       />
       {children}
@@ -302,53 +328,56 @@ const TiltCard = ({ children, className = '' }) => {
   );
 };
 
-// ==========================================
-// ANIMATED COUNTER
-// ==========================================
-
-const AnimatedCounter = ({ end, suffix = '', prefix = '', duration = 2000 }) => {
+const AnimatedCounter = ({
+  end,
+  suffix = "",
+  prefix = "",
+  duration = 2000,
+}) => {
   const [count, setCount] = useState(0);
   const [ref, inView] = useInView(0.5);
   const hasAnimated = useRef(false);
-  
+
   useEffect(() => {
     if (inView && !hasAnimated.current) {
       hasAnimated.current = true;
       let start = 0;
       const startTime = Date.now();
-      
+
       const animate = () => {
         const elapsed = Date.now() - startTime;
         const progress = Math.min(elapsed / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 4);
         setCount(Math.floor(eased * end));
-        
+
         if (progress < 1) requestAnimationFrame(animate);
       };
-      
+
       animate();
     }
   }, [inView, end, duration]);
-  
-  return <span ref={ref}>{prefix}{count}{suffix}</span>;
-};
 
-// ==========================================
-// SCROLL PROGRESS
-// ==========================================
+  return (
+    <span ref={ref}>
+      {prefix}
+      {count}
+      {suffix}
+    </span>
+  );
+};
 
 const ScrollProgress = () => {
   const [progress, setProgress] = useState(0);
-  
+
   useEffect(() => {
     const handleScroll = () => {
       const height = document.documentElement.scrollHeight - window.innerHeight;
       setProgress((window.scrollY / height) * 100);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  
+
   return (
     <div className="scroll-progress">
       <div className="scroll-progress-bar" style={{ width: `${progress}%` }} />
@@ -356,88 +385,82 @@ const ScrollProgress = () => {
   );
 };
 
-// ==========================================
-// CUSTOM CURSOR
-// ==========================================
-
 const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [hidden, setHidden] = useState(true);
   const [hovered, setHovered] = useState(false);
-  
+
   useEffect(() => {
     const move = (e) => {
       setPosition({ x: e.clientX, y: e.clientY });
       setHidden(false);
     };
     const leave = () => setHidden(true);
-    
+
     const checkHover = () => {
-      const hoverable = document.querySelectorAll('a, button, .tilt-card, .magnetic-button');
-      hoverable.forEach(el => {
-        el.addEventListener('mouseenter', () => setHovered(true));
-        el.addEventListener('mouseleave', () => setHovered(false));
+      const hoverable = document.querySelectorAll(
+        "a, button, .tilt-card, .magnetic-button",
+      );
+      hoverable.forEach((el) => {
+        el.addEventListener("mouseenter", () => setHovered(true));
+        el.addEventListener("mouseleave", () => setHovered(false));
       });
     };
-    
-    window.addEventListener('mousemove', move);
-    window.addEventListener('mouseleave', leave);
+
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseleave", leave);
     setTimeout(checkHover, 100);
-    
+
     return () => {
-      window.removeEventListener('mousemove', move);
-      window.removeEventListener('mouseleave', leave);
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseleave", leave);
     };
   }, []);
-  
+
   return (
     <>
       <div
-        className={`custom-cursor ${hidden ? 'hidden' : ''} ${hovered ? 'hovered' : ''}`}
+        className={`custom-cursor ${hidden ? "hidden" : ""} ${hovered ? "hovered" : ""}`}
         style={{ left: position.x, top: position.y }}
       />
       <div
-        className={`custom-cursor-dot ${hidden ? 'hidden' : ''}`}
+        className={`custom-cursor-dot ${hidden ? "hidden" : ""}`}
         style={{ left: position.x, top: position.y }}
       />
     </>
   );
 };
 
-// ==========================================
-// NAVIGATION
-// ==========================================
-
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  
+
   const navItems = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Services', href: '#services' },
-    { label: 'Products', href: '#products' },
-    { label: 'Portfolio', href: '#portfolio' },
-    { label: 'Process', href: '#process' },
-    { label: 'Team', href: '#team' },
-    { label: 'Contact', href: '#contact' }
+    { label: "Home", href: "#home" },
+    { label: "About", href: "#about" },
+    { label: "Services", href: "#services" },
+    { label: "Products", href: "#products" },
+    { label: "Portfolio", href: "#portfolio" },
+    { label: "Process", href: "#process" },
+    { label: "Team", href: "#team" },
+    { label: "Contact", href: "#contact" },
   ];
-  
+
   return (
-    <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
+    <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
       <div className="nav-inner">
         <a href="#home" className="nav-logo">
           <span className="logo-symbol">∞</span>
           <span className="logo-text">Infinititech</span>
         </a>
-        
-        <div className={`nav-links ${mobileOpen ? 'open' : ''}`}>
+
+        <div className={`nav-links ${mobileOpen ? "open" : ""}`}>
           {navItems.map((item, i) => (
             <a
               key={i}
@@ -449,497 +472,586 @@ const Navigation = () => {
             </a>
           ))}
         </div>
-        
+
         <MagneticButton href="#contact" className="nav-cta">
           Let's Talk
         </MagneticButton>
-        
+
         <button
-          className={`nav-mobile-toggle ${mobileOpen ? 'open' : ''}`}
+          className={`nav-mobile-toggle ${mobileOpen ? "open" : ""}`}
           onClick={() => setMobileOpen(!mobileOpen)}
         >
-          <span /><span /><span />
+          <span />
+          <span />
+          <span />
         </button>
       </div>
     </nav>
   );
 };
 
-// ==========================================
-// HERO SECTION
-// ==========================================
-
 const HeroSection = () => (
   <section id="home" className="hero">
     <AuroraBackground />
-    
-    <div className="hero-content">
-      <div className="hero-badge">
-        <span className="badge-dot" />
-        <span>Leading Technology Partner</span>
-      </div>
-      
-      <h1 className="hero-title">
-        <SplitText text="Transform" className="hero-line" />
-        <SplitText text="Innovate &" className="hero-line accent" delay={0.3} />
-        <SplitText text="Scale" className="hero-line" delay={0.6} />
-      </h1>
-      
-      <p className="hero-subtitle">
-        <BlurText
-          text="Data Center Management • Custom Software • Smart City Solutions • Digital Services"
-          delay={1}
-        />
-      </p>
-      
-      <div className="hero-ctas">
-        <MagneticButton href="#contact" className="btn-primary">
-          Start Your Project
-          <svg viewBox="0 0 24 24" className="btn-arrow">
-            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" fill="none" />
-          </svg>
-        </MagneticButton>
-        <MagneticButton href="#services" className="btn-secondary">
-          Explore Services
-        </MagneticButton>
-      </div>
-      
-      <div className="hero-scroll">
-        <div className="scroll-indicator">
-          <div className="scroll-dot" />
+
+    <ParallaxLayer speed={-0.3} className="hero-content-parallax">
+      <div className="hero-content">
+        <div className="hero-badge">
+          <span className="badge-dot" />
+          <span>Leading Technology Partner</span>
         </div>
-        <span>Scroll to explore</span>
+
+        <h1 className="hero-title">
+          <SplitText text="Transform" className="hero-line" />
+          <SplitText text="Innovate &" className="hero-line accent" delay={0.3} />
+          <SplitText text="Scale" className="hero-line" delay={0.6} />
+        </h1>
+
+        <p className="hero-subtitle">
+          <BlurText
+            text="Data Center Management • Custom Software • Smart City Solutions • Digital Services"
+            delay={1}
+          />
+        </p>
+
+        <div className="hero-ctas">
+          <MagneticButton href="#contact" className="btn-primary">
+            Start Your Project
+            <svg viewBox="0 0 24 24" className="btn-arrow">
+              <path
+                d="M5 12h14M12 5l7 7-7 7"
+                stroke="currentColor"
+                strokeWidth="2"
+                fill="none"
+              />
+            </svg>
+          </MagneticButton>
+          <MagneticButton href="#services" className="btn-secondary">
+            Explore Services
+          </MagneticButton>
+        </div>
+
+        <div className="hero-scroll">
+          <div className="scroll-indicator">
+            <div className="scroll-dot" />
+          </div>
+          <span>Scroll to explore</span>
+        </div>
       </div>
-    </div>
-    
-    <div className="hero-visual">
-      <div className="hero-sphere" />
-      <div className="hero-ring ring-1" />
-      <div className="hero-ring ring-2" />
-      <div className="hero-ring ring-3" />
-    </div>
+    </ParallaxLayer>
+
+    <ParallaxLayer speed={0.5} className="hero-visual-parallax">
+      <div className="hero-visual">
+        <div className="hero-sphere" />
+        <div className="hero-ring ring-1" />
+        <div className="hero-ring ring-2" />
+        <div className="hero-ring ring-3" />
+      </div>
+    </ParallaxLayer>
   </section>
 );
 
-// ==========================================
-// ABOUT SECTION
-// ==========================================
-
 const AboutSection = () => {
   const [ref, inView] = useInView(0.2);
-  
+
   const values = [
-    { icon: '⚡', title: 'Our Mission', desc: 'Empower businesses with cutting-edge technology solutions that drive growth and digital transformation.' },
-    { icon: '🔭', title: 'Our Vision', desc: 'Be the most trusted technology partner globally, known for excellence and innovation.' },
-    { icon: '💎', title: 'Our Values', desc: 'Integrity, Innovation, Excellence, and Customer-Centricity guide everything we do.' }
+    {
+      icon: "⚡",
+      title: "Our Mission",
+      desc: "Empower businesses with cutting-edge technology solutions that drive growth and digital transformation.",
+    },
+    {
+      icon: "🔭",
+      title: "Our Vision",
+      desc: "Be the most trusted technology partner globally, known for excellence and innovation.",
+    },
+    {
+      icon: "💎",
+      title: "Our Values",
+      desc: "Integrity, Innovation, Excellence, and Customer-Centricity guide everything we do.",
+    },
   ];
-  
+
   const stats = [
-    { value: 50, suffix: '+', label: 'Projects Delivered' },
-    { value: 30, suffix: '+', label: 'Happy Clients' },
-    { value: 4, suffix: '', label: 'Team Members' },
-    { value: 6, suffix: '', label: 'Services Offered' }
+    { value: 50, suffix: "+", label: "Projects Delivered" },
+    { value: 30, suffix: "+", label: "Happy Clients" },
+    { value: 4, suffix: "", label: "Team Members" },
+    { value: 6, suffix: "", label: "Services Offered" },
   ];
-  
+
   return (
     <section id="about" className="about" ref={ref}>
       <div className="section-container">
-        <div className="section-header">
-          <span className="section-tag">About Us</span>
-          <h2 className="section-title">
-            <SplitText text="Bridging Technology" />
-            <br />
-            <SplitText text="& Business Needs" className="accent" delay={0.3} />
-          </h2>
-        </div>
-        
-        <div className="about-content">
-          <div className="about-intro">
-            <p className={`about-text ${inView ? 'animate' : ''}`}>
-              Founded with a vision to bridge the gap between innovative technology 
-              and real-world business needs, we combine technical expertise with 
-              business acumen to deliver transformative solutions.
-            </p>
+        <ParallaxLayer speed={-0.2}>
+          <div className="section-header">
+            <span className="section-tag">About Us</span>
+            <h2 className="section-title">
+              <SplitText text="Bridging Technology" />
+              <br />
+              <SplitText text="& Business Needs" className="accent" delay={0.3} />
+            </h2>
           </div>
-          
+        </ParallaxLayer>
+
+        <div className="about-content">
+          <ParallaxLayer speed={0.1}>
+            <div className="about-intro">
+              <p className={`about-text ${inView ? "animate" : ""}`}>
+                Founded with a vision to bridge the gap between innovative
+                technology and real-world business needs, we combine technical
+                expertise with business acumen to deliver transformative
+                solutions.
+              </p>
+            </div>
+          </ParallaxLayer>
+
           <div className="about-values">
             {values.map((value, i) => (
-              <TiltCard key={i} className="value-card">
-                <span className="value-icon">{value.icon}</span>
-                <h3 className="value-title">{value.title}</h3>
-                <p className="value-desc">{value.desc}</p>
-              </TiltCard>
+              <ParallaxLayer key={i} speed={0.15 + i * 0.05}>
+                <TiltCard className="value-card">
+                  <span className="value-icon">{value.icon}</span>
+                  <h3 className="value-title">{value.title}</h3>
+                  <p className="value-desc">{value.desc}</p>
+                </TiltCard>
+              </ParallaxLayer>
             ))}
           </div>
-          
-          <div className="about-stats">
-            {stats.map((stat, i) => (
-              <div key={i} className="stat-item">
-                <span className="stat-value">
-                  <AnimatedCounter end={stat.value} suffix={stat.suffix} />
-                </span>
-                <span className="stat-label">{stat.label}</span>
-              </div>
-            ))}
-          </div>
+
+          <ParallaxLayer speed={0.2}>
+            <div className="about-stats">
+              {stats.map((stat, i) => (
+                <div key={i} className="stat-item">
+                  <span className="stat-value">
+                    <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+                  </span>
+                  <span className="stat-label">{stat.label}</span>
+                </div>
+              ))}
+            </div>
+          </ParallaxLayer>
         </div>
       </div>
     </section>
   );
 };
-
-// ==========================================
-// SERVICES SECTION
-// ==========================================
 
 const ServicesSection = () => {
   const services = [
     {
-      icon: '🏢',
-      title: 'Data Center Management',
-      desc: 'Enterprise-grade data center solutions with 24/7 monitoring and optimal performance.',
-      features: ['Infrastructure Design', 'Power Management', 'Cooling Systems', 'Security']
+      icon: "🏢",
+      title: "Data Center Management",
+      desc: "Enterprise-grade data center solutions with 24/7 monitoring and optimal performance.",
+      features: [
+        "Infrastructure Design",
+        "Power Management",
+        "Cooling Systems",
+        "Security",
+      ],
     },
     {
-      icon: '🔧',
-      title: 'Custom MDC Software',
-      desc: 'Tailored modular data center software solutions for your specific needs.',
-      features: ['DCIM Solutions', 'Asset Tracking', 'Capacity Planning', 'Analytics']
+      icon: "🔧",
+      title: "Custom MDC Software",
+      desc: "Tailored modular data center software solutions for your specific needs.",
+      features: [
+        "DCIM Solutions",
+        "Asset Tracking",
+        "Capacity Planning",
+        "Analytics",
+      ],
     },
     {
-      icon: '🌆',
-      title: 'Smart City Solutions',
-      desc: 'IoT-powered urban infrastructure for smarter, more efficient cities.',
-      features: ['Traffic Management', 'Smart Lighting', 'Waste Management', 'Air Quality']
+      icon: "🌆",
+      title: "Smart City Solutions",
+      desc: "IoT-powered urban infrastructure for smarter, more efficient cities.",
+      features: [
+        "Traffic Management",
+        "Smart Lighting",
+        "Waste Management",
+        "Air Quality",
+      ],
     },
     {
-      icon: '💼',
-      title: 'CRM, ERP & POS',
-      desc: 'Complete enterprise software suite for seamless business operations.',
-      features: ['Sales Automation', 'Inventory', 'HR Management', 'Reporting']
+      icon: "💼",
+      title: "CRM, ERP & POS",
+      desc: "Complete enterprise software suite for seamless business operations.",
+      features: ["Sales Automation", "Inventory", "HR Management", "Reporting"],
     },
     {
-      icon: '📱',
-      title: 'Web & Mobile Development',
-      desc: 'Cross-platform digital experiences that engage and convert.',
-      features: ['React/Next.js', 'React Native', 'Progressive Web Apps', 'API Development']
+      icon: "📱",
+      title: "Web & Mobile Development",
+      desc: "Cross-platform digital experiences that engage and convert.",
+      features: [
+        "React/Next.js",
+        "React Native",
+        "Progressive Web Apps",
+        "API Development",
+      ],
     },
     {
-      icon: '📈',
-      title: 'Digital Marketing',
-      desc: 'Data-driven growth strategies to maximize your online presence.',
-      features: ['SEO/SEM', 'Social Media', 'Content Marketing', 'Analytics']
-    }
+      icon: "📈",
+      title: "Digital Marketing",
+      desc: "Data-driven growth strategies to maximize your online presence.",
+      features: ["SEO/SEM", "Social Media", "Content Marketing", "Analytics"],
+    },
   ];
-  
+
   return (
     <section id="services" className="services">
       <div className="section-container">
-        <div className="section-header">
-          <span className="section-tag">What We Do</span>
-          <h2 className="section-title">
-            <SplitText text="Comprehensive" />
-            <br />
-            <SplitText text="Technology Solutions" className="accent" delay={0.2} />
-          </h2>
-        </div>
-        
+        <ParallaxLayer speed={-0.2}>
+          <div className="section-header">
+            <span className="section-tag">What We Do</span>
+            <h2 className="section-title">
+              <SplitText text="Comprehensive" />
+              <br />
+              <SplitText
+                text="Technology Solutions"
+                className="accent"
+                delay={0.2}
+              />
+            </h2>
+          </div>
+        </ParallaxLayer>
+
         <div className="services-grid">
           {services.map((service, i) => (
-            <TiltCard key={i} className="service-card">
-              <div className="service-icon">{service.icon}</div>
-              <h3 className="service-title">{service.title}</h3>
-              <p className="service-desc">{service.desc}</p>
-              <ul className="service-features">
-                {service.features.map((f, j) => (
-                  <li key={j}>{f}</li>
-                ))}
-              </ul>
-              <a href="#contact" className="service-link">
-                Learn More
-                <svg viewBox="0 0 24 24" className="link-arrow">
-                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" fill="none" />
-                </svg>
-              </a>
-            </TiltCard>
+            <ParallaxLayer key={i} speed={0.1 + (i % 3) * 0.05}>
+              <TiltCard className="service-card">
+                <div className="service-icon">{service.icon}</div>
+                <h3 className="service-title">{service.title}</h3>
+                <p className="service-desc">{service.desc}</p>
+                <ul className="service-features">
+                  {service.features.map((f, j) => (
+                    <li key={j}>{f}</li>
+                  ))}
+                </ul>
+                <a href="#contact" className="service-link">
+                  Learn More
+                  <svg viewBox="0 0 24 24" className="link-arrow">
+                    <path
+                      d="M5 12h14M12 5l7 7-7 7"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      fill="none"
+                    />
+                  </svg>
+                </a>
+              </TiltCard>
+            </ParallaxLayer>
           ))}
         </div>
       </div>
     </section>
   );
 };
-
-// ==========================================
-// PRODUCTS SECTION
-// ==========================================
 
 const ProductsSection = () => {
   const products = [
     {
-      name: 'Marketplace',
-      tagline: 'B2B Commodity Trading',
-      desc: 'Enterprise B2B marketplace with tokenization, escrow payments, and blockchain integration.',
-      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      features: ['Tokenization', 'Escrow Payments', 'Blockchain', 'Multi-currency']
+      name: "Marketplace",
+      tagline: "B2B Commodity Trading",
+      desc: "Enterprise B2B marketplace with tokenization, escrow payments, and blockchain integration.",
+      gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      features: [
+        "Tokenization",
+        "Escrow Payments",
+        "Blockchain",
+        "Multi-currency",
+      ],
     },
     {
-      name: 'Accubooks',
-      tagline: 'Enterprise Accounting',
-      desc: 'Multi-tenant accounting with double-entry bookkeeping, inventory, HR & payroll.',
-      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-      features: ['Double-entry', 'Multi-tenant', 'Payroll', 'Inventory']
+      name: "Accubooks",
+      tagline: "Enterprise Accounting",
+      desc: "Multi-tenant accounting with double-entry bookkeeping, inventory, HR & payroll.",
+      gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+      features: ["Double-entry", "Multi-tenant", "Payroll", "Inventory"],
     },
     {
-      name: 'School ERP',
-      tagline: 'School Management',
-      desc: 'Complete school management covering admissions, academics, fees, and transport.',
-      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-      features: ['Admissions', 'Academics', 'Fees', 'Transport']
+      name: "School ERP",
+      tagline: "School Management",
+      desc: "Complete school management covering admissions, academics, fees, and transport.",
+      gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+      features: ["Admissions", "Academics", "Fees", "Transport"],
     },
     {
-      name: 'Fleet Management',
-      tagline: 'Enterprise Telematics',
-      desc: 'Real-time GPS tracking, ELD compliance, driver management, and analytics.',
-      gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-      features: ['GPS Tracking', 'ELD Compliance', 'Driver Mgmt', 'Analytics']
-    }
+      name: "Fleet Management",
+      tagline: "Enterprise Telematics",
+      desc: "Real-time GPS tracking, ELD compliance, driver management, and analytics.",
+      gradient: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+      features: ["GPS Tracking", "ELD Compliance", "Driver Mgmt", "Analytics"],
+    },
   ];
-  
+
   return (
     <section id="products" className="products">
       <div className="section-container">
-        <div className="section-header">
-          <span className="section-tag">Our Products</span>
-          <h2 className="section-title">
-            <SplitText text="Production-Ready" />
-            <br />
-            <SplitText text="Enterprise Solutions" className="accent" delay={0.2} />
-          </h2>
-        </div>
-        
+        <ParallaxLayer speed={-0.2}>
+          <div className="section-header">
+            <span className="section-tag">Our Products</span>
+            <h2 className="section-title">
+              <SplitText text="Production-Ready" />
+              <br />
+              <SplitText
+                text="Enterprise Solutions"
+                className="accent"
+                delay={0.2}
+              />
+            </h2>
+          </div>
+        </ParallaxLayer>
+
         <div className="products-showcase">
           {products.map((product, i) => (
-            <TiltCard key={i} className="product-card">
-              <div className="product-visual" style={{ background: product.gradient }}>
-                <div className="product-icon-3d">
-                  <div className="cube">
-                    <div className="cube-face front" />
-                    <div className="cube-face back" />
-                    <div className="cube-face right" />
-                    <div className="cube-face left" />
-                    <div className="cube-face top" />
-                    <div className="cube-face bottom" />
+            <ParallaxLayer key={i} speed={0.1 + (i % 2) * 0.08}>
+              <TiltCard className="product-card">
+                <div
+                  className="product-visual"
+                  style={{ background: product.gradient }}
+                >
+                  <div className="product-icon-3d">
+                    <div className="cube">
+                      <div className="cube-face front" />
+                      <div className="cube-face back" />
+                      <div className="cube-face right" />
+                      <div className="cube-face left" />
+                      <div className="cube-face top" />
+                      <div className="cube-face bottom" />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="product-content">
-                <span className="product-tagline">{product.tagline}</span>
-                <h3 className="product-name">{product.name}</h3>
-                <p className="product-desc">{product.desc}</p>
-                <div className="product-features">
-                  {product.features.map((f, j) => (
-                    <span key={j} className="feature-tag">{f}</span>
-                  ))}
+                <div className="product-content">
+                  <span className="product-tagline">{product.tagline}</span>
+                  <h3 className="product-name">{product.name}</h3>
+                  <p className="product-desc">{product.desc}</p>
+                  <div className="product-features">
+                    {product.features.map((f, j) => (
+                      <span key={j} className="feature-tag">
+                        {f}
+                      </span>
+                    ))}
+                  </div>
+                  <MagneticButton href="#contact" className="product-cta">
+                    Learn More
+                  </MagneticButton>
                 </div>
-                <MagneticButton href="#contact" className="product-cta">
-                  Learn More
-                </MagneticButton>
-              </div>
-            </TiltCard>
+              </TiltCard>
+            </ParallaxLayer>
           ))}
         </div>
       </div>
     </section>
   );
 };
-
-// ==========================================
-// PORTFOLIO SECTION
-// ==========================================
 
 const PortfolioSection = () => {
   const projects = [
     {
-      category: 'Smart City',
-      title: 'Smart City Dashboard',
-      desc: 'Real-time urban monitoring system for efficient city management',
-      tech: ['React', 'Node.js', 'IoT'],
-      gradient: 'linear-gradient(135deg, #00ffcc 0%, #00ccff 100%)'
+      category: "Smart City",
+      title: "Smart City Dashboard",
+      desc: "Real-time urban monitoring system for efficient city management",
+      tech: ["React", "Node.js", "IoT"],
+      gradient: "linear-gradient(135deg, #00ffcc 0%, #00ccff 100%)",
     },
     {
-      category: 'Enterprise Software',
-      title: 'Enterprise CRM Platform',
-      desc: 'Custom CRM solution for manufacturing industry',
-      tech: ['Next.js', 'PostgreSQL', 'Redis'],
-      gradient: 'linear-gradient(135deg, #ff6b35 0%, #ff9f1c 100%)'
+      category: "Enterprise Software",
+      title: "Enterprise CRM Platform",
+      desc: "Custom CRM solution for manufacturing industry",
+      tech: ["Next.js", "PostgreSQL", "Redis"],
+      gradient: "linear-gradient(135deg, #ff6b35 0%, #ff9f1c 100%)",
     },
     {
-      category: 'Data Center',
-      title: 'Data Center Monitor',
-      desc: 'Comprehensive MDC management dashboard',
-      tech: ['Vue.js', 'Python', 'Docker'],
-      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-    }
+      category: "Data Center",
+      title: "Data Center Monitor",
+      desc: "Comprehensive MDC management dashboard",
+      tech: ["Vue.js", "Python", "Docker"],
+      gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    },
   ];
-  
+
   return (
     <section id="portfolio" className="portfolio">
       <div className="section-container">
-        <div className="section-header">
-          <span className="section-tag">Our Work</span>
-          <h2 className="section-title">
-            <SplitText text="Featured" />
-            <br />
-            <SplitText text="Projects" className="accent" delay={0.2} />
-          </h2>
-        </div>
-        
+        <ParallaxLayer speed={-0.2}>
+          <div className="section-header">
+            <span className="section-tag">Our Work</span>
+            <h2 className="section-title">
+              <SplitText text="Featured" />
+              <br />
+              <SplitText text="Projects" className="accent" delay={0.2} />
+            </h2>
+          </div>
+        </ParallaxLayer>
+
         <div className="portfolio-grid">
           {projects.map((project, i) => (
-            <TiltCard key={i} className="portfolio-card">
-              <div className="portfolio-image" style={{ background: project.gradient }}>
-                <div className="portfolio-overlay">
-                  <span className="portfolio-category">{project.category}</span>
+            <ParallaxLayer key={i} speed={0.12 + i * 0.04}>
+              <TiltCard className="portfolio-card">
+                <div
+                  className="portfolio-image"
+                  style={{ background: project.gradient }}
+                >
+                  <div className="portfolio-overlay">
+                    <span className="portfolio-category">{project.category}</span>
+                  </div>
                 </div>
-              </div>
-              <div className="portfolio-content">
-                <h3 className="portfolio-title">{project.title}</h3>
-                <p className="portfolio-desc">{project.desc}</p>
-                <div className="portfolio-tech">
-                  {project.tech.map((t, j) => (
-                    <span key={j} className="tech-tag">{t}</span>
-                  ))}
+                <div className="portfolio-content">
+                  <h3 className="portfolio-title">{project.title}</h3>
+                  <p className="portfolio-desc">{project.desc}</p>
+                  <div className="portfolio-tech">
+                    {project.tech.map((t, j) => (
+                      <span key={j} className="tech-tag">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </TiltCard>
+              </TiltCard>
+            </ParallaxLayer>
           ))}
         </div>
-        
-        <div className="portfolio-cta">
-          <MagneticButton href="#contact" className="btn-primary">
-            View All Projects
-          </MagneticButton>
-        </div>
+
+        <ParallaxLayer speed={0.15}>
+          <div className="portfolio-cta">
+            <MagneticButton href="#contact" className="btn-primary">
+              View All Projects
+            </MagneticButton>
+          </div>
+        </ParallaxLayer>
       </div>
     </section>
   );
 };
-
-// ==========================================
-// PROCESS SECTION
-// ==========================================
 
 const ProcessSection = () => {
   const steps = [
     {
-      num: '01',
-      title: 'Discovery',
-      desc: 'We get on a Teams call to understand your business module, end users, user personas, and your unique value proposition.',
-      points: ['Business Analysis', 'User Research', 'Problem Definition', 'USP Identification']
+      num: "01",
+      title: "Discovery",
+      desc: "We get on a Teams call to understand your business module, end users, user personas, and your unique value proposition.",
+      points: [
+        "Business Analysis",
+        "User Research",
+        "Problem Definition",
+        "USP Identification",
+      ],
     },
     {
-      num: '02',
-      title: 'Scope of Work',
-      desc: 'Comprehensive project planning with clear timelines, milestones, and success criteria.',
-      points: ['Timeline Planning', 'Milestone Definition', 'Acceptance Criteria', 'Tech Stack']
+      num: "02",
+      title: "Scope of Work",
+      desc: "Comprehensive project planning with clear timelines, milestones, and success criteria.",
+      points: [
+        "Timeline Planning",
+        "Milestone Definition",
+        "Acceptance Criteria",
+        "Tech Stack",
+      ],
     },
     {
-      num: '03',
-      title: 'Design',
-      desc: 'Iterative design process ensuring your vision comes to life perfectly.',
-      points: ['UI/UX Design', 'Prototype Creation', 'Design Reviews', 'Final Approval']
+      num: "03",
+      title: "Design",
+      desc: "Iterative design process ensuring your vision comes to life perfectly.",
+      points: [
+        "UI/UX Design",
+        "Prototype Creation",
+        "Design Reviews",
+        "Final Approval",
+      ],
     },
     {
-      num: '04',
-      title: 'Development',
-      desc: 'Agile development with regular updates and quality assurance at every step.',
-      points: ['Sprint Planning', 'CI/CD', 'Code Reviews', 'Testing']
+      num: "04",
+      title: "Development",
+      desc: "Agile development with regular updates and quality assurance at every step.",
+      points: ["Sprint Planning", "CI/CD", "Code Reviews", "Testing"],
     },
     {
-      num: '05',
-      title: 'Deployment',
-      desc: 'Smooth launch and ongoing support to ensure your success.',
-      points: ['Production Deploy', 'Monitoring', 'Training', 'Maintenance']
-    }
+      num: "05",
+      title: "Deployment",
+      desc: "Smooth launch and ongoing support to ensure your success.",
+      points: ["Production Deploy", "Monitoring", "Training", "Maintenance"],
+    },
   ];
-  
+
   return (
     <section id="process" className="process">
       <div className="section-container">
-        <div className="section-header">
-          <span className="section-tag">How We Work</span>
-          <h2 className="section-title">
-            <SplitText text="Our Proven" />
-            <br />
-            <SplitText text="Methodology" className="accent" delay={0.2} />
-          </h2>
-        </div>
-        
+        <ParallaxLayer speed={-0.2}>
+          <div className="section-header">
+            <span className="section-tag">How We Work</span>
+            <h2 className="section-title">
+              <SplitText text="Our Proven" />
+              <br />
+              <SplitText text="Methodology" className="accent" delay={0.2} />
+            </h2>
+          </div>
+        </ParallaxLayer>
+
         <div className="process-timeline">
           {steps.map((step, i) => (
-            <div key={i} className="process-step">
-              <div className="step-marker">
-                <span className="step-num">{step.num}</span>
-                <div className="step-line" />
+            <ParallaxLayer key={i} speed={0.08 + i * 0.03}>
+              <div className="process-step">
+                <div className="step-marker">
+                  <span className="step-num">{step.num}</span>
+                  <div className="step-line" />
+                </div>
+                <TiltCard className="step-content">
+                  <h3 className="step-title">{step.title}</h3>
+                  <p className="step-desc">{step.desc}</p>
+                  <ul className="step-points">
+                    {step.points.map((p, j) => (
+                      <li key={j}>{p}</li>
+                    ))}
+                  </ul>
+                </TiltCard>
               </div>
-              <TiltCard className="step-content">
-                <h3 className="step-title">{step.title}</h3>
-                <p className="step-desc">{step.desc}</p>
-                <ul className="step-points">
-                  {step.points.map((p, j) => (
-                    <li key={j}>{p}</li>
-                  ))}
-                </ul>
-              </TiltCard>
-            </div>
+            </ParallaxLayer>
           ))}
         </div>
       </div>
     </section>
   );
 };
-
-// ==========================================
-// TEAM SECTION
-// ==========================================
 
 const TeamSection = () => {
   const team = [
-    { name: 'Sudipto Mitra', role: 'Founder & Lead Developer', avatar: 'SM' },
-    { name: 'Pallabi Datta', role: 'HR Manager', avatar: 'PD' },
-    { name: 'Snehendu Roy', role: 'Full-stack MERN Developer', avatar: 'SR' },
-    { name: 'Soumyadip Chanda', role: 'AI/ML Developer', avatar: 'SC' }
+    { name: "Sudipto Mitra", role: "Founder & Lead Developer", avatar: "SM" },
+    { name: "Pallabi Datta", role: "HR Manager", avatar: "PD" },
+    { name: "Snehendu Roy", role: "Full-stack MERN Developer", avatar: "SR" },
+    { name: "Soumyadip Chanda", role: "AI/ML Developer", avatar: "SC" },
   ];
-  
+
   return (
     <section id="team" className="team">
       <div className="section-container">
-        <div className="section-header">
-          <span className="section-tag">Our Team</span>
-          <h2 className="section-title">
-            <SplitText text="Meet The" />
-            <br />
-            <SplitText text="Experts" className="accent" delay={0.2} />
-          </h2>
-        </div>
-        
+        <ParallaxLayer speed={-0.2}>
+          <div className="section-header">
+            <span className="section-tag">Our Team</span>
+            <h2 className="section-title">
+              <SplitText text="Meet The" />
+              <br />
+              <SplitText text="Experts" className="accent" delay={0.2} />
+            </h2>
+          </div>
+        </ParallaxLayer>
+
         <div className="team-grid">
           {team.map((member, i) => (
-            <TiltCard key={i} className="team-card">
-              <div className="team-avatar">
-                <span>{member.avatar}</span>
-                <div className="avatar-glow" />
-              </div>
-              <h3 className="team-name">{member.name}</h3>
-              <p className="team-role">{member.role}</p>
-              <div className="team-socials">
-                <a href="#" className="social-link">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                  </svg>
-                </a>
-              </div>
-            </TiltCard>
+            <ParallaxLayer key={i} speed={0.1 + i * 0.03}>
+              <TiltCard className="team-card">
+                <div className="team-avatar">
+                  <span>{member.avatar}</span>
+                  <div className="avatar-glow" />
+                </div>
+                <h3 className="team-name">{member.name}</h3>
+                <p className="team-role">{member.role}</p>
+                <div className="team-socials">
+                  <a href="#" className="social-link">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                  </a>
+                </div>
+              </TiltCard>
+            </ParallaxLayer>
           ))}
         </div>
       </div>
@@ -947,63 +1059,72 @@ const TeamSection = () => {
   );
 };
 
-// ==========================================
-// CONTACT / CTA SECTION
-// ==========================================
-
 const ContactSection = () => (
   <section id="contact" className="contact">
-    <div className="contact-glow glow-1" />
-    <div className="contact-glow glow-2" />
-    
+    <ParallaxLayer speed={0.3} className="contact-glow-wrapper">
+      <div className="contact-glow glow-1" />
+    </ParallaxLayer>
+    <ParallaxLayer speed={-0.3} className="contact-glow-wrapper">
+      <div className="contact-glow glow-2" />
+    </ParallaxLayer>
+
     <div className="section-container">
-      <div className="contact-content">
-        <span className="section-tag">Get Started</span>
-        <h2 className="contact-title">
-          <SplitText text="Ready to Transform" />
-          <br />
-          <SplitText text="Your Business?" className="accent" delay={0.2} />
-        </h2>
-        <p className="contact-desc">
-          Let's discuss your project and bring your vision to life with cutting-edge technology solutions.
-        </p>
-        
-        <div className="contact-actions">
-          <MagneticButton href="mailto:hello@infinititechpartners.com" className="btn-primary large">
-            Get in Touch
-            <svg viewBox="0 0 24 24" className="btn-arrow">
-              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" fill="none" />
-            </svg>
-          </MagneticButton>
+      <ParallaxLayer speed={-0.15}>
+        <div className="contact-content">
+          <span className="section-tag">Get Started</span>
+          <h2 className="contact-title">
+            <SplitText text="Ready to Transform" />
+            <br />
+            <SplitText text="Your Business?" className="accent" delay={0.2} />
+          </h2>
+          <p className="contact-desc">
+            Let's discuss your project and bring your vision to life with
+            cutting-edge technology solutions.
+          </p>
+
+          <div className="contact-actions">
+            <MagneticButton
+              href="mailto:hello@infinititechpartners.com"
+              className="btn-primary large"
+            >
+              Get in Touch
+              <svg viewBox="0 0 24 24" className="btn-arrow">
+                <path
+                  d="M5 12h14M12 5l7 7-7 7"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  fill="none"
+                />
+              </svg>
+            </MagneticButton>
+          </div>
+
+          <div className="contact-email">
+            <a href="mailto:hello@infinititechpartners.com">
+              hello@infinititechpartners.com
+            </a>
+          </div>
         </div>
-        
-        <div className="contact-email">
-          <a href="mailto:hello@infinititechpartners.com">hello@infinititechpartners.com</a>
-        </div>
-      </div>
+      </ParallaxLayer>
     </div>
   </section>
 );
 
-// ==========================================
-// FOOTER
-// ==========================================
-
 const Footer = () => {
   const links = {
     main: [
-      { label: 'Home', href: '#home' },
-      { label: 'About', href: '#about' },
-      { label: 'Services', href: '#services' },
-      { label: 'Portfolio', href: '#portfolio' }
+      { label: "Home", href: "#home" },
+      { label: "About", href: "#about" },
+      { label: "Services", href: "#services" },
+      { label: "Portfolio", href: "#portfolio" },
     ],
     secondary: [
-      { label: 'Products', href: '#products' },
-      { label: 'Team', href: '#team' },
-      { label: 'Contact', href: '#contact' }
-    ]
+      { label: "Products", href: "#products" },
+      { label: "Team", href: "#team" },
+      { label: "Contact", href: "#contact" },
+    ],
   };
-  
+
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -1014,16 +1135,19 @@ const Footer = () => {
               <span className="logo-text">Infinititech Partners</span>
             </a>
             <p className="footer-tagline">
-              Transform your digital vision into reality with cutting-edge technology solutions.
+              Transform your digital vision into reality with cutting-edge
+              technology solutions.
             </p>
           </div>
-          
+
           <div className="footer-links">
             <div className="footer-col">
               <h4>Quick Links</h4>
               <ul>
                 {links.main.map((link, i) => (
-                  <li key={i}><a href={link.href}>{link.label}</a></li>
+                  <li key={i}>
+                    <a href={link.href}>{link.label}</a>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -1031,13 +1155,15 @@ const Footer = () => {
               <h4>More</h4>
               <ul>
                 {links.secondary.map((link, i) => (
-                  <li key={i}><a href={link.href}>{link.label}</a></li>
+                  <li key={i}>
+                    <a href={link.href}>{link.label}</a>
+                  </li>
                 ))}
               </ul>
             </div>
           </div>
         </div>
-        
+
         <div className="footer-bottom">
           <p>&copy; 2025 Infinititech Partners. All rights reserved.</p>
           <div className="footer-legal">
@@ -1049,10 +1175,6 @@ const Footer = () => {
     </footer>
   );
 };
-
-// ==========================================
-// MAIN APP
-// ==========================================
 
 const InfinititechWebsite = () => {
   return (
@@ -1573,7 +1695,33 @@ const InfinititechWebsite = () => {
           overflow: hidden;
           padding: 120px 40px 80px;
         }
-        
+
+        /* Parallax Layer Styles */
+        .parallax-layer {
+          will-change: transform;
+          transition: transform 0.1s ease-out;
+        }
+
+        .hero-content-parallax {
+          position: relative;
+          z-index: 2;
+          display: flex;
+          justify-content: center;
+        }
+
+        .hero-visual-parallax {
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+
+        .contact-glow-wrapper {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+        }
+
         .hero-content {
           position: relative;
           z-index: 2;
@@ -1692,13 +1840,11 @@ const InfinititechWebsite = () => {
         }
         
         .hero-visual {
-          position: absolute;
-          right: -200px;
-          top: 50%;
-          transform: translateY(-50%);
+          position: relative;
           width: 600px;
           height: 600px;
           pointer-events: none;
+          margin-right: -200px;
         }
         
         .hero-sphere {
@@ -2482,12 +2628,12 @@ const InfinititechWebsite = () => {
           }
         }
       `}</style>
-      
+
       <ParticleField />
       <ScrollProgress />
       <CustomCursor />
       <Navigation />
-      
+
       <main>
         <HeroSection />
         <AboutSection />
@@ -2498,7 +2644,7 @@ const InfinititechWebsite = () => {
         <TeamSection />
         <ContactSection />
       </main>
-      
+
       <Footer />
     </div>
   );
