@@ -1,3 +1,4 @@
+import { FloatingConstellation } from "@/components/effects";
 import {
   HeroSection,
   AboutSection,
@@ -12,6 +13,7 @@ import {
 export const HomePage = () => {
   return (
     <>
+      <FloatingConstellation name="orion" />
       <HeroSection />
       <AboutSection />
       <ServicesSection />

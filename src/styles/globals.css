@@ -2270,3 +2270,53 @@ a {
     flex-direction: column;
   }
 }
+
+/* ========================================
+   CONSTELLATION
+   ======================================== */
+
+.constellation {
+  display: block;
+}
+
+.constellation-line {
+  transition: stroke-opacity 0.3s ease;
+}
+
+.constellation:hover .constellation-line {
+  stroke-opacity: 0.5;
+}
+
+.constellation-star {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Floating Constellations */
+.floating-constellations {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+}
+
+.floating-constellation {
+  position: absolute;
+  will-change: transform, opacity;
+}
+
+.floating-constellation .constellation {
+  filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.5));
+}
