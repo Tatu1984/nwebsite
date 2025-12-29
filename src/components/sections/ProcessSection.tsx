@@ -1,5 +1,5 @@
 import { ParallaxLayer, SplitText, TiltCard } from "@/components/ui";
-import { processSteps } from "@/data/siteData";
+import { processSteps } from "@/data/data";
 
 export const ProcessSection = () => {
   return (

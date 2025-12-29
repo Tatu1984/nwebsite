@@ -1,7 +1,7 @@
 import { PageLayout } from "@/components/common/PageLayout";
 import { FloatingConstellation } from "@/components/effects";
 import { ParallaxLayer, TiltCard, MagneticButton } from "@/components/ui";
-import { processSteps } from "@/data/siteData";
+import { processSteps } from "@/data/data";
 
 export const ProcessPage = () => {
   return (

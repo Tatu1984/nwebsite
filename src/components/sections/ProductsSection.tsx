@@ -1,5 +1,5 @@
 import { ParallaxLayer, SplitText, TiltCard, MagneticButton } from "@/components/ui";
-import { products } from "@/data/siteData";
+import { products } from "@/data/data";
 
 export const ProductsSection = () => {
   return (

@@ -1,18 +1,5 @@
 import { Link } from "react-router-dom";
-
-const footerLinks = {
-  main: [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Services", href: "/services" },
-    { label: "Portfolio", href: "/portfolio" },
-  ],
-  secondary: [
-    { label: "Products", href: "/products" },
-    { label: "Team", href: "/team" },
-    { label: "Contact", href: "/contact" },
-  ],
-};
+import { footerLinks } from "@/data/data";
 
 export const Footer = () => {
   return (

@@ -1,5 +1,5 @@
-import { ParallaxLayer, SplitText, TiltCard } from "@/components/ui";
-import { services } from "@/data/siteData";
+import { ParallaxLayer, SplitText, TiltCard, Icon, type IconName } from "@/components/ui";
+import { services } from "@/data/data";
 
 export const ServicesSection = () => {
   return (
@@ -20,7 +20,7 @@ export const ServicesSection = () => {
           {services.map((service, i) => (
             <ParallaxLayer key={i} speed={0.1 + (i % 3) * 0.05}>
               <TiltCard className="service-card">
-                <div className="service-icon">{service.icon}</div>
+                <div className="service-icon"><Icon name={service.icon as IconName} /></div>
                 <h3 className="service-title">{service.title}</h3>
                 <p className="service-desc">{service.desc}</p>
                 <ul className="service-features">

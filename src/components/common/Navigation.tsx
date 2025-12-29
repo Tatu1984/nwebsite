@@ -1,16 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MagneticButton } from "@/components/ui";
-
-const navItems = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Products", href: "/products" },
-  { label: "Portfolio", href: "/portfolio" },
-  { label: "Process", href: "/process" },
-  { label: "Team", href: "/team" },
-];
+import { navItems } from "@/data/data";
 
 export const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);

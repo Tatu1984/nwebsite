@@ -1,6 +1,6 @@
 import { useInView } from "@/hooks";
-import { ParallaxLayer, SplitText, TiltCard, AnimatedCounter } from "@/components/ui";
-import { values, stats } from "@/data/siteData";
+import { ParallaxLayer, SplitText, TiltCard, AnimatedCounter, Icon, type IconName } from "@/components/ui";
+import { values, stats } from "@/data/data";
 
 export const AboutSection = () => {
   const [ref, inView] = useInView(0.2);
@@ -35,7 +35,7 @@ export const AboutSection = () => {
             {values.map((value, i) => (
               <ParallaxLayer key={i} speed={0.15 + i * 0.05}>
                 <TiltCard className="value-card">
-                  <span className="value-icon">{value.icon}</span>
+                  <span className="value-icon"><Icon name={value.icon as IconName} /></span>
                   <h3 className="value-title">{value.title}</h3>
                   <p className="value-desc">{value.desc}</p>
                 </TiltCard>

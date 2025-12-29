@@ -1,7 +1,7 @@
 import { PageLayout } from "@/components/common/PageLayout";
 import { FloatingConstellation } from "@/components/effects";
 import { ParallaxLayer, TiltCard, MagneticButton } from "@/components/ui";
-import { team } from "@/data/siteData";
+import { team } from "@/data/data";
 
 export const TeamPage = () => {
   return (

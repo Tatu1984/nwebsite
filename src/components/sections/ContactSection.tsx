@@ -1,4 +1,5 @@
 import { ParallaxLayer, SplitText, MagneticButton } from "@/components/ui";
+import { contactInfo } from "@/data/data";
 
 export const ContactSection = () => (
   <section id="contact" className="contact">
@@ -25,7 +26,7 @@ export const ContactSection = () => (
 
           <div className="contact-actions">
             <MagneticButton
-              href="mailto:hello@infinititechpartners.com"
+              href={`mailto:${contactInfo.email}`}
               className="btn-primary large"
             >
               Get in Touch
@@ -41,8 +42,8 @@ export const ContactSection = () => (
           </div>
 
           <div className="contact-email">
-            <a href="mailto:hello@infinititechpartners.com">
-              hello@infinititechpartners.com
+            <a href={`mailto:${contactInfo.email}`}>
+              {contactInfo.email}
             </a>
           </div>
         </div>

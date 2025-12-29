@@ -1,7 +1,7 @@
 import { PageLayout } from "@/components/common/PageLayout";
 import { FloatingConstellation } from "@/components/effects";
-import { ParallaxLayer, TiltCard, MagneticButton } from "@/components/ui";
-import { services } from "@/data/siteData";
+import { ParallaxLayer, TiltCard, MagneticButton, Icon, type IconName } from "@/components/ui";
+import { services } from "@/data/data";
 
 export const ServicesPage = () => {
   return (
@@ -20,7 +20,7 @@ export const ServicesPage = () => {
                 <ParallaxLayer key={i} speed={0.08 + (i % 3) * 0.04}>
                   <TiltCard className="service-card-full">
                     <div className="service-header">
-                      <div className="service-icon-large">{service.icon}</div>
+                      <div className="service-icon-large"><Icon name={service.icon as IconName} /></div>
                       <h3 className="service-title-large">{service.title}</h3>
                     </div>
                     <p className="service-desc-full">{service.desc}</p>

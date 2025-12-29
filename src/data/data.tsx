@@ -1,79 +1,207 @@
-export const navItems = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Products", href: "#products" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Process", href: "#process" },
-  { label: "Team", href: "#team" },
-  { label: "Contact", href: "#contact" },
+// TypeScript interfaces
+export interface NavItem {
+  label: string;
+  href: string;
+}
+
+export interface Value {
+  icon: string;
+  title: string;
+  desc: string;
+}
+
+export interface Stat {
+  value: number;
+  suffix: string;
+  label: string;
+}
+
+export interface Service {
+  icon: string;
+  title: string;
+  desc: string;
+  features: string[];
+}
+
+export interface Product {
+  name: string;
+  tagline: string;
+  desc: string;
+  gradient: string;
+  features: string[];
+}
+
+export interface Project {
+  category: string;
+  title: string;
+  desc: string;
+  tech: string[];
+  gradient: string;
+}
+
+export interface ProcessStep {
+  num: string;
+  title: string;
+  desc: string;
+  points: string[];
+}
+
+export interface TeamMember {
+  name: string;
+  role: string;
+  avatar: string;
+}
+
+export interface ContactInfo {
+  email: string;
+  location: string;
+  hours: string;
+}
+
+export interface SocialLink {
+  name: string;
+  href: string;
+  icon: "linkedin" | "twitter";
+}
+
+export interface Feature {
+  icon: string;
+  title: string;
+  desc: string;
+}
+
+// Navigation items (relative paths for React Router)
+export const navItems: NavItem[] = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Products", href: "/products" },
+  { label: "Portfolio", href: "/portfolio" },
+  { label: "Process", href: "/process" },
+  { label: "Team", href: "/team" },
 ];
 
-export const values = [
+// Footer links
+export const footerLinks = {
+  main: [
+    { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
+    { label: "Services", href: "/services" },
+    { label: "Portfolio", href: "/portfolio" },
+  ] as NavItem[],
+  secondary: [
+    { label: "Products", href: "/products" },
+    { label: "Team", href: "/team" },
+    { label: "Contact", href: "/contact" },
+  ] as NavItem[],
+};
+
+// Contact info
+export const contactInfo: ContactInfo = {
+  email: "hello@infinititechpartners.com",
+  location: "Available Worldwide",
+  hours: "Mon - Fri: 9AM - 6PM IST",
+};
+
+// Social links
+export const socialLinks: SocialLink[] = [
+  { name: "LinkedIn", href: "#", icon: "linkedin" },
+  { name: "Twitter", href: "#", icon: "twitter" },
+];
+
+// Why Choose Us features
+export const whyChooseUs: Feature[] = [
   {
-    icon: "⚡",
+    icon: "rocket",
+    title: "Fast Delivery",
+    desc: "We deliver projects on time without compromising quality.",
+  },
+  {
+    icon: "shield",
+    title: "Secure Solutions",
+    desc: "Security-first approach in all our implementations.",
+  },
+  {
+    icon: "lightbulb",
+    title: "Innovation",
+    desc: "Cutting-edge technologies and modern approaches.",
+  },
+  {
+    icon: "handshake",
+    title: "Partnership",
+    desc: "We work as an extension of your team.",
+  },
+];
+
+// Core values
+export const values: Value[] = [
+  {
+    icon: "zap",
     title: "Our Mission",
     desc: "Empower businesses with cutting-edge technology solutions that drive growth and digital transformation.",
   },
   {
-    icon: "🔭",
+    icon: "telescope",
     title: "Our Vision",
     desc: "Be the most trusted technology partner globally, known for excellence and innovation.",
   },
   {
-    icon: "💎",
+    icon: "gem",
     title: "Our Values",
     desc: "Integrity, Innovation, Excellence, and Customer-Centricity guide everything we do.",
   },
 ];
 
-export const stats = [
+// Company stats
+export const stats: Stat[] = [
   { value: 50, suffix: "+", label: "Projects Delivered" },
   { value: 30, suffix: "+", label: "Happy Clients" },
   { value: 4, suffix: "", label: "Team Members" },
   { value: 6, suffix: "", label: "Services Offered" },
 ];
 
-export const services = [
+// Services
+export const services: Service[] = [
   {
-    icon: "🏢",
+    icon: "server",
     title: "Data Center Management",
     desc: "Enterprise-grade data center solutions with 24/7 monitoring and optimal performance.",
     features: ["Infrastructure Design", "Power Management", "Cooling Systems", "Security"],
   },
   {
-    icon: "🔧",
+    icon: "wrench",
     title: "Custom MDC Software",
     desc: "Tailored modular data center software solutions for your specific needs.",
     features: ["DCIM Solutions", "Asset Tracking", "Capacity Planning", "Analytics"],
   },
   {
-    icon: "🌆",
+    icon: "building-2",
     title: "Smart City Solutions",
     desc: "IoT-powered urban infrastructure for smarter, more efficient cities.",
     features: ["Traffic Management", "Smart Lighting", "Waste Management", "Air Quality"],
   },
   {
-    icon: "💼",
+    icon: "briefcase",
     title: "CRM, ERP & POS",
     desc: "Complete enterprise software suite for seamless business operations.",
     features: ["Sales Automation", "Inventory", "HR Management", "Reporting"],
   },
   {
-    icon: "📱",
+    icon: "smartphone",
     title: "Web & Mobile Development",
     desc: "Cross-platform digital experiences that engage and convert.",
     features: ["React/Next.js", "React Native", "Progressive Web Apps", "API Development"],
   },
   {
-    icon: "📈",
+    icon: "trending-up",
     title: "Digital Marketing",
     desc: "Data-driven growth strategies to maximize your online presence.",
     features: ["SEO/SEM", "Social Media", "Content Marketing", "Analytics"],
   },
 ];
 
-export const products = [
+// Products
+export const products: Product[] = [
   {
     name: "Marketplace",
     tagline: "B2B Commodity Trading",
@@ -104,7 +232,8 @@ export const products = [
   },
 ];
 
-export const projects = [
+// Portfolio projects
+export const projects: Project[] = [
   {
     category: "Smart City",
     title: "Smart City Dashboard",
@@ -128,7 +257,8 @@ export const projects = [
   },
 ];
 
-export const processSteps = [
+// Development process
+export const processSteps: ProcessStep[] = [
   {
     num: "01",
     title: "Discovery",
@@ -161,23 +291,10 @@ export const processSteps = [
   },
 ];
 
-export const team = [
+// Team members
+export const team: TeamMember[] = [
   { name: "Sudipto Mitra", role: "Founder & Lead Developer", avatar: "SM" },
   { name: "Pallabi Datta", role: "HR Manager", avatar: "PD" },
   { name: "Snehendu Roy", role: "Full-stack MERN Developer", avatar: "SR" },
   { name: "Soumyadip Chanda", role: "AI/ML Developer", avatar: "SC" },
 ];
-
-export const footerLinks = {
-  main: [
-    { label: "Home", href: "#home" },
-    { label: "About", href: "#about" },
-    { label: "Services", href: "#services" },
-    { label: "Portfolio", href: "#portfolio" },
-  ],
-  secondary: [
-    { label: "Products", href: "#products" },
-    { label: "Team", href: "#team" },
-    { label: "Contact", href: "#contact" },
-  ],
-};

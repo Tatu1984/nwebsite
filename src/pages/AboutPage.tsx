@@ -1,7 +1,7 @@
 import { PageLayout } from "@/components/common/PageLayout";
 import { FloatingConstellation } from "@/components/effects";
-import { ParallaxLayer, TiltCard, AnimatedCounter, MagneticButton } from "@/components/ui";
-import { values, stats } from "@/data/siteData";
+import { ParallaxLayer, TiltCard, AnimatedCounter, MagneticButton, Icon, type IconName } from "@/components/ui";
+import { values, stats, whyChooseUs } from "@/data/data";
 
 export const AboutPage = () => {
   return (
@@ -33,7 +33,7 @@ export const AboutPage = () => {
               {values.map((value, i) => (
                 <ParallaxLayer key={i} speed={0.1 + i * 0.05}>
                   <TiltCard className="value-card">
-                    <span className="value-icon">{value.icon}</span>
+                    <span className="value-icon"><Icon name={value.icon as IconName} /></span>
                     <h3 className="value-title">{value.title}</h3>
                     <p className="value-desc">{value.desc}</p>
                   </TiltCard>
@@ -60,31 +60,10 @@ export const AboutPage = () => {
           <div className="page-section">
             <h2 className="page-section-title">Why Choose Us</h2>
             <div className="features-grid">
-              {[
-                {
-                  icon: "🚀",
-                  title: "Fast Delivery",
-                  desc: "We deliver projects on time without compromising quality.",
-                },
-                {
-                  icon: "🔒",
-                  title: "Secure Solutions",
-                  desc: "Security-first approach in all our implementations.",
-                },
-                {
-                  icon: "💡",
-                  title: "Innovation",
-                  desc: "Cutting-edge technologies and modern approaches.",
-                },
-                {
-                  icon: "🤝",
-                  title: "Partnership",
-                  desc: "We work as an extension of your team.",
-                },
-              ].map((feature, i) => (
+              {whyChooseUs.map((feature, i) => (
                 <ParallaxLayer key={i} speed={0.1 + i * 0.03}>
                   <TiltCard className="feature-card">
-                    <span className="feature-icon">{feature.icon}</span>
+                    <span className="feature-icon"><Icon name={feature.icon as IconName} /></span>
                     <h3 className="feature-title">{feature.title}</h3>
                     <p className="feature-desc">{feature.desc}</p>
                   </TiltCard>

@@ -1,7 +1,7 @@
 import { PageLayout } from "@/components/common/PageLayout";
 import { FloatingConstellation } from "@/components/effects";
 import { ParallaxLayer, TiltCard, MagneticButton } from "@/components/ui";
-import { products } from "@/data/siteData";
+import { products } from "@/data/data";
 
 export const ProductsPage = () => {
   return (

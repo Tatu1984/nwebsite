@@ -1,5 +1,5 @@
 import { ParallaxLayer, SplitText, TiltCard } from "@/components/ui";
-import { team } from "@/data/siteData";
+import { team } from "@/data/data";
 
 export const TeamSection = () => {
   return (

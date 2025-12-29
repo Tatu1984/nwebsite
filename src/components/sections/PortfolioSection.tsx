@@ -1,5 +1,5 @@
 import { ParallaxLayer, SplitText, TiltCard, MagneticButton } from "@/components/ui";
-import { projects } from "@/data/siteData";
+import { projects } from "@/data/data";
 
 export const PortfolioSection = () => {
   return (

@@ -1,7 +1,7 @@
 import { PageLayout } from "@/components/common/PageLayout";
 import { FloatingConstellation } from "@/components/effects";
 import { ParallaxLayer, TiltCard, MagneticButton } from "@/components/ui";
-import { projects } from "@/data/siteData";
+import { projects } from "@/data/data";
 
 export const PortfolioPage = () => {
   return (
