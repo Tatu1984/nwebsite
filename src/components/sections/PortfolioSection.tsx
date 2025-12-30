@@ -1,5 +1,11 @@
-import { ParallaxLayer, SplitText, TiltCard, MagneticButton } from "@/components/ui";
+import {
+  ParallaxLayer,
+  SplitText,
+  TiltCard,
+  MagneticButton,
+} from "@/components/ui";
 import { projects } from "@/data/data";
+import { Link } from "react-router-dom";
 
 export const PortfolioSection = () => {
   return (
@@ -11,43 +17,45 @@ export const PortfolioSection = () => {
             <h2 className="section-title">
               <SplitText text="Featured" />
               <br />
-              <SplitText text="Projects" className="accent" delay={0.2} />
+              <SplitText text="Projects" className="accent" />
             </h2>
           </div>
         </ParallaxLayer>
 
-        <div className="portfolio-grid">
+        <div className="flex justify-center flex-wrap gap-6 mb-10">
           {projects.map((project, i) => (
-            <ParallaxLayer key={i} speed={0.12 + i * 0.04}>
-              <TiltCard className="portfolio-card">
-                <div className="portfolio-image" style={{ background: project.gradient }}>
-                  <div className="portfolio-overlay">
-                    <span className="portfolio-category">{project.category}</span>
-                  </div>
-                </div>
-                <div className="portfolio-content">
-                  <h3 className="portfolio-title">{project.title}</h3>
-                  <p className="portfolio-desc">{project.desc}</p>
-                  <div className="portfolio-tech">
-                    {project.tech.map((t, j) => (
-                      <span key={j} className="tech-tag">
-                        {t}
+            <TiltCard
+              key={i}
+              className="portfolio-card w-full md:w-[47%] lg:w-[32%]"
+            >
+              <Link to={`/portfolio/${project.slug}`}>
+                <>
+                  <div
+                    className="portfolio-image"
+                    style={{ background: project.gradient }}
+                  >
+                    <div className="portfolio-overlay">
+                      <span className="portfolio-category">
+                        {project.category}
                       </span>
-                    ))}
+                    </div>
                   </div>
-                </div>
-              </TiltCard>
-            </ParallaxLayer>
+                  <div className="portfolio-content">
+                    <h3 className="portfolio-title">{project.title}</h3>
+                    <p className="portfolio-desc">{project.desc}</p>
+                    <div className="portfolio-tech"></div>
+                  </div>
+                </>
+              </Link>
+            </TiltCard>
           ))}
         </div>
 
-        <ParallaxLayer speed={0.15}>
-          <div className="portfolio-cta">
-            <MagneticButton href="#contact" className="btn-primary">
-              View All Projects
-            </MagneticButton>
-          </div>
-        </ParallaxLayer>
+        <div className="portfolio-cta mt-20">
+          <MagneticButton href="/products" className="btn-primary">
+            View All Projects
+          </MagneticButton>
+        </div>
       </div>
     </section>
   );

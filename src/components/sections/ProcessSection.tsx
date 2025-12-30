@@ -11,7 +11,7 @@ export const ProcessSection = () => {
             <h2 className="section-title">
               <SplitText text="Our Proven" />
               <br />
-              <SplitText text="Methodology" className="accent" delay={0.2} />
+              <SplitText text="Methodology" className="accent" />
             </h2>
           </div>
         </ParallaxLayer>
@@ -19,22 +19,20 @@ export const ProcessSection = () => {
         <div className="process-horizontal">
           <div className="process-connector" />
           {processSteps.map((step, i) => (
-            <ParallaxLayer key={i} speed={0.06 + i * 0.02}>
-              <div className="process-step-h">
-                <div className="step-number-h">
-                  <span>{step.num}</span>
-                </div>
-                <TiltCard className="step-card-h">
-                  <h3 className="step-title-h">{step.title}</h3>
-                  <p className="step-desc-h">{step.desc}</p>
-                  <ul className="step-points-h">
-                    {step.points.map((p, j) => (
-                      <li key={j}>{p}</li>
-                    ))}
-                  </ul>
-                </TiltCard>
+            <div key={i} className="process-step-h">
+              <div className="step-number-h">
+                <span>{step.num}</span>
               </div>
-            </ParallaxLayer>
+              <TiltCard className="step-card-h">
+                <h3 className="step-title-h">{step.title}</h3>
+                <p className="step-desc-h">{step.desc}</p>
+                <ul className="step-points-h">
+                  {step.points.map((p, j) => (
+                    <li key={j}>{p}</li>
+                  ))}
+                </ul>
+              </TiltCard>
+            </div>
           ))}
         </div>
       </div>
