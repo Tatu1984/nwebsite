@@ -1,6 +1,13 @@
 import { PageLayout } from "@/components/common/PageLayout";
 import { FloatingConstellation } from "@/components/effects";
-import { ParallaxLayer, TiltCard, MagneticButton, Icon, SplitText, AnimatedCounter } from "@/components/ui";
+import {
+  ParallaxLayer,
+  TiltCard,
+  MagneticButton,
+  Icon,
+  SplitText,
+  AnimatedCounter,
+} from "@/components/ui";
 import {
   aboutFounderStory,
   aboutServicesExpanded,
@@ -17,25 +24,29 @@ const journeyMilestones = [
   {
     year: "2020",
     title: "The Beginning",
-    description: "Started as a specialized engineering unit focused on modern data centers and cloud integrations.",
+    description:
+      "Started as a specialized engineering unit focused on modern data centers and cloud integrations.",
     icon: "rocket",
   },
   {
     year: "2022",
     title: "Expansion",
-    description: "Expanded into DevOps, cybersecurity, and smart city solutions as client demands grew.",
+    description:
+      "Expanded into DevOps, cybersecurity, and smart city solutions as client demands grew.",
     icon: "trending-up",
   },
   {
     year: "2024",
     title: "Full-Stack Firm",
-    description: "Evolved into a full-stack technology engineering firm with AI/ML and blockchain capabilities.",
+    description:
+      "Evolved into a full-stack technology engineering firm with AI/ML and blockchain capabilities.",
     icon: "zap",
   },
   {
     year: "Now",
     title: "Global Reach",
-    description: "Supporting clients worldwide from startups to enterprises with scalable solutions.",
+    description:
+      "Supporting clients worldwide from startups to enterprises with scalable solutions.",
     icon: "globe",
   },
 ];
@@ -113,21 +124,29 @@ export const AboutPage = () => {
 
             <div className="about-journey-timeline">
               {journeyMilestones.map((milestone, i) => (
-                <ParallaxLayer key={i} speed={0.1 + i * 0.03}>
-                  <div className="about-journey-item">
-                    <div className="about-journey-marker">
-                      <div className="about-journey-year">{milestone.year}</div>
-                      <div className="about-journey-line" />
-                    </div>
-                    <TiltCard className="about-journey-card">
-                      <div className="about-journey-icon">
-                        <Icon name={milestone.icon as "rocket" | "trending-up" | "zap" | "globe"} />
-                      </div>
-                      <h3 className="about-journey-title">{milestone.title}</h3>
-                      <p className="about-journey-desc">{milestone.description}</p>
-                    </TiltCard>
+                <div key={i} className="about-journey-item">
+                  <div className="about-journey-marker">
+                    <div className="about-journey-year">{milestone.year}</div>
+                    <div className="about-journey-line" />
                   </div>
-                </ParallaxLayer>
+                  <TiltCard className="about-journey-card h-[35vh]">
+                    <div className="about-journey-icon">
+                      <Icon
+                        name={
+                          milestone.icon as
+                            | "rocket"
+                            | "trending-up"
+                            | "zap"
+                            | "globe"
+                        }
+                      />
+                    </div>
+                    <h3 className="about-journey-title">{milestone.title}</h3>
+                    <p className="about-journey-desc">
+                      {milestone.description}
+                    </p>
+                  </TiltCard>
+                </div>
               ))}
             </div>
           </div>
@@ -140,7 +159,7 @@ export const AboutPage = () => {
                 <h2 className="section-title">
                   <SplitText text="What We" />
                   <br />
-                  <SplitText text="Excel At" className="accent" delay={0.2} />
+                  <SplitText text="Excel At" className="accent" />
                 </h2>
               </div>
             </ParallaxLayer>
@@ -149,7 +168,9 @@ export const AboutPage = () => {
               {aboutServicesExpanded.map((service, i) => (
                 <ParallaxLayer key={i} speed={0.1 + i * 0.02}>
                   <div className="about-expertise-item">
-                    <div className="about-expertise-number">{String(i + 1).padStart(2, '0')}</div>
+                    <div className="about-expertise-number">
+                      {String(i + 1).padStart(2, "0")}
+                    </div>
                     <span className="about-expertise-text">{service}</span>
                     <div className="about-expertise-line" />
                   </div>
@@ -166,7 +187,7 @@ export const AboutPage = () => {
                 <h2 className="section-title">
                   <SplitText text="What" />
                   <br />
-                  <SplitText text="Drives Us" className="accent" delay={0.2} />
+                  <SplitText text="Drives Us" className="accent" />
                 </h2>
               </div>
             </ParallaxLayer>
@@ -179,18 +200,16 @@ export const AboutPage = () => {
               </div>
             </ParallaxLayer>
 
-            <div className="about-principles-container">
+            <div className="about-principles-container z-50">
               <p className="about-principles-label">Our teams operate with:</p>
               <div className="about-principles-list">
                 {aboutOperatingPrinciples.map((principle, i) => (
-                  <ParallaxLayer key={i} speed={0.1 + i * 0.02}>
-                    <div className="about-principle-card">
-                      <div className="about-principle-indicator">
-                        <Icon name="check" />
-                      </div>
-                      <span>{principle}</span>
+                  <div className="about-principle-card h-full">
+                    <div className="about-principle-indicator">
+                      <Icon name="check" />
                     </div>
-                  </ParallaxLayer>
+                    <span>{principle}</span>
+                  </div>
                 ))}
               </div>
             </div>
@@ -207,20 +226,23 @@ export const AboutPage = () => {
                   <SplitText text="Choose Us" className="accent" delay={0.2} />
                 </h2>
                 <p className="about-clients-subtitle">
-                  Not because of geography. Not because of cost.<br />
-                  <span className="accent-text">Because we deliver technology that performs.</span>
+                  Not because of geography. Not because of cost.
+                  <br />
+                  <span className="accent-text">
+                    Because we deliver technology that performs.
+                  </span>
                 </p>
               </div>
             </ParallaxLayer>
 
             <div className="about-reasons-grid">
               {aboutClientReasons.map((reason, i) => (
-                <ParallaxLayer key={i} speed={0.1 + i * 0.025}>
-                  <TiltCard className="about-reason-item">
-                    <div className="about-reason-number">{String(i + 1).padStart(2, '0')}</div>
-                    <p className="about-reason-text">{reason.text}</p>
-                  </TiltCard>
-                </ParallaxLayer>
+                <TiltCard className="about-reason-item">
+                  <div className="about-reason-number">
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                  <p className="about-reason-text">{reason.text}</p>
+                </TiltCard>
               ))}
             </div>
           </div>
@@ -264,10 +286,13 @@ export const AboutPage = () => {
                 <p className="about-closing-statement">
                   {aboutClosingStatement.split("advantage").map((part, i) =>
                     i === 0 ? (
-                      <span key={i}>{part}<span className="gradient-text">advantage</span></span>
+                      <span key={i}>
+                        {part}
+                        <span className="gradient-text">advantage</span>
+                      </span>
                     ) : (
                       <span key={i}>{part}</span>
-                    )
+                    ),
                   )}
                 </p>
               </div>
