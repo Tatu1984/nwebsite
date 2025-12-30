@@ -1,156 +1,21 @@
-// TypeScript interfaces
-export interface NavItem {
-  label: string;
-  href: string;
-}
-
-export interface Value {
-  icon: string;
-  title: string;
-  desc: string;
-}
-
-export interface Stat {
-  value: number;
-  suffix: string;
-  label: string;
-}
-
-export interface Service {
-  slug: string;
-  icon: string;
-  title: string;
-  desc: string;
-  features: string[];
-}
-
-export interface ServiceDetail {
-  slug: string;
-  heroTitle: string;
-  heroDescription: string;
-  heroDescription2?: string;
-  // Why It Matters section
-  whyMattersTitle: string;
-  whyMattersIntro: string;
-  whyMattersClosing: string;
-  // Capabilities section
-  capabilitiesIntro: string;
-  capabilities: string[];
-  // Benefits (shown as cards in Why It Matters)
-  benefits: { title: string; desc: string }[];
-  // Revenue/Business Impact
-  revenueImpact: string[];
-  revenueClosing: string;
-  // Highlight CTA
-  highlightCTA: string;
-  technologies?: string[];
-}
-
-export interface Product {
-  slug: string;
-  name: string;
-  tagline: string;
-  category: string;
-  icon: string;
-  desc: string;
-  gradient: string;
-  features: string[];
-  technologies: string[];
-  highlights: string;
-  demoUrl?: string;
-}
-
-export interface ProductModule {
-  icon: string;
-  title: string;
-  description: string;
-}
-
-export interface ProductPortal {
-  title: string;
-  description?: string;
-  features: string[];
-}
-
-export interface ProductDetail {
-  slug: string;
-  heroTitle: string;
-  heroSubtitle: string;
-  heroDescription: string;
-  modules: ProductModule[];
-  portals?: ProductPortal[];
-  completeFeatures: string[];
-  stats?: { label: string; value: string }[];
-}
-
-export interface Project {
-  slug: string;
-  category: string;
-  title: string;
-  desc: string;
-  tech: string[];
-  gradient: string;
-}
-
-export interface ProjectPainPoint {
-  challenge: string;
-  solution: string;
-}
-
-export interface ProjectDetail {
-  slug: string;
-  title: string;
-  subtitle: string;
-  category: string;
-  timeline?: string;
-  teamSize?: string;
-  heroDescription: string;
-  challenge: string;
-  mission: string;
-  missionPoints: string[];
-  technologies: string[];
-  deliverables: string[];
-  painPoints: ProjectPainPoint[];
-  results: string[];
-  testimonial?: {
-    quote: string;
-    author: string;
-    role: string;
-  };
-}
-
-export interface ProcessStep {
-  num: string;
-  title: string;
-  desc: string;
-  points: string[];
-}
-
-export interface TeamMember {
-  name: string;
-  role: string;
-  avatar: string;
-  bio: string;
-  linkedin?: string;
-}
-
-export interface ContactInfo {
-  email: string;
-  location: string;
-  hours: string;
-}
-
-export interface SocialLink {
-  name: string;
-  href: string;
-  icon: "linkedin" | "twitter" | "github";
-}
-
-export interface Feature {
-  icon: string;
-  title: string;
-  desc: string;
-}
+import type {
+  NavItem,
+  Value,
+  Stat,
+  Service,
+  ServiceDetail,
+  Product,
+  ProductDetail,
+  Project,
+  ProjectDetail,
+  ProcessStep,
+  TeamMember,
+  ContactInfo,
+  SocialLink,
+  Feature,
+  AboutClientReason,
+  Version,
+} from "@/types/data";
 
 // Navigation items (relative paths for React Router)
 export const navItems: NavItem[] = [
@@ -160,6 +25,7 @@ export const navItems: NavItem[] = [
   { label: "Products", href: "/products" },
   { label: "Portfolio", href: "/portfolio" },
   { label: "Team", href: "/team" },
+  { label: "Previous Versions", href: "/previous-versions" },
 ];
 
 // Footer links
@@ -2485,10 +2351,6 @@ export const team: TeamMember[] = [
 ];
 
 // About page content
-export interface AboutClientReason {
-  text: string;
-}
-
 export const aboutFounderStory = [
   `Infiniti Tech Partners was founded by <span class="text-primary font-semibold">Sudipto</span>, a technologist who has spent his career inside the engine rooms of enterprise systems — building architectures, securing environments, scaling platforms, and leading high-impact technology transformations. Over the years, he worked across modernization, cloud engineering, cybersecurity, networking, and automation, eventually developing a reputation for solving problems that other teams labeled <span class="text-primary font-semibold">"too complex."</span>`,
   `Infiniti Tech Partners grew from that mindset: <span class="font-semibold text-white">engineering-first, execution-driven</span>, and built for organizations that expect reliability, speed, and long-term scalability.`,
@@ -2546,3 +2408,22 @@ export const aboutCommitment =
 
 export const aboutClosingStatement =
   "Infiniti Tech Partners exists for companies that want their technology to be an advantage, not a liability.";
+
+// Previous Versions
+export const versions: Version[] = [
+  {
+    version: "v2.0",
+    header: "Current Version - Enhanced Performance & New Features",
+    description:
+      "Major redesign with improved animations, enhanced user experience, new constellation effects, and optimized performance. Added custom cursor, parallax effects, and modernized component architecture.",
+    link: "/", // Current version - redirects to home
+    isLatest: true,
+  },
+  {
+    version: "v1.0",
+    header: "Initial Release - Foundation Build",
+    description:
+      "Initial launch featuring core sections including home, services, products, portfolio, team, and contact. Implemented particle effects, aurora background, and basic navigation system.",
+    link: "https://infinititechpartners.com", // Update with actual v1.0 URL
+  },
+];
