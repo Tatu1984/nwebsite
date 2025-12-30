@@ -117,7 +117,7 @@ export const AboutPage = () => {
                 <h2 className="section-title">
                   <SplitText text="How We" />
                   <br />
-                  <SplitText text="Evolved" className="accent" delay={0.2} />
+                  <SplitText text="Evolved" className="accent" />
                 </h2>
               </div>
             </ParallaxLayer>
@@ -204,7 +204,7 @@ export const AboutPage = () => {
               <p className="about-principles-label">Our teams operate with:</p>
               <div className="about-principles-list">
                 {aboutOperatingPrinciples.map((principle, i) => (
-                  <div className="about-principle-card h-full">
+                  <div key={i} className="about-principle-card h-full">
                     <div className="about-principle-indicator">
                       <Icon name="check" />
                     </div>
@@ -223,7 +223,7 @@ export const AboutPage = () => {
                 <h2 className="section-title">
                   <SplitText text="Why Clients" />
                   <br />
-                  <SplitText text="Choose Us" className="accent" delay={0.2} />
+                  <SplitText text="Choose Us" className="accent" />
                 </h2>
                 <p className="about-clients-subtitle">
                   Not because of geography. Not because of cost.
