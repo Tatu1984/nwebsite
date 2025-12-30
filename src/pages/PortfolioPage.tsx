@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { PageLayout } from "@/components/common/PageLayout";
 import { FloatingConstellation } from "@/components/effects";
 import { ParallaxLayer, TiltCard, MagneticButton } from "@/components/ui";
@@ -39,8 +40,8 @@ export const PortfolioPage = () => {
                           </span>
                         ))}
                       </div>
-                      <MagneticButton href="/contact" className="portfolio-view-btn">
-                        View Project
+                      <Link to={`/portfolio/${project.slug}`} className="portfolio-view-btn">
+                        View Case Study
                         <svg viewBox="0 0 24 24" className="btn-arrow">
                           <path
                             d="M5 12h14M12 5l7 7-7 7"
@@ -49,7 +50,7 @@ export const PortfolioPage = () => {
                             fill="none"
                           />
                         </svg>
-                      </MagneticButton>
+                      </Link>
                     </div>
                   </TiltCard>
                 </ParallaxLayer>

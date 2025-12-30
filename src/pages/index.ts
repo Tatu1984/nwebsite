@@ -1,9 +1,10 @@
 export { HomePage } from "./HomePage";
 export { AboutPage } from "./AboutPage";
 export { ServicesPage } from "./ServicesPage";
+export { ServiceDetailPage } from "./ServiceDetailPage";
 export { ProductsPage } from "./ProductsPage";
 export { ProductDetailPage } from "./ProductDetailPage";
 export { PortfolioPage } from "./PortfolioPage";
-export { ProcessPage } from "./ProcessPage";
+export { PortfolioDetailPage } from "./PortfolioDetailPage";
 export { TeamPage } from "./TeamPage";
 export { ContactPage } from "./ContactPage";

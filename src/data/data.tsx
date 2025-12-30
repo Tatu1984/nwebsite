@@ -17,10 +17,33 @@ export interface Stat {
 }
 
 export interface Service {
+  slug: string;
   icon: string;
   title: string;
   desc: string;
   features: string[];
+}
+
+export interface ServiceDetail {
+  slug: string;
+  heroTitle: string;
+  heroDescription: string;
+  heroDescription2?: string;
+  // Why It Matters section
+  whyMattersTitle: string;
+  whyMattersIntro: string;
+  whyMattersClosing: string;
+  // Capabilities section
+  capabilitiesIntro: string;
+  capabilities: string[];
+  // Benefits (shown as cards in Why It Matters)
+  benefits: { title: string; desc: string }[];
+  // Revenue/Business Impact
+  revenueImpact: string[];
+  revenueClosing: string;
+  // Highlight CTA
+  highlightCTA: string;
+  technologies?: string[];
 }
 
 export interface Product {
@@ -61,11 +84,39 @@ export interface ProductDetail {
 }
 
 export interface Project {
+  slug: string;
   category: string;
   title: string;
   desc: string;
   tech: string[];
   gradient: string;
+}
+
+export interface ProjectPainPoint {
+  challenge: string;
+  solution: string;
+}
+
+export interface ProjectDetail {
+  slug: string;
+  title: string;
+  subtitle: string;
+  category: string;
+  timeline?: string;
+  teamSize?: string;
+  heroDescription: string;
+  challenge: string;
+  mission: string;
+  missionPoints: string[];
+  technologies: string[];
+  deliverables: string[];
+  painPoints: ProjectPainPoint[];
+  results: string[];
+  testimonial?: {
+    quote: string;
+    author: string;
+    role: string;
+  };
 }
 
 export interface ProcessStep {
@@ -79,6 +130,8 @@ export interface TeamMember {
   name: string;
   role: string;
   avatar: string;
+  bio: string;
+  linkedin?: string;
 }
 
 export interface ContactInfo {
@@ -90,7 +143,7 @@ export interface ContactInfo {
 export interface SocialLink {
   name: string;
   href: string;
-  icon: "linkedin" | "twitter";
+  icon: "linkedin" | "twitter" | "github";
 }
 
 export interface Feature {
@@ -106,7 +159,6 @@ export const navItems: NavItem[] = [
   { label: "Services", href: "/services" },
   { label: "Products", href: "/products" },
   { label: "Portfolio", href: "/portfolio" },
-  { label: "Process", href: "/process" },
   { label: "Team", href: "/team" },
 ];
 
@@ -134,8 +186,8 @@ export const contactInfo: ContactInfo = {
 
 // Social links
 export const socialLinks: SocialLink[] = [
-  { name: "LinkedIn", href: "#", icon: "linkedin" },
-  { name: "Twitter", href: "#", icon: "twitter" },
+  { name: "LinkedIn", href: "https://www.linkedin.com/company/infinititech-partners", icon: "linkedin" },
+  { name: "GitHub", href: "https://github.com/infps", icon: "github" },
 ];
 
 // Why Choose Us features
@@ -185,71 +237,466 @@ export const values: Value[] = [
 export const stats: Stat[] = [
   { value: 50, suffix: "+", label: "Projects Delivered" },
   { value: 30, suffix: "+", label: "Happy Clients" },
-  { value: 4, suffix: "", label: "Team Members" },
+  { value: 7, suffix: "", label: "Team Members" },
   { value: 10, suffix: "", label: "Services Offered" },
 ];
 
 // Services
 export const services: Service[] = [
   {
+    slug: "mdc-engineering",
     icon: "server",
     title: "Modern Data Center (MDC) Engineering",
     desc: "Resilient, scalable MDC architectures that support mission-critical workloads with zero tolerance for failure.",
     features: ["Infrastructure Design", "Power Management", "Cooling Systems", "High Availability"],
   },
   {
+    slug: "devops-engineering",
     icon: "git-branch",
     title: "DevOps Engineering",
     desc: "Automated, fast, stable delivery pipelines that ensure teams can develop, deploy, and iterate without friction.",
     features: ["CI/CD Pipelines", "Infrastructure as Code", "Container Orchestration", "Monitoring"],
   },
   {
+    slug: "devsecops",
     icon: "shield",
     title: "DevSecOps & Security Automation",
     desc: "Security embedded into every stage of development, testing, and deployment.",
     features: ["Security Scanning", "Compliance Automation", "Vulnerability Management", "Policy as Code"],
   },
   {
+    slug: "cybersecurity",
     icon: "lock",
     title: "Cybersecurity & Threat Management",
     desc: "Defend against modern threats using a layered, intelligence-driven approach.",
     features: ["Threat Detection", "Incident Response", "Penetration Testing", "Security Audits"],
   },
   {
+    slug: "network-architecture",
     icon: "network",
     title: "Network Architecture & Infrastructure",
     desc: "Fast, reliable, and secure networks capable of supporting heavy loads and distributed operations.",
     features: ["Network Design", "Load Balancing", "SD-WAN", "Network Security"],
   },
   {
+    slug: "smart-city-iot",
     icon: "building-2",
     title: "Smart City & IoT Solutions",
     desc: "Connected systems that improve efficiency, operations, and citizen experience.",
     features: ["Traffic Management", "Smart Lighting", "Environmental Monitoring", "Urban Analytics"],
   },
   {
+    slug: "ai-ml-engineering",
     icon: "brain",
     title: "AI / Machine Learning Engineering",
     desc: "Intelligent systems that automate decisions, optimize operations, and open new capabilities.",
     features: ["ML Model Development", "Data Pipelines", "Predictive Analytics", "NLP Solutions"],
   },
   {
+    slug: "blockchain",
     icon: "blocks",
     title: "Blockchain & Distributed Systems",
     desc: "Secure, high-performance blockchain applications tailored to business use-cases.",
     features: ["Smart Contracts", "DeFi Solutions", "NFT Platforms", "Enterprise Blockchain"],
   },
   {
+    slug: "website-development",
     icon: "globe",
     title: "Website Development",
     desc: "Fast, secure, and responsive websites designed for performance, branding, and conversion.",
     features: ["React/Next.js", "Performance Optimization", "SEO", "CMS Integration"],
   },
   {
+    slug: "mobile-app-development",
     icon: "smartphone",
     title: "Mobile App Development",
     desc: "High-performance mobile applications engineered for usability, security, and scale.",
     features: ["React Native", "iOS & Android", "App Store Optimization", "Push Notifications"],
+  },
+];
+
+// Service Details
+export const serviceDetails: ServiceDetail[] = [
+  {
+    slug: "mdc-engineering",
+    heroTitle: "Modern Data Center Engineering",
+    heroDescription: "A modern data center serves as the core infrastructure for ambitious enterprises. As organizations expand, adopt hybrid setups, manage data-intensive workloads, and embrace automation, their infrastructure must evolve accordingly. We engineer Modern Data Centers built for both current computing demands and unpredictable high-growth scenarios.",
+    heroDescription2: "Our MDC engineering team combines expertise in physical infrastructure, virtualization, cybersecurity, and cloud integrations to create resilient, cost-efficient data centers prepared for dynamic scaling. Whether modernizing legacy systems, building hybrid data centers, implementing high-availability architecture, or optimizing workload distribution, we ensure digital backbone precision.",
+    whyMattersTitle: "Why Modern Data Centers Matter for Business Growth",
+    whyMattersIntro: "Your data center directly contributes to business revenue, though many organizations overlook this. Slow, unstable, or outdated infrastructure restricts performance, causes downtime, increases operational costs, and creates security vulnerabilities. Every second of downtime results in lost revenue, customer trust, and opportunities.",
+    whyMattersClosing: "When the core is strong, the entire digital ecosystem becomes faster, safer, and more adaptable.",
+    capabilitiesIntro: "We approach MDC engineering holistically—from physical layout planning through virtualization, network design, security layers, cloud cooperation, and automation frameworks. The objective: build a data center that performs flawlessly during peak demand.",
+    capabilities: [
+      "Complete data center design and modernization",
+      "Hybrid DC plus cloud architecture",
+      "Virtualization and hyperconverged infrastructure (HCI)",
+      "High-availability and disaster recovery engineering",
+      "Compute, network, and storage optimization",
+      "Security-first DC architecture",
+      "Energy optimization and sustainability",
+      "Monitoring and automation frameworks",
+    ],
+    benefits: [
+      { title: "Near-Zero Downtime", desc: "Protects revenue and customer trust with redundant systems" },
+      { title: "Optimized Utilization", desc: "Reduces infrastructure cost through intelligent resource allocation" },
+      { title: "High-Speed Workloads", desc: "Improves customer experience with performance-optimized systems" },
+      { title: "Better Security Posture", desc: "Lowers breach risk with multi-layer protection" },
+      { title: "Scalable Design", desc: "Future growth without massive reinvestments" },
+      { title: "Energy Efficiency", desc: "Reduces operational costs drastically with green practices" },
+    ],
+    revenueImpact: [
+      "Faster applications → higher customer satisfaction → higher retention",
+      "More uptime → more transactions and uninterrupted operations",
+      "Optimized hardware → reduced CapEx and OpEx",
+      "Automated failover → lowered risk cost",
+      "Scalable architecture → more digital products launched faster",
+    ],
+    revenueClosing: "Your data center becomes an asset that actively pushes business growth.",
+    highlightCTA: "Our data center solutions form the foundation for next-generation digital operations.",
+    technologies: ["VMware", "Hyper-V", "Kubernetes", "OpenStack", "Terraform", "Ansible"],
+  },
+  {
+    slug: "devops-engineering",
+    heroTitle: "DevOps Engineering",
+    heroDescription: "DevOps is not just a set of tools - it is a strategic advantage. In a marketplace where speed, reliability, and constant improvement determine survival, DevOps becomes the engine that drives innovation.",
+    heroDescription2: "We build DevOps ecosystems that transform the way businesses build, deploy, and scale their digital products. Our frameworks emphasize automation, predictability, and operational intelligence through CI/CD pipelines, containerized environments, infrastructure automation, and cloud-native architectures.",
+    whyMattersTitle: "Why DevOps Drives Business Results",
+    whyMattersIntro: "The financial impact of DevOps is significant. Organizations that embrace DevOps deliver value faster, with fewer errors, and at lower cost. Every improvement in your delivery pipeline translates directly to business outcomes.",
+    whyMattersClosing: "When the pipeline is automated, your engineering team can finally focus on building features that generate value - not fixing broken deployments.",
+    capabilitiesIntro: "Our approach is built on five pillars: automation, standardization, observability, scalability, and security. We design systems that scale with your business.",
+    capabilities: [
+      "CI/CD pipeline design and automation",
+      "Infrastructure as Code (Terraform, Ansible, CloudFormation)",
+      "Docker, Kubernetes & container orchestration",
+      "Cloud-native architecture optimization",
+      "Monitoring, logging & observability tooling",
+      "Environment hardening & pipeline security",
+      "GitOps workflows and release automation",
+      "Automated testing integration",
+    ],
+    benefits: [
+      { title: "Faster Release Cycles", desc: "Deploy multiple times per day with confidence and speed" },
+      { title: "Fewer Failures", desc: "Automated deployments eliminate manual errors and inconsistencies" },
+      { title: "Lower Operational Costs", desc: "Reduced manual effort means smaller operations overhead" },
+      { title: "Better Customer Experience", desc: "Stable environments lead to reliable user experiences" },
+      { title: "Predictable Scaling", desc: "Consistent pipelines enable smooth expansion and growth" },
+      { title: "Team Productivity", desc: "Engineers focus on features, not deployment firefighting" },
+    ],
+    revenueImpact: [
+      "Less manual testing → fewer human hours → reduced labor costs",
+      "Automated deployments → less downtime → more revenue uptime",
+      "Standardized environments → fewer production errors → better reliability",
+      "Better resource scaling → optimized cloud spending → cost efficiency",
+      "Faster releases → quicker time-to-market → competitive advantage",
+    ],
+    revenueClosing: "Your delivery pipeline becomes a competitive advantage that accelerates growth.",
+    highlightCTA: "DevOps transforms your engineering team into a high-velocity delivery machine.",
+    technologies: ["Jenkins", "GitLab CI", "GitHub Actions", "ArgoCD", "Terraform", "Kubernetes", "Docker"],
+  },
+  {
+    slug: "devsecops",
+    heroTitle: "DevSecOps & Security Automation",
+    heroDescription: "Security must operate at pipeline speed. Our DevSecOps services embed security checks, policy enforcement, automated scanning, and real-time monitoring directly into your CI/CD workflows.",
+    heroDescription2: "We transform development and deployment into a secure, compliant, and continuous process. Security is not a gate at the end - it's woven into every stage of your software delivery lifecycle.",
+    whyMattersTitle: "Why Security Must Be Built-In",
+    whyMattersIntro: "Security as an afterthought creates vulnerabilities. When security is treated as a separate phase, issues are discovered too late and cost significantly more to fix. DevSecOps changes this paradigm.",
+    whyMattersClosing: "Your pipeline becomes a defense layer - not an attack surface.",
+    capabilitiesIntro: "We build a hardened delivery process that minimizes attack surfaces without slowing delivery. Security becomes invisible to developers while remaining rigorous.",
+    capabilities: [
+      "Secure CI/CD workflows",
+      "Automated code scanning & vulnerability detection",
+      "Secrets & identity management",
+      "Policy-as-code enforcement",
+      "Container & Kubernetes security",
+      "Shift-left security practices",
+      "Continuous threat detection",
+      "Compliance automation",
+    ],
+    benefits: [
+      { title: "Early Detection", desc: "Find vulnerabilities in development, not production" },
+      { title: "Continuous Compliance", desc: "Automated checks ensure ongoing regulatory adherence" },
+      { title: "Reduced Attack Surface", desc: "Hardened pipelines minimize security exposure" },
+      { title: "Developer-Friendly", desc: "Security tools integrated into existing workflows" },
+      { title: "Faster Remediation", desc: "Immediate feedback loops for quick fixes" },
+      { title: "Audit-Ready", desc: "Complete security trail for compliance audits" },
+    ],
+    revenueImpact: [
+      "Automated scanning → fewer vulnerabilities → reduced breach risk",
+      "Shift-left security → earlier detection → lower remediation costs",
+      "Compliance automation → faster audits → reduced compliance overhead",
+      "Secure pipelines → protected deployments → maintained customer trust",
+      "Policy enforcement → consistent security → predictable risk profile",
+    ],
+    revenueClosing: "Security becomes an accelerator, not a bottleneck.",
+    highlightCTA: "Integrate security into every stage of your development and deployment process.",
+    technologies: ["SonarQube", "Snyk", "Trivy", "HashiCorp Vault", "OPA", "Falco"],
+  },
+  {
+    slug: "cybersecurity",
+    heroTitle: "Cybersecurity & Threat Management",
+    heroDescription: "Cybersecurity is no longer a technical add-on - it is a core business function that protects revenue, customer trust, operational continuity, and long-term reputation.",
+    heroDescription2: "Modern companies operate in an environment where threats evolve daily: ransomware, data theft, phishing attacks, supply-chain vulnerabilities, insider risks, and AI-driven exploitation. We build cybersecurity frameworks that help organizations operate fearlessly with advanced threat intelligence, real-time monitoring, Zero Trust methodology, automated defense systems, and incident response capabilities engineered for resilience.",
+    whyMattersTitle: "Why Cybersecurity is a Business Priority",
+    whyMattersIntro: "A strong cybersecurity program does more than protect servers - it protects revenue streams and accelerates growth. Every breach avoided is revenue protected, trust maintained, and reputation preserved.",
+    whyMattersClosing: "Cybersecurity is not a cost center - it is a business safeguard that keeps operations stable and profitable.",
+    capabilitiesIntro: "We take a layered approach, securing every part of your environment: endpoints, users, networks, cloud resources, applications, APIs, IoT devices, and data flows. Our systems detect threats early, isolate them quickly, and neutralize them before they disrupt business operations.",
+    capabilities: [
+      "Security Audits & Vulnerability Assessments",
+      "SOC Setup & Threat Monitoring (24/7)",
+      "Network, Cloud & Endpoint Security",
+      "Zero Trust Security Framework",
+      "Identity & Access Management (IAM)",
+      "Ransomware Defense & Recovery",
+      "Incident Response & Digital Forensics",
+      "Compliance audits (ISO 27001, SOC 2)",
+    ],
+    benefits: [
+      { title: "Prevent Financial Losses", desc: "Protection against breaches, downtime, and ransomware attacks" },
+      { title: "Strengthen Customer Trust", desc: "Improved retention and brand reputation through data security" },
+      { title: "Business Continuity", desc: "Operations continue even during attempted attacks" },
+      { title: "Enable Partnerships", desc: "Meet compliance requirements for enterprise deals" },
+      { title: "Reduce Long-term Costs", desc: "Automation of repetitive security tasks" },
+      { title: "Protect IP", desc: "Safeguard intellectual property and future product lines" },
+    ],
+    revenueImpact: [
+      "Less downtime → more transactions, more productivity",
+      "Better compliance → access to bigger markets (healthcare, finance, government)",
+      "Faster detection → less damage and lower recovery cost",
+      "Automated protection → smaller security teams needed",
+      "Secure infrastructure → safe cloud migration & digital transformation",
+      "Risk prevention → stronger investor and customer confidence",
+    ],
+    revenueClosing: "Your environment becomes a fortress - not a liability.",
+    highlightCTA: "Cybersecurity should never slow growth; it should enable it.",
+    technologies: ["SIEM", "EDR", "SOAR", "Firewall", "IDS/IPS", "WAF", "Zero Trust"],
+  },
+  {
+    slug: "network-architecture",
+    heroTitle: "Network Architecture & Infrastructure",
+    heroDescription: "A modern business runs on its network. Every application, every device, every cloud dependency, every remote employee - all rely on a stable, fast, and secure network backbone.",
+    heroDescription2: "At Infiniti Tech Partners, we engineer network architectures built for scale, resilience, and high performance. Your network is the invisible foundation of your digital operations - we make sure it never becomes a bottleneck.",
+    whyMattersTitle: "Why Networks Drive Business Performance",
+    whyMattersIntro: "A high-performance network directly fuels business efficiency and profitability. Poor network design silently destroys revenue through latency, outages, and security gaps. Every millisecond of delay affects user experience.",
+    whyMattersClosing: "A poorly designed network silently destroys revenue. A well-designed network silently increases it.",
+    capabilitiesIntro: "We focus on intelligent routing, high availability, secure perimeter defenses, and cloud-aware connectivity. Every design decision is made with performance, security, and scalability in mind.",
+    capabilities: [
+      "Enterprise network design and restructuring",
+      "SD-WAN architecture and implementation",
+      "Firewall, IDS/IPS & perimeter protection",
+      "Multi-site connectivity & VPN frameworks",
+      "Wireless network engineering",
+      "Load balancing & traffic optimization",
+      "Network monitoring & health analytics",
+      "Multi-cloud networking",
+    ],
+    benefits: [
+      { title: "Fast Operations", desc: "Fast networks lead to faster customer service and response" },
+      { title: "Reduced Latency", desc: "Smoother digital experiences drive higher conversions" },
+      { title: "Strong Security", desc: "Protect customer data and brand integrity" },
+      { title: "Stable Connectivity", desc: "Fewer outages mean more productivity" },
+      { title: "Scalable Architecture", desc: "Support growth without major reinvestment" },
+      { title: "Complete Visibility", desc: "Full insight into network traffic and performance" },
+    ],
+    revenueImpact: [
+      "Reduced downtime → more transactions, more productivity",
+      "Optimized routing → lower bandwidth and cloud cost",
+      "Better security → fewer breaches, lower risk",
+      "Faster internal tools → faster teams → faster delivery",
+      "Scalable design → future expansion without expensive rebuilds",
+    ],
+    revenueClosing: "Your network becomes an invisible engine that powers every transaction.",
+    highlightCTA: "We engineer networks that power business growth.",
+    technologies: ["Cisco", "Juniper", "Palo Alto", "F5", "Arista", "SD-WAN"],
+  },
+  {
+    slug: "smart-city-iot",
+    heroTitle: "Smart City & IoT Solutions",
+    heroDescription: "Cities are becoming intelligent ecosystems - and we engineer the technology behind them. Our Smart City and IoT solutions connect devices, data, systems, and analytics to improve efficiency, safety, and performance.",
+    heroDescription2: "We help governments and enterprises build connected systems that improve efficiency, operations, and citizen experience. From traffic optimization to environmental monitoring, we create infrastructure that makes cities smarter and more livable.",
+    whyMattersTitle: "Why Smart Cities Matter",
+    whyMattersIntro: "Smart infrastructure transforms how cities operate and serve their residents. Connected systems provide real-time visibility, enable predictive maintenance, and create better citizen experiences at lower costs.",
+    whyMattersClosing: "We build the connected future of urban living.",
+    capabilitiesIntro: "We design smart ecosystems that are scalable, secure, and built for public impact. From IoT sensors to real-time analytics, we create the infrastructure for the future of urban operations.",
+    capabilities: [
+      "IoT architecture & sensor deployment",
+      "Smart surveillance systems",
+      "Traffic & mobility automation",
+      "Energy management platforms",
+      "Environmental monitoring",
+      "Real-time data dashboards",
+      "Secure smart-city backbone infrastructure",
+      "Citizen engagement platforms",
+    ],
+    benefits: [
+      { title: "Improved Efficiency", desc: "Automate city operations and reduce resource waste" },
+      { title: "Better Citizen Experience", desc: "Responsive systems that serve residents better" },
+      { title: "Data-Driven Decisions", desc: "Real-time analytics for informed urban planning" },
+      { title: "Sustainability", desc: "Reduce environmental impact through optimization" },
+      { title: "Public Safety", desc: "Enhanced monitoring and emergency response capabilities" },
+      { title: "Cost Reduction", desc: "Lower operational costs through automation and optimization" },
+    ],
+    revenueImpact: [
+      "Automated systems → reduced operational overhead",
+      "Real-time monitoring → faster incident response",
+      "Energy optimization → lower utility costs",
+      "Data analytics → better resource allocation",
+      "Connected infrastructure → improved service delivery",
+    ],
+    revenueClosing: "Smart infrastructure becomes a platform for continuous improvement.",
+    highlightCTA: "Let's create connected systems that transform cities and improve quality of life.",
+    technologies: ["LoRaWAN", "MQTT", "Azure IoT", "AWS IoT", "Edge Computing", "5G"],
+  },
+  {
+    slug: "ai-ml-engineering",
+    heroTitle: "AI / Machine Learning Engineering",
+    heroDescription: "AI is no longer optional - it is a competitive necessity. We build AI and ML solutions that help businesses automate decisions, uncover insights, and optimize performance.",
+    heroDescription2: "Our engineers focus on real-world AI that drives measurable outcomes - not experimentation for its own sake. From predictive analytics to computer vision, we transform data into intelligence and intelligence into impact.",
+    whyMattersTitle: "Why AI Delivers Business Value",
+    whyMattersIntro: "We create intelligent systems that automate decisions, optimize operations, and open new capabilities. Every AI solution we build is designed to deliver measurable ROI and practical business outcomes.",
+    whyMattersClosing: "We transform data into intelligence and intelligence into impact.",
+    capabilitiesIntro: "Our AI/ML practice focuses on practical applications that solve real business problems. We build systems that learn, adapt, and continuously improve with your data.",
+    capabilities: [
+      "Machine learning model development",
+      "AI automation systems",
+      "NLP & computer vision",
+      "Predictive analytics",
+      "MLOps & model deployment",
+      "Data pipelines & feature engineering",
+      "Recommendation systems",
+      "AI-powered process automation",
+    ],
+    benefits: [
+      { title: "Intelligent Automation", desc: "Reduce manual work with AI-powered workflows" },
+      { title: "Better Predictions", desc: "Data-driven forecasting improves planning accuracy" },
+      { title: "New Capabilities", desc: "Enable features impossible with traditional software" },
+      { title: "Operational Efficiency", desc: "Optimize processes with machine learning insights" },
+      { title: "Competitive Advantage", desc: "Stay ahead with cutting-edge AI applications" },
+      { title: "Scalable Intelligence", desc: "ML models that grow with your data and needs" },
+    ],
+    revenueImpact: [
+      "Automated decisions → faster response times → better customer experience",
+      "Predictive analytics → optimized inventory → reduced waste",
+      "Personalization → higher engagement → increased conversions",
+      "Process automation → reduced labor costs → better margins",
+      "Anomaly detection → early problem identification → prevented losses",
+    ],
+    revenueClosing: "AI becomes your silent partner that continuously optimizes operations.",
+    highlightCTA: "Let's create AI and ML solutions that drive measurable business outcomes.",
+    technologies: ["Python", "TensorFlow", "PyTorch", "scikit-learn", "MLflow", "Kubeflow"],
+  },
+  {
+    slug: "blockchain",
+    heroTitle: "Blockchain & Distributed Systems",
+    heroDescription: "Blockchain is not hype - it is infrastructure. We engineer secure, scalable blockchain and distributed systems for enterprises that need transparent, tamper-proof, and high-performance digital solutions.",
+    heroDescription2: "We develop secure, high-performance blockchain applications tailored to business use-cases - not hype. From smart contracts to private networks, we build solutions that solve real problems with measurable outcomes.",
+    whyMattersTitle: "Why Blockchain Creates Business Value",
+    whyMattersIntro: "We focus on security, scalability, and business-driven blockchain outcomes. Blockchain technology enables new forms of trust, transparency, and automation that were previously impossible.",
+    whyMattersClosing: "Our blockchain engineering focuses on security, scalability, and real business value.",
+    capabilitiesIntro: "We build blockchain solutions that integrate with your existing systems while opening new possibilities. Every implementation is designed for security, performance, and long-term maintainability.",
+    capabilities: [
+      "Smart contract development",
+      "Private blockchain networks",
+      "dApp architecture",
+      "Tokenization frameworks",
+      "Identity & integrity systems",
+      "Blockchain + legacy integration",
+      "Security audits",
+      "Web3 application development",
+    ],
+    benefits: [
+      { title: "Transparency", desc: "Immutable records create trust between parties" },
+      { title: "Automation", desc: "Smart contracts execute automatically when conditions are met" },
+      { title: "Security", desc: "Cryptographic protection for sensitive transactions" },
+      { title: "Efficiency", desc: "Remove intermediaries and reduce transaction costs" },
+      { title: "Traceability", desc: "Complete audit trail for regulatory compliance" },
+      { title: "Trust", desc: "Decentralized verification eliminates single points of failure" },
+    ],
+    revenueImpact: [
+      "Automated contracts → reduced legal and administrative overhead",
+      "Transparent transactions → increased stakeholder confidence",
+      "Tokenization → new revenue streams and business models",
+      "Immutable records → simplified compliance and auditing",
+      "Decentralized trust → reduced intermediary costs",
+    ],
+    revenueClosing: "Blockchain becomes infrastructure that creates new business possibilities.",
+    highlightCTA: "Let's create secure, scalable blockchain solutions for your enterprise.",
+    technologies: ["Ethereum", "Solidity", "Hardhat", "IPFS", "Polygon", "Hyperledger"],
+  },
+  {
+    slug: "website-development",
+    heroTitle: "Website Development",
+    heroDescription: "A website is often your business's first handshake - so it must be fast, secure, and engineered with purpose. We build fast, secure, and responsive websites designed for performance, branding, and conversion.",
+    heroDescription2: "We create websites that do not just look good - they perform. From corporate sites to e-commerce platforms, every website is engineered for speed, security, and conversion. Your website should work as hard as your sales team.",
+    whyMattersTitle: "Why Website Performance Matters",
+    whyMattersIntro: "Your website is often the first interaction customers have with your brand. Every second of load time, every confusing navigation, every security concern costs you conversions and trust.",
+    whyMattersClosing: "We create websites that do not just look good - they perform.",
+    capabilitiesIntro: "Every website we build is optimized for speed, search engines, and user experience from day one. We focus on the metrics that matter: load time, conversion rate, and user engagement.",
+    capabilities: [
+      "Corporate websites & landing pages",
+      "High-speed, SEO-ready builds",
+      "Custom CMS development",
+      "E-commerce solutions",
+      "Brand-aligned UI/UX design",
+      "Security hardening & optimization",
+      "Performance optimization",
+      "Analytics integration",
+    ],
+    benefits: [
+      { title: "Fast Loading", desc: "Sub-second load times improve user experience and SEO" },
+      { title: "Mobile First", desc: "Responsive designs that work perfectly on all devices" },
+      { title: "SEO Ready", desc: "Built-in optimization for search engine visibility" },
+      { title: "Secure by Default", desc: "Hardened against common web vulnerabilities" },
+      { title: "Easy Updates", desc: "Content management systems for non-technical users" },
+      { title: "Conversion Focused", desc: "Designed to turn visitors into customers" },
+    ],
+    revenueImpact: [
+      "Faster load times → lower bounce rates → more conversions",
+      "SEO optimization → higher rankings → more organic traffic",
+      "Mobile-friendly → capture mobile audience → expanded reach",
+      "Security → customer trust → repeat business",
+      "Great UX → longer sessions → higher engagement",
+    ],
+    revenueClosing: "Your website becomes a 24/7 sales and marketing asset.",
+    highlightCTA: "Let's create a high-performance website that drives results for your business.",
+    technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL"],
+  },
+  {
+    slug: "mobile-app-development",
+    heroTitle: "Mobile App Development",
+    heroDescription: "Mobile apps must be fast, intuitive, secure, and built for scale. We develop native and cross-platform apps designed for seamless performance and long-term maintainability.",
+    heroDescription2: "We develop high-performance mobile applications engineered for usability, security, and scale. From native iOS and Android to cross-platform solutions with React Native and Flutter, we build apps that users love and businesses rely on.",
+    whyMattersTitle: "Why Mobile Experience Matters",
+    whyMattersIntro: "We build mobile experiences users trust. Your app is often the primary touchpoint with customers - it must be fast, intuitive, and reliable to drive engagement and loyalty.",
+    whyMattersClosing: "We build mobile experiences users trust.",
+    capabilitiesIntro: "Every app we build is optimized for performance, designed for usability, and engineered for scale. We focus on the full lifecycle from development through deployment and ongoing updates.",
+    capabilities: [
+      "Native iOS & Android apps",
+      "Cross-platform apps (Flutter, React Native)",
+      "Backend API engineering",
+      "Authentication & app security",
+      "Performance optimization",
+      "Store deployment & release management",
+      "Push notification systems",
+      "Offline-first architecture",
+    ],
+    benefits: [
+      { title: "Cross-Platform Efficiency", desc: "Single codebase for iOS and Android reduces cost and time" },
+      { title: "Native Performance", desc: "Smooth animations and responsive interactions" },
+      { title: "Offline Support", desc: "Apps work even without internet connectivity" },
+      { title: "Secure by Design", desc: "Built-in authentication and data protection" },
+      { title: "Easy Updates", desc: "Over-the-air updates without app store delays" },
+      { title: "User Delight", desc: "Intuitive UX that keeps users engaged" },
+    ],
+    revenueImpact: [
+      "Great UX → higher app store ratings → more downloads",
+      "Push notifications → increased engagement → better retention",
+      "Offline support → uninterrupted usage → satisfied users",
+      "Cross-platform → faster launch → earlier market entry",
+      "Performance optimization → smooth experience → loyal users",
+    ],
+    revenueClosing: "Your app becomes a direct channel to customers that drives engagement and loyalty.",
+    highlightCTA: "Let's create a high-performance mobile app that delights your users.",
+    technologies: ["React Native", "Flutter", "Swift", "Kotlin", "Node.js", "Firebase"],
   },
 ];
 
@@ -479,30 +926,327 @@ export const productDetails: ProductDetail[] = [
     completeFeatures: ["Rider Mobile App", "Driver Mobile App", "Web Booking", "Admin Dashboard", "Real-time Tracking", "Stripe Payments", "Driver Verification", "Surge Pricing", "Promo Codes", "Support System", "Push Notifications", "Email & SMS Alerts"],
     stats: [{ label: "Database Models", value: "22" }, { label: "Mobile Apps", value: "2" }, { label: "Web Apps", value: "3" }, { label: "Real-time Events", value: "10+" }],
   },
+  {
+    slug: "marketplace",
+    heroTitle: "B2B Marketplace",
+    heroSubtitle: "Enterprise Commodity Trading Platform",
+    heroDescription: "A comprehensive B2B marketplace for commodity trading with producer management, tokenization, escrow payments, and blockchain integration for secure, transparent transactions",
+    modules: [
+      { icon: "store", title: "Producer Management", description: "Complete producer onboarding, verification, and management with KYC compliance and document tracking." },
+      { icon: "coins", title: "Tokenization Engine", description: "Commodity tokenization for fractional ownership, enabling smaller investors to participate in commodity trading." },
+      { icon: "shield", title: "Escrow Payments", description: "Secure escrow system ensuring safe transactions between buyers and sellers with dispute resolution." },
+      { icon: "blocks", title: "Blockchain Integration", description: "Immutable transaction records and smart contracts for automated compliance and transparent trading." },
+      { icon: "globe", title: "Multi-Currency Support", description: "Support for multiple currencies and payment methods including wire transfers, crypto, and trade finance." },
+      { icon: "trending-up", title: "Insurance & Hedging", description: "Integrated insurance products and hedging instruments to manage commodity price risks." },
+    ],
+    portals: [
+      { title: "Producer Portal", description: "For commodity producers and suppliers", features: ["Product listing management", "Order fulfillment tracking", "Payment reconciliation", "Analytics dashboard", "Document management"] },
+      { title: "Buyer Portal", description: "For commodity buyers and traders", features: ["Browse and search commodities", "Place orders and negotiate", "Track shipments", "Payment management", "Contract management"] },
+      { title: "Admin Dashboard", description: "Platform administration", features: ["User verification", "Transaction monitoring", "Dispute resolution", "Platform analytics", "Compliance reporting"] },
+    ],
+    completeFeatures: ["Multi-role Access", "Commodity Tokenization", "Escrow Payments", "Blockchain Ledger", "Smart Contracts", "KYC/AML Compliance", "Insurance Integration", "Hedging Tools", "Multi-currency", "Trade Finance", "Shipment Tracking", "Document Management"],
+    stats: [{ label: "Database Models", value: "45+" }, { label: "User Roles", value: "5" }, { label: "Payment Methods", value: "6+" }, { label: "API Endpoints", value: "60+" }],
+  },
+  {
+    slug: "realestate",
+    heroTitle: "Real Estate Platform",
+    heroSubtitle: "Property Listing & Management Solution",
+    heroDescription: "An advanced real estate platform with comprehensive property listings, agent management, membership subscriptions, and powerful search capabilities similar to leading property portals",
+    modules: [
+      { icon: "building-2", title: "Property Listings", description: "Rich property listings with multiple images, virtual tours, floor plans, and detailed specifications." },
+      { icon: "users", title: "Agent Management", description: "Complete agent onboarding, verification, commission tracking, and performance analytics." },
+      { icon: "shield", title: "Membership Plans", description: "Flexible subscription plans for agents and builders with featured listings and premium placement." },
+      { icon: "search", title: "Advanced Search", description: "Powerful search with filters for location, price, amenities, property type, and proximity to landmarks." },
+      { icon: "mail", title: "Lead Management", description: "Integrated CRM for lead capture, follow-up automation, and conversion tracking." },
+      { icon: "trending-up", title: "Analytics Dashboard", description: "Property performance metrics, market trends, and agent productivity reports." },
+    ],
+    portals: [
+      { title: "Public Portal", description: "Property search for buyers and renters", features: ["Browse all listings", "Advanced search filters", "Save favorites", "Contact agents", "Schedule viewings"] },
+      { title: "Agent Portal", description: "Tools for real estate agents", features: ["Manage listings", "Lead management", "Commission tracking", "Performance analytics", "Client communication"] },
+      { title: "Builder Portal", description: "For property developers", features: ["Project management", "Bulk listings", "Inventory tracking", "Sales analytics", "Marketing tools"] },
+      { title: "Admin Dashboard", description: "Platform management", features: ["User management", "Listing moderation", "Subscription management", "Revenue analytics", "Support tickets"] },
+    ],
+    completeFeatures: ["Property Listings", "Virtual Tours", "Agent Verification", "Membership Plans", "Featured Listings", "Advanced Search", "Map Integration", "Lead Capture", "SMS & Email Alerts", "Commission Management", "Analytics Reports", "Mobile Responsive"],
+    stats: [{ label: "Database Models", value: "35+" }, { label: "User Roles", value: "6" }, { label: "Search Filters", value: "20+" }, { label: "API Endpoints", value: "50+" }],
+  },
 ];
 
 // Portfolio projects
 export const projects: Project[] = [
   {
-    category: "Smart City",
-    title: "Smart City Dashboard",
-    desc: "Real-time urban monitoring system for efficient city management",
-    tech: ["React", "Node.js", "IoT"],
+    slug: "pigeon-pulse",
+    category: "IoT / Animal Health / AgriTech",
+    title: "Pigeon Pulse",
+    desc: "Intelligent Avian Health Monitoring System using lightweight IoT devices to track vitals, detect early symptoms, and enable real-time care for pigeons and poultry.",
+    tech: ["IoT Sensors", "MQTT", "AWS IoT Core", "React Native", "Python", "DynamoDB"],
     gradient: "linear-gradient(135deg, #00ffcc 0%, #00ccff 100%)",
   },
   {
-    category: "Enterprise Software",
-    title: "Enterprise CRM Platform",
-    desc: "Custom CRM solution for manufacturing industry",
-    tech: ["Next.js", "PostgreSQL", "Redis"],
+    slug: "paravet",
+    category: "Telemedicine / Rural Healthcare",
+    title: "Paravet",
+    desc: "Rural Veterinary Telemedicine Network connecting livestock owners to para-vets and veterinary doctors, enabling remote triage and care for animals in underserved areas.",
+    tech: ["Android", "Node.js", "Firebase", "Google Maps API", "Python"],
     gradient: "linear-gradient(135deg, #ff6b35 0%, #ff9f1c 100%)",
   },
   {
-    category: "Data Center",
-    title: "Data Center Monitor",
-    desc: "Comprehensive MDC management dashboard",
-    tech: ["Vue.js", "Python", "Docker"],
+    slug: "smart-city",
+    category: "Urban Tech / IoT / Public Infrastructure",
+    title: "SmartCity Platform",
+    desc: "Unified command dashboard consolidating surveillance, traffic flow, emergency response, and environmental monitoring—enabling real-time decision-making for city operations.",
+    tech: ["Microservices", "Kubernetes", "Kafka", "AI/ML", "React", "PostgreSQL"],
     gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+  },
+  {
+    slug: "mdc-system",
+    category: "Data Centers / IT Infrastructure",
+    title: "MDC System",
+    desc: "Modular Data Center Automation platform tracking power, cooling, rack health, and predictive maintenance for enterprise data center operations.",
+    tech: ["Python", "SNMP", "InfluxDB", "Grafana", "Docker", "MQTT"],
+    gradient: "linear-gradient(135deg, #00ccff 0%, #667eea 100%)",
+  },
+];
+
+// Portfolio Project Details (Case Studies)
+export const projectDetails: ProjectDetail[] = [
+  {
+    slug: "pigeon-pulse",
+    title: "Pigeon Pulse",
+    subtitle: "Intelligent Avian Health Monitoring System",
+    category: "IoT / Animal Health / AgriTech",
+    timeline: "6-8 Months",
+    teamSize: "4-6 Engineers",
+    heroDescription: "Smart health-monitoring ecosystem for pigeons using lightweight IoT devices to track vitals, detect early symptoms of illness, and enable real-time care decisions in large aviaries.",
+    challenge: "Aviary caretakers lacked systematic methods for early disease detection. The operation relied entirely on manual observation—inconsistent and often too late to prevent flock-wide spread. No digital infrastructure existed; everything was logged manually with spotty documentation.",
+    mission: "The team aimed to automate health tracking, identify anomalies early, and provide real-time visibility into individual bird status.",
+    missionPoints: [
+      "Reduce mortality rates through early detection",
+      "Improve early diagnosis capabilities",
+      "Create a data-driven care model",
+    ],
+    technologies: ["IoT Sensors", "MQTT", "Python", "Node.js", "AWS IoT Core", "DynamoDB", "React Native", "Flutter", "Grafana", "BLE Modules"],
+    deliverables: [
+      "Wearable IoT sensors for pigeons",
+      "Gateway-based data collection system",
+      "Cloud backend for analytics (AWS IoT Core)",
+      "Mobile and web dashboards (React Native)",
+      "Temperature & heart-rate detection",
+      "Motion analysis algorithms",
+      "Real-time alert system",
+      "Historical trend analysis",
+      "Caretaker assignment workflows",
+    ],
+    painPoints: [
+      {
+        challenge: "Tiny Sensors for Tiny Birds",
+        solution: "Designed ultra-lightweight, non-invasive wearable sensors",
+      },
+      {
+        challenge: "Erratic Connectivity",
+        solution: "Strategic RF repeater placement and antenna optimization",
+      },
+      {
+        challenge: "Battery Life Issues",
+        solution: "Custom firmware with advanced sleep modes—300% battery extension",
+      },
+      {
+        challenge: "No Historical Datasets",
+        solution: "Crowdsourced baseline model using aggregated multi-aviary data",
+      },
+    ],
+    results: [
+      "40-60% improvement in disease detection time",
+      "70% reduction in manual monitoring workload",
+      "Higher survival rates through early intervention",
+      "Predictable care cycles and resource allocation",
+      "Real-time visibility across multiple locations",
+    ],
+    testimonial: {
+      quote: "The client reported higher survival rates and more predictable care cycles, transforming how they manage aviary health.",
+      author: "Aviary Operations Manager",
+      role: "Client",
+    },
+  },
+  {
+    slug: "paravet",
+    title: "Paravet",
+    subtitle: "Rural Veterinary Telemedicine Network",
+    category: "Telemedicine / Rural Healthcare",
+    timeline: "4-6 Months",
+    teamSize: "5-7 Engineers",
+    heroDescription: "Digital network connecting livestock owners to trained para-vets and veterinary doctors, enabling remote triage, location-aware case assignment, and transparent field-to-cloud healthcare delivery.",
+    challenge: "The livestock healthcare sector lacked unified systems. Bookings, case logs, and field reports were scattered across WhatsApp groups and handwritten notebooks, creating chaotic service delivery with no tracking capability and minimal accountability.",
+    mission: "Digitize the field-veterinary ecosystem through a structured platform enabling remote triage and consultation, location-aware vet assignment, transparent pricing and service records, and improved service availability in rural areas.",
+    missionPoints: [
+      "Remote triage and consultation",
+      "Location-aware vet assignment",
+      "Transparent pricing and service records",
+      "Improved service availability in rural areas",
+    ],
+    technologies: ["Android (Java/Kotlin)", "Node.js", "Python", "Firebase", "AWS", "Google Maps API", "SMS Gateway"],
+    deliverables: [
+      "Mobile app with registration & vet discovery",
+      "Case logging & documentation system",
+      "GPS-based routing & location services",
+      "In-field digital form collection",
+      "Medicine recommendation engine",
+      "Digital treatment receipts",
+      "Vet performance tracking backend",
+      "SMS/WhatsApp notification integration",
+      "Offline-first architecture with smart syncing",
+    ],
+    painPoints: [
+      {
+        challenge: "Low Network Bandwidth - Rural areas had extremely limited connectivity",
+        solution: "Offline-First Architecture - Smart local storage with intelligent background syncing",
+      },
+      {
+        challenge: "Tech-Unfamiliar User Base - Minimal smartphone experience",
+        solution: "Icon-Based Workflows - Simplified UI with large icons, minimal text, and guided flows",
+      },
+      {
+        challenge: "Inconsistent Documentation - Vets documented cases differently",
+        solution: "Standardized Digital Forms - Structured forms with pre-filled options and mandatory fields",
+      },
+      {
+        challenge: "Language Barriers - Multiple local languages needed support",
+        solution: "Multilingual UI Layers - Comprehensive language support with region-specific translations",
+      },
+    ],
+    results: [
+      "Cut case turnaround time by almost 50%",
+      "Increased vet assignment efficiency in remote villages",
+      "Drastically improved documentation accuracy",
+      "Enabled seamless audit trails for health authorities",
+      "Smoother operations and resource allocation",
+    ],
+    testimonial: {
+      quote: "Client feedback highlighted smoother operations, easier audit trails, and a dramatic improvement in service delivery to remote areas.",
+      author: "Healthcare Administrator",
+      role: "Client",
+    },
+  },
+  {
+    slug: "smart-city",
+    title: "SmartCity Platform",
+    subtitle: "Integrated Operations & Monitoring Suite",
+    category: "Urban Tech / IoT / Public Infrastructure",
+    timeline: "10-12 Months",
+    teamSize: "8-12 Engineers",
+    heroDescription: "Unified command dashboard consolidating surveillance, traffic flow, emergency response, and environmental monitoring—enabling real-time decision-making for city operations.",
+    challenge: "Before implementation, city departments operated in silos. Traffic control, surveillance, and emergency services each used separate systems. Data was fragmented, response coordination was slow, and real-time decision-making was nearly impossible.",
+    mission: "Create a unified command center consolidating all monitoring and analytics systems while enabling real-time decision-making through analytics.",
+    missionPoints: [
+      "Enable real-time decision-making through analytics",
+      "Enhance public safety and traffic efficiency",
+      "Improve emergency response times",
+      "Centralize previously siloed departmental operations",
+    ],
+    technologies: ["Microservices (Node.js/Go)", "Kubernetes", "Docker", "Kafka Streams", "CCTV/RTSP Integration", "GIS Dashboards", "AI/ML Anomaly Detection", "React", "PostgreSQL", "Redis"],
+    deliverables: [
+      "Multi-module command center platform",
+      "CCTV ingestion & RTSP video wall",
+      "Real-time traffic analytics",
+      "Incident management workflows",
+      "Pollution & environmental sensor dashboards",
+      "Emergency dispatch coordination",
+      "Microservices pipeline with Kafka",
+      "ANPR camera integration",
+      "GPS device & IoT sensor integration",
+      "Weather station connectivity",
+      "Protocol adapters for vendor neutrality",
+    ],
+    painPoints: [
+      {
+        challenge: "Huge data volume from hundreds of CCTV feeds",
+        solution: "Deployed GPU clusters for parallel processing",
+      },
+      {
+        challenge: "Latency-sensitive analytics requiring millisecond response",
+        solution: "Implemented Kafka message streams for buffering",
+      },
+      {
+        challenge: "Multiple mismatched vendor systems",
+        solution: "Created universal protocol adapters normalizing data",
+      },
+      {
+        challenge: "24/7 reliability requirement for public safety",
+        solution: "Built active-active failover with auto health monitoring",
+      },
+    ],
+    results: [
+      "Significantly reduced incident detection time",
+      "Improved traffic flow reporting accuracy",
+      "Faster emergency coordination and response",
+      "Centralized previously siloed departmental operations",
+      "Achieved single pane of glass for city-wide monitoring",
+    ],
+    testimonial: {
+      quote: "The client praised the system for centralizing what used to be chaotic siloed operations into a unified, intelligent command center.",
+      author: "City Administrator",
+      role: "Municipal Government",
+    },
+  },
+  {
+    slug: "mdc-system",
+    title: "MDC System",
+    subtitle: "Modular Data Center Automation & Monitoring",
+    category: "Data Centers / IT Infrastructure",
+    timeline: "8-10 Months",
+    teamSize: "6-8 Engineers",
+    heroDescription: "Full-stack monitoring and automation platform for modular data centers—tracking power, cooling, rack health, security access, and predictive maintenance with real-time visibility.",
+    challenge: "The client's data center operations were fragmented across multiple disconnected tools—each system (power, cooling, security) operated independently. This separation prevented unified visibility, delayed fault detection, and required excessive manual intervention with no predictive maintenance capabilities.",
+    mission: "Consolidate all sensors and equipment controllers into a single dashboard while enabling intelligent automation.",
+    missionPoints: [
+      "Improve system uptime through proactive monitoring",
+      "Enable automated alerting and rapid response",
+      "Reduce dependency on manual operations",
+      "Enable predictive failure detection",
+    ],
+    technologies: ["Python", "Node.js", "SNMP", "Modbus/TCP", "InfluxDB", "Grafana", "Docker", "MQTT", "Power/Energy APIs"],
+    deliverables: [
+      "Hardware integration layer (SNMP/Modbus protocols)",
+      "Backend for time-series data processing",
+      "Real-time monitoring dashboards",
+      "Threshold-based alerting system",
+      "Automated alert rules engine",
+      "Maintenance log management",
+      "Role-based access control",
+      "Energy meter integration",
+      "UPS system monitoring",
+      "PAC unit integration",
+      "Physical security sensor connectivity",
+    ],
+    painPoints: [
+      {
+        challenge: "Protocol Inconsistency",
+        solution: "Built a universal adapter framework normalizing SNMP, Modbus, and custom protocols into standard formats",
+      },
+      {
+        challenge: "Time-Series Load Spikes",
+        solution: "Implemented InfluxDB with buffered collectors to gracefully handle massive ingestion spikes",
+      },
+      {
+        challenge: "Corrupted Edge Packets",
+        solution: "Created intelligent packet validation with automatic retry mechanisms and error logging",
+      },
+      {
+        challenge: "Mission-Critical Sensitivity",
+        solution: "Deployed redundant monitoring nodes with health-check heartbeats and automatic failover",
+      },
+    ],
+    results: [
+      "Boosted visibility across all racks and equipment",
+      "Reduced downtime through proactive alerting",
+      "Enabled predictive maintenance scheduling",
+      "Scaled operations without proportional manpower increase",
+      "Became a core operational asset for the client",
+    ],
+    testimonial: {
+      quote: "The MDC System became a core operational asset, enabling the client to scale their data center operations without scaling manpower proportionally.",
+      author: "Data Center Operations Manager",
+      role: "Enterprise Client",
+    },
   },
 ];
 
@@ -542,10 +1286,55 @@ export const processSteps: ProcessStep[] = [
 
 // Team members
 export const team: TeamMember[] = [
-  { name: "Sudipto Mitra", role: "Founder & Lead Developer", avatar: "SM" },
-  { name: "Pallabi Datta", role: "HR Manager", avatar: "PD" },
-  { name: "Snehendu Roy", role: "Full-stack MERN Developer", avatar: "SR" },
-  { name: "Soumyadip Chanda", role: "AI/ML Developer", avatar: "SC" },
+  {
+    name: "Sudipto Mitra",
+    role: "Founder & CEO",
+    avatar: "SM",
+    bio: "Visionary leader with 10+ years in technology innovation",
+    linkedin: "https://linkedin.com/in/sudipto-mitra",
+  },
+  {
+    name: "Pallabi Datta",
+    role: "Human Resources",
+    avatar: "PD",
+    bio: "Building strong teams and fostering workplace excellence",
+    linkedin: "https://linkedin.com/in/pallabi-datta",
+  },
+  {
+    name: "Snehendu Roy",
+    role: "Full Stack MERN Developer",
+    avatar: "SR",
+    bio: "Expert in building scalable web applications",
+    linkedin: "https://linkedin.com/in/snehendu-roy",
+  },
+  {
+    name: "Mitali Giri",
+    role: "AI/ML Developer",
+    avatar: "MG",
+    bio: "Pioneering intelligent solutions with machine learning",
+    linkedin: "https://linkedin.com/in/mitali-giri",
+  },
+  {
+    name: "Achyut Pal",
+    role: "Sr Developer",
+    avatar: "AP",
+    bio: "Senior developer specializing in scalable enterprise solutions",
+    linkedin: "https://linkedin.com/in/achyut-pal",
+  },
+  {
+    name: "Tushar Daiya",
+    role: "Full Stack MERN Developer",
+    avatar: "TD",
+    bio: "Building robust and scalable web applications",
+    linkedin: "https://linkedin.com/in/tushar-daiya",
+  },
+  {
+    name: "Balaji Yadav",
+    role: "Full Stack MERN Developer",
+    avatar: "BY",
+    bio: "Crafting modern web solutions with expertise in MERN stack",
+    linkedin: "https://linkedin.com/in/balaji-yadav",
+  },
 ];
 
 // About page content

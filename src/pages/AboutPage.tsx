@@ -1,6 +1,6 @@
 import { PageLayout } from "@/components/common/PageLayout";
 import { FloatingConstellation } from "@/components/effects";
-import { ParallaxLayer, TiltCard, MagneticButton, Icon, SplitText } from "@/components/ui";
+import { ParallaxLayer, TiltCard, MagneticButton, Icon, SplitText, AnimatedCounter } from "@/components/ui";
 import {
   aboutFounderStory,
   aboutServicesExpanded,
@@ -10,7 +10,35 @@ import {
   aboutVision,
   aboutCommitment,
   aboutClosingStatement,
+  stats,
 } from "@/data/data";
+
+const journeyMilestones = [
+  {
+    year: "2020",
+    title: "The Beginning",
+    description: "Started as a specialized engineering unit focused on modern data centers and cloud integrations.",
+    icon: "rocket",
+  },
+  {
+    year: "2022",
+    title: "Expansion",
+    description: "Expanded into DevOps, cybersecurity, and smart city solutions as client demands grew.",
+    icon: "trending-up",
+  },
+  {
+    year: "2024",
+    title: "Full-Stack Firm",
+    description: "Evolved into a full-stack technology engineering firm with AI/ML and blockchain capabilities.",
+    icon: "zap",
+  },
+  {
+    year: "Now",
+    title: "Global Reach",
+    description: "Supporting clients worldwide from startups to enterprises with scalable solutions.",
+    icon: "globe",
+  },
+];
 
 export const AboutPage = () => {
   return (
@@ -18,62 +46,123 @@ export const AboutPage = () => {
       <FloatingConstellation name="cassiopeia" />
       <PageLayout
         tag="About Us"
-        title="About Infiniti"
-        titleAccent="Tech Partners"
+        title="Engineering the"
+        titleAccent="Future"
         description="A Founder Who Built, Broke, and Rebuilt Technology Until It Made Sense"
       >
         <div className="section-container">
-          {/* Founder Story */}
+          {/* Founder Story - Hero Style */}
           <div className="page-section">
-            <ParallaxLayer speed={0.1}>
-              <div className="about-intro-full">
-                {aboutFounderStory.map((paragraph, i) => (
-                  <p
-                    key={i}
-                    className="about-text-large"
-                    style={{ marginBottom: i < aboutFounderStory.length - 1 ? "1.5rem" : 0 }}
-                    dangerouslySetInnerHTML={{ __html: paragraph }}
-                  />
-                ))}
-              </div>
-            </ParallaxLayer>
+            <div className="about-story-container">
+              <ParallaxLayer speed={0.1}>
+                <div className="about-story-content">
+                  <div className="about-story-badge">
+                    <Icon name="zap" />
+                    <span>Our Story</span>
+                  </div>
+                  {aboutFounderStory.map((paragraph, i) => (
+                    <p
+                      key={i}
+                      className="about-story-text"
+                      dangerouslySetInnerHTML={{ __html: paragraph }}
+                    />
+                  ))}
+                </div>
+              </ParallaxLayer>
+              <ParallaxLayer speed={0.15}>
+                <div className="about-story-visual">
+                  <div className="about-story-icon-container">
+                    <div className="about-story-icon-glow" />
+                    <div className="about-story-icon">
+                      <span>∞</span>
+                    </div>
+                  </div>
+                </div>
+              </ParallaxLayer>
+            </div>
           </div>
 
-          {/* Company Evolution */}
+          {/* Stats Row */}
+          <div className="page-section">
+            <div className="about-stats-row">
+              {stats.map((stat, i) => (
+                <ParallaxLayer key={i} speed={0.08 + i * 0.02}>
+                  <div className="about-stat-card">
+                    <span className="about-stat-value">
+                      <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+                    </span>
+                    <span className="about-stat-label">{stat.label}</span>
+                  </div>
+                </ParallaxLayer>
+              ))}
+            </div>
+          </div>
+
+          {/* Journey Timeline */}
           <div className="page-section">
             <ParallaxLayer speed={-0.2}>
               <div className="section-header">
+                <span className="section-tag">Our Journey</span>
                 <h2 className="section-title">
-                  <SplitText text="How the Company" />
+                  <SplitText text="How We" />
                   <br />
                   <SplitText text="Evolved" className="accent" delay={0.2} />
                 </h2>
               </div>
             </ParallaxLayer>
-            <ParallaxLayer speed={0.1}>
-              <TiltCard className="about-evolution-card">
-                <p className="about-evolution-intro">
-                  The company started as a specialized engineering unit focused on modern data centers (MDC), cloud integrations, and automation frameworks. As businesses demanded deeper resilience and smarter systems, we expanded into:
-                </p>
-                <div className="about-services-list">
-                  {aboutServicesExpanded.map((service, i) => (
-                    <div key={i} className="about-service-item">
-                      <span className="about-check-icon"><Icon name="check" /></span>
-                      <span>{service}</span>
+
+            <div className="about-journey-timeline">
+              {journeyMilestones.map((milestone, i) => (
+                <ParallaxLayer key={i} speed={0.1 + i * 0.03}>
+                  <div className="about-journey-item">
+                    <div className="about-journey-marker">
+                      <div className="about-journey-year">{milestone.year}</div>
+                      <div className="about-journey-line" />
                     </div>
-                  ))}
-                </div>
-                <p className="about-evolution-closing">
-                  Today, Infiniti Tech Partners operates as a <span className="font-semibold text-white">full-stack technology engineering firm</span>, supporting clients who require dependable, scalable, and secure solutions — from startups building their first core architecture to enterprises upgrading legacy systems into modern ecosystems.
-                </p>
-              </TiltCard>
+                    <TiltCard className="about-journey-card">
+                      <div className="about-journey-icon">
+                        <Icon name={milestone.icon as "rocket" | "trending-up" | "zap" | "globe"} />
+                      </div>
+                      <h3 className="about-journey-title">{milestone.title}</h3>
+                      <p className="about-journey-desc">{milestone.description}</p>
+                    </TiltCard>
+                  </div>
+                </ParallaxLayer>
+              ))}
+            </div>
+          </div>
+
+          {/* What We Do - Services Expanded */}
+          <div className="page-section">
+            <ParallaxLayer speed={-0.2}>
+              <div className="section-header">
+                <span className="section-tag">Expertise</span>
+                <h2 className="section-title">
+                  <SplitText text="What We" />
+                  <br />
+                  <SplitText text="Excel At" className="accent" delay={0.2} />
+                </h2>
+              </div>
             </ParallaxLayer>
+
+            <div className="about-expertise-grid">
+              {aboutServicesExpanded.map((service, i) => (
+                <ParallaxLayer key={i} speed={0.1 + i * 0.02}>
+                  <div className="about-expertise-item">
+                    <div className="about-expertise-number">{String(i + 1).padStart(2, '0')}</div>
+                    <span className="about-expertise-text">{service}</span>
+                    <div className="about-expertise-line" />
+                  </div>
+                </ParallaxLayer>
+              ))}
+            </div>
           </div>
 
           {/* What Drives Us */}
           <div className="page-section">
             <ParallaxLayer speed={-0.2}>
               <div className="section-header">
+                <span className="section-tag">Philosophy</span>
                 <h2 className="section-title">
                   <SplitText text="What" />
                   <br />
@@ -81,51 +170,55 @@ export const AboutPage = () => {
                 </h2>
               </div>
             </ParallaxLayer>
+
             <ParallaxLayer speed={0.1}>
-              <TiltCard className="about-quote-card">
-                <p className="about-motto">"{aboutMotto}"</p>
-              </TiltCard>
+              <div className="about-motto-container">
+                <div className="about-motto-quote">"</div>
+                <p className="about-motto-text">{aboutMotto}</p>
+                <div className="about-motto-quote end">"</div>
+              </div>
             </ParallaxLayer>
-            <div className="about-principles-grid">
-              <p className="about-principles-intro">Our teams operate with:</p>
-              {aboutOperatingPrinciples.map((principle, i) => (
-                <ParallaxLayer key={i} speed={0.1 + i * 0.02}>
-                  <div className="about-principle-item">
-                    <span className="about-principle-dot" />
-                    <span>{principle}</span>
-                  </div>
-                </ParallaxLayer>
-              ))}
+
+            <div className="about-principles-container">
+              <p className="about-principles-label">Our teams operate with:</p>
+              <div className="about-principles-list">
+                {aboutOperatingPrinciples.map((principle, i) => (
+                  <ParallaxLayer key={i} speed={0.1 + i * 0.02}>
+                    <div className="about-principle-card">
+                      <div className="about-principle-indicator">
+                        <Icon name="check" />
+                      </div>
+                      <span>{principle}</span>
+                    </div>
+                  </ParallaxLayer>
+                ))}
+              </div>
             </div>
-            <ParallaxLayer speed={0.1}>
-              <p className="about-drives-closing">
-                This ensures our clients get solutions that are <span className="font-semibold text-white">resilient, efficient, and ready for the next decade</span> — not just the next quarter.
-              </p>
-            </ParallaxLayer>
           </div>
 
           {/* Why Clients Work With Us */}
           <div className="page-section">
             <ParallaxLayer speed={-0.2}>
               <div className="section-header">
+                <span className="section-tag">Why Us</span>
                 <h2 className="section-title">
                   <SplitText text="Why Clients" />
                   <br />
-                  <SplitText text="Work With Us" className="accent" delay={0.2} />
+                  <SplitText text="Choose Us" className="accent" delay={0.2} />
                 </h2>
-                <p className="page-description" style={{ marginTop: '30px' }}>
-                  Not because of geography. Not because of cost.
-                  <br />
-                  <span style={{ color: 'var(--color-primary)' }}>Because we deliver technology that performs.</span>
+                <p className="about-clients-subtitle">
+                  Not because of geography. Not because of cost.<br />
+                  <span className="accent-text">Because we deliver technology that performs.</span>
                 </p>
               </div>
             </ParallaxLayer>
-            <div className="features-grid">
+
+            <div className="about-reasons-grid">
               {aboutClientReasons.map((reason, i) => (
-                <ParallaxLayer key={i} speed={0.1 + i * 0.03}>
-                  <TiltCard className="feature-card about-reason-card">
-                    <span className="feature-icon"><Icon name="award" /></span>
-                    <p className="feature-desc">{reason.text}</p>
+                <ParallaxLayer key={i} speed={0.1 + i * 0.025}>
+                  <TiltCard className="about-reason-item">
+                    <div className="about-reason-number">{String(i + 1).padStart(2, '0')}</div>
+                    <p className="about-reason-text">{reason.text}</p>
                   </TiltCard>
                 </ParallaxLayer>
               ))}
@@ -134,32 +227,44 @@ export const AboutPage = () => {
 
           {/* Vision & Commitment */}
           <div className="page-section">
-            <div className="about-vision-grid">
+            <div className="about-vc-grid">
               <ParallaxLayer speed={0.1}>
-                <TiltCard className="about-vision-card">
-                  <div className="about-vision-icon">
-                    <Icon name="zap" />
+                <TiltCard className="about-vc-card vision">
+                  <div className="about-vc-header">
+                    <div className="about-vc-icon">
+                      <Icon name="telescope" />
+                    </div>
+                    <h3 className="about-vc-title">Our Vision</h3>
                   </div>
-                  <h3 className="about-vision-title">Our Vision</h3>
-                  <p className="about-vision-text">{aboutVision}</p>
+                  <p className="about-vc-text">{aboutVision}</p>
+                  <div className="about-vc-accent-line" />
                 </TiltCard>
               </ParallaxLayer>
+
               <ParallaxLayer speed={0.12}>
-                <TiltCard className="about-commitment-card">
-                  <div className="about-commitment-icon">
-                    <Icon name="shield" />
+                <TiltCard className="about-vc-card commitment">
+                  <div className="about-vc-header">
+                    <div className="about-vc-icon">
+                      <Icon name="shield" />
+                    </div>
+                    <h3 className="about-vc-title">Our Commitment</h3>
                   </div>
-                  <h3 className="about-commitment-title">Our Commitment</h3>
-                  <p className="about-vision-text">{aboutCommitment}</p>
+                  <p className="about-vc-text">{aboutCommitment}</p>
+                  <div className="about-vc-accent-line" />
                 </TiltCard>
               </ParallaxLayer>
             </div>
+          </div>
+
+          {/* Closing Statement */}
+          <div className="page-section">
             <ParallaxLayer speed={0.1}>
-              <div className="about-closing-card">
-                <p className="about-closing-text">
+              <div className="about-closing-container">
+                <div className="about-closing-glow" />
+                <p className="about-closing-statement">
                   {aboutClosingStatement.split("advantage").map((part, i) =>
                     i === 0 ? (
-                      <span key={i}>{part}<span className="text-gradient">advantage</span></span>
+                      <span key={i}>{part}<span className="gradient-text">advantage</span></span>
                     ) : (
                       <span key={i}>{part}</span>
                     )

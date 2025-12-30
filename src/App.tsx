@@ -5,10 +5,11 @@ import {
   HomePage,
   AboutPage,
   ServicesPage,
+  ServiceDetailPage,
   ProductsPage,
   ProductDetailPage,
   PortfolioPage,
-  ProcessPage,
+  PortfolioDetailPage,
   TeamPage,
   ContactPage,
 } from "@/pages";
@@ -27,10 +28,11 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/services" element={<ServicesPage />} />
+            <Route path="/services/:slug" element={<ServiceDetailPage />} />
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/products/:slug" element={<ProductDetailPage />} />
             <Route path="/portfolio" element={<PortfolioPage />} />
-            <Route path="/process" element={<ProcessPage />} />
+            <Route path="/portfolio/:slug" element={<PortfolioDetailPage />} />
             <Route path="/team" element={<TeamPage />} />
             <Route path="/contact" element={<ContactPage />} />
           </Routes>

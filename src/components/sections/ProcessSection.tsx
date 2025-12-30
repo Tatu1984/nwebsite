@@ -16,18 +16,18 @@ export const ProcessSection = () => {
           </div>
         </ParallaxLayer>
 
-        <div className="process-timeline">
+        <div className="process-horizontal">
+          <div className="process-connector" />
           {processSteps.map((step, i) => (
-            <ParallaxLayer key={i} speed={0.08 + i * 0.03}>
-              <div className="process-step">
-                <div className="step-marker">
-                  <span className="step-num">{step.num}</span>
-                  <div className="step-line" />
+            <ParallaxLayer key={i} speed={0.06 + i * 0.02}>
+              <div className="process-step-h">
+                <div className="step-number-h">
+                  <span>{step.num}</span>
                 </div>
-                <TiltCard className="step-content">
-                  <h3 className="step-title">{step.title}</h3>
-                  <p className="step-desc">{step.desc}</p>
-                  <ul className="step-points">
+                <TiltCard className="step-card-h">
+                  <h3 className="step-title-h">{step.title}</h3>
+                  <p className="step-desc-h">{step.desc}</p>
+                  <ul className="step-points-h">
                     {step.points.map((p, j) => (
                       <li key={j}>{p}</li>
                     ))}
