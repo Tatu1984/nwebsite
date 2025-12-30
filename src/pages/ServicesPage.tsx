@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import { PageLayout } from "@/components/common/PageLayout";
 import { FloatingConstellation } from "@/components/effects";
-import { ParallaxLayer, TiltCard, MagneticButton, Icon, type IconName } from "@/components/ui";
+import {
+  ParallaxLayer,
+  TiltCard,
+  MagneticButton,
+  Icon,
+  type IconName,
+} from "@/components/ui";
 import { services } from "@/data/data";
 
 export const ServicesPage = () => {
@@ -18,31 +24,28 @@ export const ServicesPage = () => {
           <div className="page-section">
             <div className="services-grid-full">
               {services.map((service, i) => (
-                <ParallaxLayer key={i} speed={0.08 + (i % 3) * 0.04}>
-                  <TiltCard className="service-card-full">
-                    <Link to={`/services/${service.slug}`} className="service-card-link">
-                      <div className="service-header">
-                        <div className="service-icon-large"><Icon name={service.icon as IconName} /></div>
-                        <h3 className="service-title-large">{service.title}</h3>
+                <TiltCard className="service-card-full">
+                  <Link
+                    to={`/services/${service.slug}`}
+                    className="service-card-link"
+                  >
+                    <div className="service-header">
+                      <div className="service-icon-large">
+                        <Icon name={service.icon as IconName} />
                       </div>
-                      <p className="service-desc-full">{service.desc}</p>
-                      <div className="service-features-section">
-                        <h4 className="service-features-title">Key Features</h4>
-                        <ul className="service-features-list">
-                          {service.features.map((f, j) => (
-                            <li key={j}>{f}</li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div className="service-view-details">
-                        Learn More
-                        <svg viewBox="0 0 24 24" className="arrow-icon">
-                          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" fill="none" />
-                        </svg>
-                      </div>
-                    </Link>
-                  </TiltCard>
-                </ParallaxLayer>
+                      <h3 className="service-title-large">{service.title}</h3>
+                    </div>
+                    <p className="service-desc-full">{service.desc}</p>
+                    <div className="service-features-section">
+                      <h4 className="service-features-title">Key Features</h4>
+                      <ul className="service-features-list">
+                        {service.features.map((f, j) => (
+                          <li key={j}>{f}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </Link>
+                </TiltCard>
               ))}
             </div>
           </div>
