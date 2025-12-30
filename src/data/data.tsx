@@ -1,156 +1,21 @@
-// TypeScript interfaces
-export interface NavItem {
-  label: string;
-  href: string;
-}
-
-export interface Value {
-  icon: string;
-  title: string;
-  desc: string;
-}
-
-export interface Stat {
-  value: number;
-  suffix: string;
-  label: string;
-}
-
-export interface Service {
-  slug: string;
-  icon: string;
-  title: string;
-  desc: string;
-  features: string[];
-}
-
-export interface ServiceDetail {
-  slug: string;
-  heroTitle: string;
-  heroDescription: string;
-  heroDescription2?: string;
-  // Why It Matters section
-  whyMattersTitle: string;
-  whyMattersIntro: string;
-  whyMattersClosing: string;
-  // Capabilities section
-  capabilitiesIntro: string;
-  capabilities: string[];
-  // Benefits (shown as cards in Why It Matters)
-  benefits: { title: string; desc: string }[];
-  // Revenue/Business Impact
-  revenueImpact: string[];
-  revenueClosing: string;
-  // Highlight CTA
-  highlightCTA: string;
-  technologies?: string[];
-}
-
-export interface Product {
-  slug: string;
-  name: string;
-  tagline: string;
-  category: string;
-  icon: string;
-  desc: string;
-  gradient: string;
-  features: string[];
-  technologies: string[];
-  highlights: string;
-  demoUrl?: string;
-}
-
-export interface ProductModule {
-  icon: string;
-  title: string;
-  description: string;
-}
-
-export interface ProductPortal {
-  title: string;
-  description?: string;
-  features: string[];
-}
-
-export interface ProductDetail {
-  slug: string;
-  heroTitle: string;
-  heroSubtitle: string;
-  heroDescription: string;
-  modules: ProductModule[];
-  portals?: ProductPortal[];
-  completeFeatures: string[];
-  stats?: { label: string; value: string }[];
-}
-
-export interface Project {
-  slug: string;
-  category: string;
-  title: string;
-  desc: string;
-  tech: string[];
-  gradient: string;
-}
-
-export interface ProjectPainPoint {
-  challenge: string;
-  solution: string;
-}
-
-export interface ProjectDetail {
-  slug: string;
-  title: string;
-  subtitle: string;
-  category: string;
-  timeline?: string;
-  teamSize?: string;
-  heroDescription: string;
-  challenge: string;
-  mission: string;
-  missionPoints: string[];
-  technologies: string[];
-  deliverables: string[];
-  painPoints: ProjectPainPoint[];
-  results: string[];
-  testimonial?: {
-    quote: string;
-    author: string;
-    role: string;
-  };
-}
-
-export interface ProcessStep {
-  num: string;
-  title: string;
-  desc: string;
-  points: string[];
-}
-
-export interface TeamMember {
-  name: string;
-  role: string;
-  avatar: string;
-  bio: string;
-  linkedin?: string;
-}
-
-export interface ContactInfo {
-  email: string;
-  location: string;
-  hours: string;
-}
-
-export interface SocialLink {
-  name: string;
-  href: string;
-  icon: "linkedin" | "twitter" | "github";
-}
-
-export interface Feature {
-  icon: string;
-  title: string;
-  desc: string;
-}
+import type {
+  NavItem,
+  Value,
+  Stat,
+  Service,
+  ServiceDetail,
+  Product,
+  ProductDetail,
+  Project,
+  ProjectDetail,
+  ProcessStep,
+  TeamMember,
+  ContactInfo,
+  SocialLink,
+  Feature,
+  AboutClientReason,
+  Version,
+} from "@/types/data";
 
 // Navigation items (relative paths for React Router)
 export const navItems: NavItem[] = [
@@ -160,6 +25,7 @@ export const navItems: NavItem[] = [
   { label: "Products", href: "/products" },
   { label: "Portfolio", href: "/portfolio" },
   { label: "Team", href: "/team" },
+  { label: "Previous Versions", href: "/previous-versions" },
 ];
 
 // Footer links
@@ -186,7 +52,11 @@ export const contactInfo: ContactInfo = {
 
 // Social links
 export const socialLinks: SocialLink[] = [
-  { name: "LinkedIn", href: "https://www.linkedin.com/company/infinititech-partners", icon: "linkedin" },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/company/infinititech-partners",
+    icon: "linkedin",
+  },
   { name: "GitHub", href: "https://github.com/infps", icon: "github" },
 ];
 
@@ -248,70 +118,120 @@ export const services: Service[] = [
     icon: "server",
     title: "Modern Data Center (MDC) Engineering",
     desc: "Resilient, scalable MDC architectures that support mission-critical workloads with zero tolerance for failure.",
-    features: ["Infrastructure Design", "Power Management", "Cooling Systems", "High Availability"],
+    features: [
+      "Infrastructure Design",
+      "Power Management",
+      "Cooling Systems",
+      "High Availability",
+    ],
   },
   {
     slug: "devops-engineering",
     icon: "git-branch",
     title: "DevOps Engineering",
     desc: "Automated, fast, stable delivery pipelines that ensure teams can develop, deploy, and iterate without friction.",
-    features: ["CI/CD Pipelines", "Infrastructure as Code", "Container Orchestration", "Monitoring"],
+    features: [
+      "CI/CD Pipelines",
+      "Infrastructure as Code",
+      "Container Orchestration",
+      "Monitoring",
+    ],
   },
   {
     slug: "devsecops",
     icon: "shield",
     title: "DevSecOps & Security Automation",
     desc: "Security embedded into every stage of development, testing, and deployment.",
-    features: ["Security Scanning", "Compliance Automation", "Vulnerability Management", "Policy as Code"],
+    features: [
+      "Security Scanning",
+      "Compliance Automation",
+      "Vulnerability Management",
+      "Policy as Code",
+    ],
   },
   {
     slug: "cybersecurity",
     icon: "lock",
     title: "Cybersecurity & Threat Management",
     desc: "Defend against modern threats using a layered, intelligence-driven approach.",
-    features: ["Threat Detection", "Incident Response", "Penetration Testing", "Security Audits"],
+    features: [
+      "Threat Detection",
+      "Incident Response",
+      "Penetration Testing",
+      "Security Audits",
+    ],
   },
   {
     slug: "network-architecture",
     icon: "network",
     title: "Network Architecture & Infrastructure",
     desc: "Fast, reliable, and secure networks capable of supporting heavy loads and distributed operations.",
-    features: ["Network Design", "Load Balancing", "SD-WAN", "Network Security"],
+    features: [
+      "Network Design",
+      "Load Balancing",
+      "SD-WAN",
+      "Network Security",
+    ],
   },
   {
     slug: "smart-city-iot",
     icon: "building-2",
     title: "Smart City & IoT Solutions",
     desc: "Connected systems that improve efficiency, operations, and citizen experience.",
-    features: ["Traffic Management", "Smart Lighting", "Environmental Monitoring", "Urban Analytics"],
+    features: [
+      "Traffic Management",
+      "Smart Lighting",
+      "Environmental Monitoring",
+      "Urban Analytics",
+    ],
   },
   {
     slug: "ai-ml-engineering",
     icon: "brain",
     title: "AI / Machine Learning Engineering",
     desc: "Intelligent systems that automate decisions, optimize operations, and open new capabilities.",
-    features: ["ML Model Development", "Data Pipelines", "Predictive Analytics", "NLP Solutions"],
+    features: [
+      "ML Model Development",
+      "Data Pipelines",
+      "Predictive Analytics",
+      "NLP Solutions",
+    ],
   },
   {
     slug: "blockchain",
     icon: "blocks",
     title: "Blockchain & Distributed Systems",
     desc: "Secure, high-performance blockchain applications tailored to business use-cases.",
-    features: ["Smart Contracts", "DeFi Solutions", "NFT Platforms", "Enterprise Blockchain"],
+    features: [
+      "Smart Contracts",
+      "DeFi Solutions",
+      "NFT Platforms",
+      "Enterprise Blockchain",
+    ],
   },
   {
     slug: "website-development",
     icon: "globe",
     title: "Website Development",
     desc: "Fast, secure, and responsive websites designed for performance, branding, and conversion.",
-    features: ["React/Next.js", "Performance Optimization", "SEO", "CMS Integration"],
+    features: [
+      "React/Next.js",
+      "Performance Optimization",
+      "SEO",
+      "CMS Integration",
+    ],
   },
   {
     slug: "mobile-app-development",
     icon: "smartphone",
     title: "Mobile App Development",
     desc: "High-performance mobile applications engineered for usability, security, and scale.",
-    features: ["React Native", "iOS & Android", "App Store Optimization", "Push Notifications"],
+    features: [
+      "React Native",
+      "iOS & Android",
+      "App Store Optimization",
+      "Push Notifications",
+    ],
   },
 ];
 
@@ -320,12 +240,17 @@ export const serviceDetails: ServiceDetail[] = [
   {
     slug: "mdc-engineering",
     heroTitle: "Modern Data Center Engineering",
-    heroDescription: "A modern data center serves as the core infrastructure for ambitious enterprises. As organizations expand, adopt hybrid setups, manage data-intensive workloads, and embrace automation, their infrastructure must evolve accordingly. We engineer Modern Data Centers built for both current computing demands and unpredictable high-growth scenarios.",
-    heroDescription2: "Our MDC engineering team combines expertise in physical infrastructure, virtualization, cybersecurity, and cloud integrations to create resilient, cost-efficient data centers prepared for dynamic scaling. Whether modernizing legacy systems, building hybrid data centers, implementing high-availability architecture, or optimizing workload distribution, we ensure digital backbone precision.",
+    heroDescription:
+      "A modern data center serves as the core infrastructure for ambitious enterprises. As organizations expand, adopt hybrid setups, manage data-intensive workloads, and embrace automation, their infrastructure must evolve accordingly. We engineer Modern Data Centers built for both current computing demands and unpredictable high-growth scenarios.",
+    heroDescription2:
+      "Our MDC engineering team combines expertise in physical infrastructure, virtualization, cybersecurity, and cloud integrations to create resilient, cost-efficient data centers prepared for dynamic scaling. Whether modernizing legacy systems, building hybrid data centers, implementing high-availability architecture, or optimizing workload distribution, we ensure digital backbone precision.",
     whyMattersTitle: "Why Modern Data Centers Matter for Business Growth",
-    whyMattersIntro: "Your data center directly contributes to business revenue, though many organizations overlook this. Slow, unstable, or outdated infrastructure restricts performance, causes downtime, increases operational costs, and creates security vulnerabilities. Every second of downtime results in lost revenue, customer trust, and opportunities.",
-    whyMattersClosing: "When the core is strong, the entire digital ecosystem becomes faster, safer, and more adaptable.",
-    capabilitiesIntro: "We approach MDC engineering holistically—from physical layout planning through virtualization, network design, security layers, cloud cooperation, and automation frameworks. The objective: build a data center that performs flawlessly during peak demand.",
+    whyMattersIntro:
+      "Your data center directly contributes to business revenue, though many organizations overlook this. Slow, unstable, or outdated infrastructure restricts performance, causes downtime, increases operational costs, and creates security vulnerabilities. Every second of downtime results in lost revenue, customer trust, and opportunities.",
+    whyMattersClosing:
+      "When the core is strong, the entire digital ecosystem becomes faster, safer, and more adaptable.",
+    capabilitiesIntro:
+      "We approach MDC engineering holistically—from physical layout planning through virtualization, network design, security layers, cloud cooperation, and automation frameworks. The objective: build a data center that performs flawlessly during peak demand.",
     capabilities: [
       "Complete data center design and modernization",
       "Hybrid DC plus cloud architecture",
@@ -337,12 +262,30 @@ export const serviceDetails: ServiceDetail[] = [
       "Monitoring and automation frameworks",
     ],
     benefits: [
-      { title: "Near-Zero Downtime", desc: "Protects revenue and customer trust with redundant systems" },
-      { title: "Optimized Utilization", desc: "Reduces infrastructure cost through intelligent resource allocation" },
-      { title: "High-Speed Workloads", desc: "Improves customer experience with performance-optimized systems" },
-      { title: "Better Security Posture", desc: "Lowers breach risk with multi-layer protection" },
-      { title: "Scalable Design", desc: "Future growth without massive reinvestments" },
-      { title: "Energy Efficiency", desc: "Reduces operational costs drastically with green practices" },
+      {
+        title: "Near-Zero Downtime",
+        desc: "Protects revenue and customer trust with redundant systems",
+      },
+      {
+        title: "Optimized Utilization",
+        desc: "Reduces infrastructure cost through intelligent resource allocation",
+      },
+      {
+        title: "High-Speed Workloads",
+        desc: "Improves customer experience with performance-optimized systems",
+      },
+      {
+        title: "Better Security Posture",
+        desc: "Lowers breach risk with multi-layer protection",
+      },
+      {
+        title: "Scalable Design",
+        desc: "Future growth without massive reinvestments",
+      },
+      {
+        title: "Energy Efficiency",
+        desc: "Reduces operational costs drastically with green practices",
+      },
     ],
     revenueImpact: [
       "Faster applications → higher customer satisfaction → higher retention",
@@ -351,19 +294,33 @@ export const serviceDetails: ServiceDetail[] = [
       "Automated failover → lowered risk cost",
       "Scalable architecture → more digital products launched faster",
     ],
-    revenueClosing: "Your data center becomes an asset that actively pushes business growth.",
-    highlightCTA: "Our data center solutions form the foundation for next-generation digital operations.",
-    technologies: ["VMware", "Hyper-V", "Kubernetes", "OpenStack", "Terraform", "Ansible"],
+    revenueClosing:
+      "Your data center becomes an asset that actively pushes business growth.",
+    highlightCTA:
+      "Our data center solutions form the foundation for next-generation digital operations.",
+    technologies: [
+      "VMware",
+      "Hyper-V",
+      "Kubernetes",
+      "OpenStack",
+      "Terraform",
+      "Ansible",
+    ],
   },
   {
     slug: "devops-engineering",
     heroTitle: "DevOps Engineering",
-    heroDescription: "DevOps is not just a set of tools - it is a strategic advantage. In a marketplace where speed, reliability, and constant improvement determine survival, DevOps becomes the engine that drives innovation.",
-    heroDescription2: "We build DevOps ecosystems that transform the way businesses build, deploy, and scale their digital products. Our frameworks emphasize automation, predictability, and operational intelligence through CI/CD pipelines, containerized environments, infrastructure automation, and cloud-native architectures.",
+    heroDescription:
+      "DevOps is not just a set of tools - it is a strategic advantage. In a marketplace where speed, reliability, and constant improvement determine survival, DevOps becomes the engine that drives innovation.",
+    heroDescription2:
+      "We build DevOps ecosystems that transform the way businesses build, deploy, and scale their digital products. Our frameworks emphasize automation, predictability, and operational intelligence through CI/CD pipelines, containerized environments, infrastructure automation, and cloud-native architectures.",
     whyMattersTitle: "Why DevOps Drives Business Results",
-    whyMattersIntro: "The financial impact of DevOps is significant. Organizations that embrace DevOps deliver value faster, with fewer errors, and at lower cost. Every improvement in your delivery pipeline translates directly to business outcomes.",
-    whyMattersClosing: "When the pipeline is automated, your engineering team can finally focus on building features that generate value - not fixing broken deployments.",
-    capabilitiesIntro: "Our approach is built on five pillars: automation, standardization, observability, scalability, and security. We design systems that scale with your business.",
+    whyMattersIntro:
+      "The financial impact of DevOps is significant. Organizations that embrace DevOps deliver value faster, with fewer errors, and at lower cost. Every improvement in your delivery pipeline translates directly to business outcomes.",
+    whyMattersClosing:
+      "When the pipeline is automated, your engineering team can finally focus on building features that generate value - not fixing broken deployments.",
+    capabilitiesIntro:
+      "Our approach is built on five pillars: automation, standardization, observability, scalability, and security. We design systems that scale with your business.",
     capabilities: [
       "CI/CD pipeline design and automation",
       "Infrastructure as Code (Terraform, Ansible, CloudFormation)",
@@ -375,12 +332,30 @@ export const serviceDetails: ServiceDetail[] = [
       "Automated testing integration",
     ],
     benefits: [
-      { title: "Faster Release Cycles", desc: "Deploy multiple times per day with confidence and speed" },
-      { title: "Fewer Failures", desc: "Automated deployments eliminate manual errors and inconsistencies" },
-      { title: "Lower Operational Costs", desc: "Reduced manual effort means smaller operations overhead" },
-      { title: "Better Customer Experience", desc: "Stable environments lead to reliable user experiences" },
-      { title: "Predictable Scaling", desc: "Consistent pipelines enable smooth expansion and growth" },
-      { title: "Team Productivity", desc: "Engineers focus on features, not deployment firefighting" },
+      {
+        title: "Faster Release Cycles",
+        desc: "Deploy multiple times per day with confidence and speed",
+      },
+      {
+        title: "Fewer Failures",
+        desc: "Automated deployments eliminate manual errors and inconsistencies",
+      },
+      {
+        title: "Lower Operational Costs",
+        desc: "Reduced manual effort means smaller operations overhead",
+      },
+      {
+        title: "Better Customer Experience",
+        desc: "Stable environments lead to reliable user experiences",
+      },
+      {
+        title: "Predictable Scaling",
+        desc: "Consistent pipelines enable smooth expansion and growth",
+      },
+      {
+        title: "Team Productivity",
+        desc: "Engineers focus on features, not deployment firefighting",
+      },
     ],
     revenueImpact: [
       "Less manual testing → fewer human hours → reduced labor costs",
@@ -389,19 +364,34 @@ export const serviceDetails: ServiceDetail[] = [
       "Better resource scaling → optimized cloud spending → cost efficiency",
       "Faster releases → quicker time-to-market → competitive advantage",
     ],
-    revenueClosing: "Your delivery pipeline becomes a competitive advantage that accelerates growth.",
-    highlightCTA: "DevOps transforms your engineering team into a high-velocity delivery machine.",
-    technologies: ["Jenkins", "GitLab CI", "GitHub Actions", "ArgoCD", "Terraform", "Kubernetes", "Docker"],
+    revenueClosing:
+      "Your delivery pipeline becomes a competitive advantage that accelerates growth.",
+    highlightCTA:
+      "DevOps transforms your engineering team into a high-velocity delivery machine.",
+    technologies: [
+      "Jenkins",
+      "GitLab CI",
+      "GitHub Actions",
+      "ArgoCD",
+      "Terraform",
+      "Kubernetes",
+      "Docker",
+    ],
   },
   {
     slug: "devsecops",
     heroTitle: "DevSecOps & Security Automation",
-    heroDescription: "Security must operate at pipeline speed. Our DevSecOps services embed security checks, policy enforcement, automated scanning, and real-time monitoring directly into your CI/CD workflows.",
-    heroDescription2: "We transform development and deployment into a secure, compliant, and continuous process. Security is not a gate at the end - it's woven into every stage of your software delivery lifecycle.",
+    heroDescription:
+      "Security must operate at pipeline speed. Our DevSecOps services embed security checks, policy enforcement, automated scanning, and real-time monitoring directly into your CI/CD workflows.",
+    heroDescription2:
+      "We transform development and deployment into a secure, compliant, and continuous process. Security is not a gate at the end - it's woven into every stage of your software delivery lifecycle.",
     whyMattersTitle: "Why Security Must Be Built-In",
-    whyMattersIntro: "Security as an afterthought creates vulnerabilities. When security is treated as a separate phase, issues are discovered too late and cost significantly more to fix. DevSecOps changes this paradigm.",
-    whyMattersClosing: "Your pipeline becomes a defense layer - not an attack surface.",
-    capabilitiesIntro: "We build a hardened delivery process that minimizes attack surfaces without slowing delivery. Security becomes invisible to developers while remaining rigorous.",
+    whyMattersIntro:
+      "Security as an afterthought creates vulnerabilities. When security is treated as a separate phase, issues are discovered too late and cost significantly more to fix. DevSecOps changes this paradigm.",
+    whyMattersClosing:
+      "Your pipeline becomes a defense layer - not an attack surface.",
+    capabilitiesIntro:
+      "We build a hardened delivery process that minimizes attack surfaces without slowing delivery. Security becomes invisible to developers while remaining rigorous.",
     capabilities: [
       "Secure CI/CD workflows",
       "Automated code scanning & vulnerability detection",
@@ -413,12 +403,30 @@ export const serviceDetails: ServiceDetail[] = [
       "Compliance automation",
     ],
     benefits: [
-      { title: "Early Detection", desc: "Find vulnerabilities in development, not production" },
-      { title: "Continuous Compliance", desc: "Automated checks ensure ongoing regulatory adherence" },
-      { title: "Reduced Attack Surface", desc: "Hardened pipelines minimize security exposure" },
-      { title: "Developer-Friendly", desc: "Security tools integrated into existing workflows" },
-      { title: "Faster Remediation", desc: "Immediate feedback loops for quick fixes" },
-      { title: "Audit-Ready", desc: "Complete security trail for compliance audits" },
+      {
+        title: "Early Detection",
+        desc: "Find vulnerabilities in development, not production",
+      },
+      {
+        title: "Continuous Compliance",
+        desc: "Automated checks ensure ongoing regulatory adherence",
+      },
+      {
+        title: "Reduced Attack Surface",
+        desc: "Hardened pipelines minimize security exposure",
+      },
+      {
+        title: "Developer-Friendly",
+        desc: "Security tools integrated into existing workflows",
+      },
+      {
+        title: "Faster Remediation",
+        desc: "Immediate feedback loops for quick fixes",
+      },
+      {
+        title: "Audit-Ready",
+        desc: "Complete security trail for compliance audits",
+      },
     ],
     revenueImpact: [
       "Automated scanning → fewer vulnerabilities → reduced breach risk",
@@ -428,18 +436,31 @@ export const serviceDetails: ServiceDetail[] = [
       "Policy enforcement → consistent security → predictable risk profile",
     ],
     revenueClosing: "Security becomes an accelerator, not a bottleneck.",
-    highlightCTA: "Integrate security into every stage of your development and deployment process.",
-    technologies: ["SonarQube", "Snyk", "Trivy", "HashiCorp Vault", "OPA", "Falco"],
+    highlightCTA:
+      "Integrate security into every stage of your development and deployment process.",
+    technologies: [
+      "SonarQube",
+      "Snyk",
+      "Trivy",
+      "HashiCorp Vault",
+      "OPA",
+      "Falco",
+    ],
   },
   {
     slug: "cybersecurity",
     heroTitle: "Cybersecurity & Threat Management",
-    heroDescription: "Cybersecurity is no longer a technical add-on - it is a core business function that protects revenue, customer trust, operational continuity, and long-term reputation.",
-    heroDescription2: "Modern companies operate in an environment where threats evolve daily: ransomware, data theft, phishing attacks, supply-chain vulnerabilities, insider risks, and AI-driven exploitation. We build cybersecurity frameworks that help organizations operate fearlessly with advanced threat intelligence, real-time monitoring, Zero Trust methodology, automated defense systems, and incident response capabilities engineered for resilience.",
+    heroDescription:
+      "Cybersecurity is no longer a technical add-on - it is a core business function that protects revenue, customer trust, operational continuity, and long-term reputation.",
+    heroDescription2:
+      "Modern companies operate in an environment where threats evolve daily: ransomware, data theft, phishing attacks, supply-chain vulnerabilities, insider risks, and AI-driven exploitation. We build cybersecurity frameworks that help organizations operate fearlessly with advanced threat intelligence, real-time monitoring, Zero Trust methodology, automated defense systems, and incident response capabilities engineered for resilience.",
     whyMattersTitle: "Why Cybersecurity is a Business Priority",
-    whyMattersIntro: "A strong cybersecurity program does more than protect servers - it protects revenue streams and accelerates growth. Every breach avoided is revenue protected, trust maintained, and reputation preserved.",
-    whyMattersClosing: "Cybersecurity is not a cost center - it is a business safeguard that keeps operations stable and profitable.",
-    capabilitiesIntro: "We take a layered approach, securing every part of your environment: endpoints, users, networks, cloud resources, applications, APIs, IoT devices, and data flows. Our systems detect threats early, isolate them quickly, and neutralize them before they disrupt business operations.",
+    whyMattersIntro:
+      "A strong cybersecurity program does more than protect servers - it protects revenue streams and accelerates growth. Every breach avoided is revenue protected, trust maintained, and reputation preserved.",
+    whyMattersClosing:
+      "Cybersecurity is not a cost center - it is a business safeguard that keeps operations stable and profitable.",
+    capabilitiesIntro:
+      "We take a layered approach, securing every part of your environment: endpoints, users, networks, cloud resources, applications, APIs, IoT devices, and data flows. Our systems detect threats early, isolate them quickly, and neutralize them before they disrupt business operations.",
     capabilities: [
       "Security Audits & Vulnerability Assessments",
       "SOC Setup & Threat Monitoring (24/7)",
@@ -451,12 +472,30 @@ export const serviceDetails: ServiceDetail[] = [
       "Compliance audits (ISO 27001, SOC 2)",
     ],
     benefits: [
-      { title: "Prevent Financial Losses", desc: "Protection against breaches, downtime, and ransomware attacks" },
-      { title: "Strengthen Customer Trust", desc: "Improved retention and brand reputation through data security" },
-      { title: "Business Continuity", desc: "Operations continue even during attempted attacks" },
-      { title: "Enable Partnerships", desc: "Meet compliance requirements for enterprise deals" },
-      { title: "Reduce Long-term Costs", desc: "Automation of repetitive security tasks" },
-      { title: "Protect IP", desc: "Safeguard intellectual property and future product lines" },
+      {
+        title: "Prevent Financial Losses",
+        desc: "Protection against breaches, downtime, and ransomware attacks",
+      },
+      {
+        title: "Strengthen Customer Trust",
+        desc: "Improved retention and brand reputation through data security",
+      },
+      {
+        title: "Business Continuity",
+        desc: "Operations continue even during attempted attacks",
+      },
+      {
+        title: "Enable Partnerships",
+        desc: "Meet compliance requirements for enterprise deals",
+      },
+      {
+        title: "Reduce Long-term Costs",
+        desc: "Automation of repetitive security tasks",
+      },
+      {
+        title: "Protect IP",
+        desc: "Safeguard intellectual property and future product lines",
+      },
     ],
     revenueImpact: [
       "Less downtime → more transactions, more productivity",
@@ -467,18 +506,32 @@ export const serviceDetails: ServiceDetail[] = [
       "Risk prevention → stronger investor and customer confidence",
     ],
     revenueClosing: "Your environment becomes a fortress - not a liability.",
-    highlightCTA: "Cybersecurity should never slow growth; it should enable it.",
-    technologies: ["SIEM", "EDR", "SOAR", "Firewall", "IDS/IPS", "WAF", "Zero Trust"],
+    highlightCTA:
+      "Cybersecurity should never slow growth; it should enable it.",
+    technologies: [
+      "SIEM",
+      "EDR",
+      "SOAR",
+      "Firewall",
+      "IDS/IPS",
+      "WAF",
+      "Zero Trust",
+    ],
   },
   {
     slug: "network-architecture",
     heroTitle: "Network Architecture & Infrastructure",
-    heroDescription: "A modern business runs on its network. Every application, every device, every cloud dependency, every remote employee - all rely on a stable, fast, and secure network backbone.",
-    heroDescription2: "At Infiniti Tech Partners, we engineer network architectures built for scale, resilience, and high performance. Your network is the invisible foundation of your digital operations - we make sure it never becomes a bottleneck.",
+    heroDescription:
+      "A modern business runs on its network. Every application, every device, every cloud dependency, every remote employee - all rely on a stable, fast, and secure network backbone.",
+    heroDescription2:
+      "At Infiniti Tech Partners, we engineer network architectures built for scale, resilience, and high performance. Your network is the invisible foundation of your digital operations - we make sure it never becomes a bottleneck.",
     whyMattersTitle: "Why Networks Drive Business Performance",
-    whyMattersIntro: "A high-performance network directly fuels business efficiency and profitability. Poor network design silently destroys revenue through latency, outages, and security gaps. Every millisecond of delay affects user experience.",
-    whyMattersClosing: "A poorly designed network silently destroys revenue. A well-designed network silently increases it.",
-    capabilitiesIntro: "We focus on intelligent routing, high availability, secure perimeter defenses, and cloud-aware connectivity. Every design decision is made with performance, security, and scalability in mind.",
+    whyMattersIntro:
+      "A high-performance network directly fuels business efficiency and profitability. Poor network design silently destroys revenue through latency, outages, and security gaps. Every millisecond of delay affects user experience.",
+    whyMattersClosing:
+      "A poorly designed network silently destroys revenue. A well-designed network silently increases it.",
+    capabilitiesIntro:
+      "We focus on intelligent routing, high availability, secure perimeter defenses, and cloud-aware connectivity. Every design decision is made with performance, security, and scalability in mind.",
     capabilities: [
       "Enterprise network design and restructuring",
       "SD-WAN architecture and implementation",
@@ -490,12 +543,30 @@ export const serviceDetails: ServiceDetail[] = [
       "Multi-cloud networking",
     ],
     benefits: [
-      { title: "Fast Operations", desc: "Fast networks lead to faster customer service and response" },
-      { title: "Reduced Latency", desc: "Smoother digital experiences drive higher conversions" },
-      { title: "Strong Security", desc: "Protect customer data and brand integrity" },
-      { title: "Stable Connectivity", desc: "Fewer outages mean more productivity" },
-      { title: "Scalable Architecture", desc: "Support growth without major reinvestment" },
-      { title: "Complete Visibility", desc: "Full insight into network traffic and performance" },
+      {
+        title: "Fast Operations",
+        desc: "Fast networks lead to faster customer service and response",
+      },
+      {
+        title: "Reduced Latency",
+        desc: "Smoother digital experiences drive higher conversions",
+      },
+      {
+        title: "Strong Security",
+        desc: "Protect customer data and brand integrity",
+      },
+      {
+        title: "Stable Connectivity",
+        desc: "Fewer outages mean more productivity",
+      },
+      {
+        title: "Scalable Architecture",
+        desc: "Support growth without major reinvestment",
+      },
+      {
+        title: "Complete Visibility",
+        desc: "Full insight into network traffic and performance",
+      },
     ],
     revenueImpact: [
       "Reduced downtime → more transactions, more productivity",
@@ -504,19 +575,24 @@ export const serviceDetails: ServiceDetail[] = [
       "Faster internal tools → faster teams → faster delivery",
       "Scalable design → future expansion without expensive rebuilds",
     ],
-    revenueClosing: "Your network becomes an invisible engine that powers every transaction.",
+    revenueClosing:
+      "Your network becomes an invisible engine that powers every transaction.",
     highlightCTA: "We engineer networks that power business growth.",
     technologies: ["Cisco", "Juniper", "Palo Alto", "F5", "Arista", "SD-WAN"],
   },
   {
     slug: "smart-city-iot",
     heroTitle: "Smart City & IoT Solutions",
-    heroDescription: "Cities are becoming intelligent ecosystems - and we engineer the technology behind them. Our Smart City and IoT solutions connect devices, data, systems, and analytics to improve efficiency, safety, and performance.",
-    heroDescription2: "We help governments and enterprises build connected systems that improve efficiency, operations, and citizen experience. From traffic optimization to environmental monitoring, we create infrastructure that makes cities smarter and more livable.",
+    heroDescription:
+      "Cities are becoming intelligent ecosystems - and we engineer the technology behind them. Our Smart City and IoT solutions connect devices, data, systems, and analytics to improve efficiency, safety, and performance.",
+    heroDescription2:
+      "We help governments and enterprises build connected systems that improve efficiency, operations, and citizen experience. From traffic optimization to environmental monitoring, we create infrastructure that makes cities smarter and more livable.",
     whyMattersTitle: "Why Smart Cities Matter",
-    whyMattersIntro: "Smart infrastructure transforms how cities operate and serve their residents. Connected systems provide real-time visibility, enable predictive maintenance, and create better citizen experiences at lower costs.",
+    whyMattersIntro:
+      "Smart infrastructure transforms how cities operate and serve their residents. Connected systems provide real-time visibility, enable predictive maintenance, and create better citizen experiences at lower costs.",
     whyMattersClosing: "We build the connected future of urban living.",
-    capabilitiesIntro: "We design smart ecosystems that are scalable, secure, and built for public impact. From IoT sensors to real-time analytics, we create the infrastructure for the future of urban operations.",
+    capabilitiesIntro:
+      "We design smart ecosystems that are scalable, secure, and built for public impact. From IoT sensors to real-time analytics, we create the infrastructure for the future of urban operations.",
     capabilities: [
       "IoT architecture & sensor deployment",
       "Smart surveillance systems",
@@ -528,12 +604,30 @@ export const serviceDetails: ServiceDetail[] = [
       "Citizen engagement platforms",
     ],
     benefits: [
-      { title: "Improved Efficiency", desc: "Automate city operations and reduce resource waste" },
-      { title: "Better Citizen Experience", desc: "Responsive systems that serve residents better" },
-      { title: "Data-Driven Decisions", desc: "Real-time analytics for informed urban planning" },
-      { title: "Sustainability", desc: "Reduce environmental impact through optimization" },
-      { title: "Public Safety", desc: "Enhanced monitoring and emergency response capabilities" },
-      { title: "Cost Reduction", desc: "Lower operational costs through automation and optimization" },
+      {
+        title: "Improved Efficiency",
+        desc: "Automate city operations and reduce resource waste",
+      },
+      {
+        title: "Better Citizen Experience",
+        desc: "Responsive systems that serve residents better",
+      },
+      {
+        title: "Data-Driven Decisions",
+        desc: "Real-time analytics for informed urban planning",
+      },
+      {
+        title: "Sustainability",
+        desc: "Reduce environmental impact through optimization",
+      },
+      {
+        title: "Public Safety",
+        desc: "Enhanced monitoring and emergency response capabilities",
+      },
+      {
+        title: "Cost Reduction",
+        desc: "Lower operational costs through automation and optimization",
+      },
     ],
     revenueImpact: [
       "Automated systems → reduced operational overhead",
@@ -542,19 +636,33 @@ export const serviceDetails: ServiceDetail[] = [
       "Data analytics → better resource allocation",
       "Connected infrastructure → improved service delivery",
     ],
-    revenueClosing: "Smart infrastructure becomes a platform for continuous improvement.",
-    highlightCTA: "Let's create connected systems that transform cities and improve quality of life.",
-    technologies: ["LoRaWAN", "MQTT", "Azure IoT", "AWS IoT", "Edge Computing", "5G"],
+    revenueClosing:
+      "Smart infrastructure becomes a platform for continuous improvement.",
+    highlightCTA:
+      "Let's create connected systems that transform cities and improve quality of life.",
+    technologies: [
+      "LoRaWAN",
+      "MQTT",
+      "Azure IoT",
+      "AWS IoT",
+      "Edge Computing",
+      "5G",
+    ],
   },
   {
     slug: "ai-ml-engineering",
     heroTitle: "AI / Machine Learning Engineering",
-    heroDescription: "AI is no longer optional - it is a competitive necessity. We build AI and ML solutions that help businesses automate decisions, uncover insights, and optimize performance.",
-    heroDescription2: "Our engineers focus on real-world AI that drives measurable outcomes - not experimentation for its own sake. From predictive analytics to computer vision, we transform data into intelligence and intelligence into impact.",
+    heroDescription:
+      "AI is no longer optional - it is a competitive necessity. We build AI and ML solutions that help businesses automate decisions, uncover insights, and optimize performance.",
+    heroDescription2:
+      "Our engineers focus on real-world AI that drives measurable outcomes - not experimentation for its own sake. From predictive analytics to computer vision, we transform data into intelligence and intelligence into impact.",
     whyMattersTitle: "Why AI Delivers Business Value",
-    whyMattersIntro: "We create intelligent systems that automate decisions, optimize operations, and open new capabilities. Every AI solution we build is designed to deliver measurable ROI and practical business outcomes.",
-    whyMattersClosing: "We transform data into intelligence and intelligence into impact.",
-    capabilitiesIntro: "Our AI/ML practice focuses on practical applications that solve real business problems. We build systems that learn, adapt, and continuously improve with your data.",
+    whyMattersIntro:
+      "We create intelligent systems that automate decisions, optimize operations, and open new capabilities. Every AI solution we build is designed to deliver measurable ROI and practical business outcomes.",
+    whyMattersClosing:
+      "We transform data into intelligence and intelligence into impact.",
+    capabilitiesIntro:
+      "Our AI/ML practice focuses on practical applications that solve real business problems. We build systems that learn, adapt, and continuously improve with your data.",
     capabilities: [
       "Machine learning model development",
       "AI automation systems",
@@ -566,12 +674,30 @@ export const serviceDetails: ServiceDetail[] = [
       "AI-powered process automation",
     ],
     benefits: [
-      { title: "Intelligent Automation", desc: "Reduce manual work with AI-powered workflows" },
-      { title: "Better Predictions", desc: "Data-driven forecasting improves planning accuracy" },
-      { title: "New Capabilities", desc: "Enable features impossible with traditional software" },
-      { title: "Operational Efficiency", desc: "Optimize processes with machine learning insights" },
-      { title: "Competitive Advantage", desc: "Stay ahead with cutting-edge AI applications" },
-      { title: "Scalable Intelligence", desc: "ML models that grow with your data and needs" },
+      {
+        title: "Intelligent Automation",
+        desc: "Reduce manual work with AI-powered workflows",
+      },
+      {
+        title: "Better Predictions",
+        desc: "Data-driven forecasting improves planning accuracy",
+      },
+      {
+        title: "New Capabilities",
+        desc: "Enable features impossible with traditional software",
+      },
+      {
+        title: "Operational Efficiency",
+        desc: "Optimize processes with machine learning insights",
+      },
+      {
+        title: "Competitive Advantage",
+        desc: "Stay ahead with cutting-edge AI applications",
+      },
+      {
+        title: "Scalable Intelligence",
+        desc: "ML models that grow with your data and needs",
+      },
     ],
     revenueImpact: [
       "Automated decisions → faster response times → better customer experience",
@@ -580,19 +706,33 @@ export const serviceDetails: ServiceDetail[] = [
       "Process automation → reduced labor costs → better margins",
       "Anomaly detection → early problem identification → prevented losses",
     ],
-    revenueClosing: "AI becomes your silent partner that continuously optimizes operations.",
-    highlightCTA: "Let's create AI and ML solutions that drive measurable business outcomes.",
-    technologies: ["Python", "TensorFlow", "PyTorch", "scikit-learn", "MLflow", "Kubeflow"],
+    revenueClosing:
+      "AI becomes your silent partner that continuously optimizes operations.",
+    highlightCTA:
+      "Let's create AI and ML solutions that drive measurable business outcomes.",
+    technologies: [
+      "Python",
+      "TensorFlow",
+      "PyTorch",
+      "scikit-learn",
+      "MLflow",
+      "Kubeflow",
+    ],
   },
   {
     slug: "blockchain",
     heroTitle: "Blockchain & Distributed Systems",
-    heroDescription: "Blockchain is not hype - it is infrastructure. We engineer secure, scalable blockchain and distributed systems for enterprises that need transparent, tamper-proof, and high-performance digital solutions.",
-    heroDescription2: "We develop secure, high-performance blockchain applications tailored to business use-cases - not hype. From smart contracts to private networks, we build solutions that solve real problems with measurable outcomes.",
+    heroDescription:
+      "Blockchain is not hype - it is infrastructure. We engineer secure, scalable blockchain and distributed systems for enterprises that need transparent, tamper-proof, and high-performance digital solutions.",
+    heroDescription2:
+      "We develop secure, high-performance blockchain applications tailored to business use-cases - not hype. From smart contracts to private networks, we build solutions that solve real problems with measurable outcomes.",
     whyMattersTitle: "Why Blockchain Creates Business Value",
-    whyMattersIntro: "We focus on security, scalability, and business-driven blockchain outcomes. Blockchain technology enables new forms of trust, transparency, and automation that were previously impossible.",
-    whyMattersClosing: "Our blockchain engineering focuses on security, scalability, and real business value.",
-    capabilitiesIntro: "We build blockchain solutions that integrate with your existing systems while opening new possibilities. Every implementation is designed for security, performance, and long-term maintainability.",
+    whyMattersIntro:
+      "We focus on security, scalability, and business-driven blockchain outcomes. Blockchain technology enables new forms of trust, transparency, and automation that were previously impossible.",
+    whyMattersClosing:
+      "Our blockchain engineering focuses on security, scalability, and real business value.",
+    capabilitiesIntro:
+      "We build blockchain solutions that integrate with your existing systems while opening new possibilities. Every implementation is designed for security, performance, and long-term maintainability.",
     capabilities: [
       "Smart contract development",
       "Private blockchain networks",
@@ -604,12 +744,30 @@ export const serviceDetails: ServiceDetail[] = [
       "Web3 application development",
     ],
     benefits: [
-      { title: "Transparency", desc: "Immutable records create trust between parties" },
-      { title: "Automation", desc: "Smart contracts execute automatically when conditions are met" },
-      { title: "Security", desc: "Cryptographic protection for sensitive transactions" },
-      { title: "Efficiency", desc: "Remove intermediaries and reduce transaction costs" },
-      { title: "Traceability", desc: "Complete audit trail for regulatory compliance" },
-      { title: "Trust", desc: "Decentralized verification eliminates single points of failure" },
+      {
+        title: "Transparency",
+        desc: "Immutable records create trust between parties",
+      },
+      {
+        title: "Automation",
+        desc: "Smart contracts execute automatically when conditions are met",
+      },
+      {
+        title: "Security",
+        desc: "Cryptographic protection for sensitive transactions",
+      },
+      {
+        title: "Efficiency",
+        desc: "Remove intermediaries and reduce transaction costs",
+      },
+      {
+        title: "Traceability",
+        desc: "Complete audit trail for regulatory compliance",
+      },
+      {
+        title: "Trust",
+        desc: "Decentralized verification eliminates single points of failure",
+      },
     ],
     revenueImpact: [
       "Automated contracts → reduced legal and administrative overhead",
@@ -618,19 +776,33 @@ export const serviceDetails: ServiceDetail[] = [
       "Immutable records → simplified compliance and auditing",
       "Decentralized trust → reduced intermediary costs",
     ],
-    revenueClosing: "Blockchain becomes infrastructure that creates new business possibilities.",
-    highlightCTA: "Let's create secure, scalable blockchain solutions for your enterprise.",
-    technologies: ["Ethereum", "Solidity", "Hardhat", "IPFS", "Polygon", "Hyperledger"],
+    revenueClosing:
+      "Blockchain becomes infrastructure that creates new business possibilities.",
+    highlightCTA:
+      "Let's create secure, scalable blockchain solutions for your enterprise.",
+    technologies: [
+      "Ethereum",
+      "Solidity",
+      "Hardhat",
+      "IPFS",
+      "Polygon",
+      "Hyperledger",
+    ],
   },
   {
     slug: "website-development",
     heroTitle: "Website Development",
-    heroDescription: "A website is often your business's first handshake - so it must be fast, secure, and engineered with purpose. We build fast, secure, and responsive websites designed for performance, branding, and conversion.",
-    heroDescription2: "We create websites that do not just look good - they perform. From corporate sites to e-commerce platforms, every website is engineered for speed, security, and conversion. Your website should work as hard as your sales team.",
+    heroDescription:
+      "A website is often your business's first handshake - so it must be fast, secure, and engineered with purpose. We build fast, secure, and responsive websites designed for performance, branding, and conversion.",
+    heroDescription2:
+      "We create websites that do not just look good - they perform. From corporate sites to e-commerce platforms, every website is engineered for speed, security, and conversion. Your website should work as hard as your sales team.",
     whyMattersTitle: "Why Website Performance Matters",
-    whyMattersIntro: "Your website is often the first interaction customers have with your brand. Every second of load time, every confusing navigation, every security concern costs you conversions and trust.",
-    whyMattersClosing: "We create websites that do not just look good - they perform.",
-    capabilitiesIntro: "Every website we build is optimized for speed, search engines, and user experience from day one. We focus on the metrics that matter: load time, conversion rate, and user engagement.",
+    whyMattersIntro:
+      "Your website is often the first interaction customers have with your brand. Every second of load time, every confusing navigation, every security concern costs you conversions and trust.",
+    whyMattersClosing:
+      "We create websites that do not just look good - they perform.",
+    capabilitiesIntro:
+      "Every website we build is optimized for speed, search engines, and user experience from day one. We focus on the metrics that matter: load time, conversion rate, and user engagement.",
     capabilities: [
       "Corporate websites & landing pages",
       "High-speed, SEO-ready builds",
@@ -642,12 +814,30 @@ export const serviceDetails: ServiceDetail[] = [
       "Analytics integration",
     ],
     benefits: [
-      { title: "Fast Loading", desc: "Sub-second load times improve user experience and SEO" },
-      { title: "Mobile First", desc: "Responsive designs that work perfectly on all devices" },
-      { title: "SEO Ready", desc: "Built-in optimization for search engine visibility" },
-      { title: "Secure by Default", desc: "Hardened against common web vulnerabilities" },
-      { title: "Easy Updates", desc: "Content management systems for non-technical users" },
-      { title: "Conversion Focused", desc: "Designed to turn visitors into customers" },
+      {
+        title: "Fast Loading",
+        desc: "Sub-second load times improve user experience and SEO",
+      },
+      {
+        title: "Mobile First",
+        desc: "Responsive designs that work perfectly on all devices",
+      },
+      {
+        title: "SEO Ready",
+        desc: "Built-in optimization for search engine visibility",
+      },
+      {
+        title: "Secure by Default",
+        desc: "Hardened against common web vulnerabilities",
+      },
+      {
+        title: "Easy Updates",
+        desc: "Content management systems for non-technical users",
+      },
+      {
+        title: "Conversion Focused",
+        desc: "Designed to turn visitors into customers",
+      },
     ],
     revenueImpact: [
       "Faster load times → lower bounce rates → more conversions",
@@ -657,18 +847,30 @@ export const serviceDetails: ServiceDetail[] = [
       "Great UX → longer sessions → higher engagement",
     ],
     revenueClosing: "Your website becomes a 24/7 sales and marketing asset.",
-    highlightCTA: "Let's create a high-performance website that drives results for your business.",
-    technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL"],
+    highlightCTA:
+      "Let's create a high-performance website that drives results for your business.",
+    technologies: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Node.js",
+      "PostgreSQL",
+    ],
   },
   {
     slug: "mobile-app-development",
     heroTitle: "Mobile App Development",
-    heroDescription: "Mobile apps must be fast, intuitive, secure, and built for scale. We develop native and cross-platform apps designed for seamless performance and long-term maintainability.",
-    heroDescription2: "We develop high-performance mobile applications engineered for usability, security, and scale. From native iOS and Android to cross-platform solutions with React Native and Flutter, we build apps that users love and businesses rely on.",
+    heroDescription:
+      "Mobile apps must be fast, intuitive, secure, and built for scale. We develop native and cross-platform apps designed for seamless performance and long-term maintainability.",
+    heroDescription2:
+      "We develop high-performance mobile applications engineered for usability, security, and scale. From native iOS and Android to cross-platform solutions with React Native and Flutter, we build apps that users love and businesses rely on.",
     whyMattersTitle: "Why Mobile Experience Matters",
-    whyMattersIntro: "We build mobile experiences users trust. Your app is often the primary touchpoint with customers - it must be fast, intuitive, and reliable to drive engagement and loyalty.",
+    whyMattersIntro:
+      "We build mobile experiences users trust. Your app is often the primary touchpoint with customers - it must be fast, intuitive, and reliable to drive engagement and loyalty.",
     whyMattersClosing: "We build mobile experiences users trust.",
-    capabilitiesIntro: "Every app we build is optimized for performance, designed for usability, and engineered for scale. We focus on the full lifecycle from development through deployment and ongoing updates.",
+    capabilitiesIntro:
+      "Every app we build is optimized for performance, designed for usability, and engineered for scale. We focus on the full lifecycle from development through deployment and ongoing updates.",
     capabilities: [
       "Native iOS & Android apps",
       "Cross-platform apps (Flutter, React Native)",
@@ -680,11 +882,26 @@ export const serviceDetails: ServiceDetail[] = [
       "Offline-first architecture",
     ],
     benefits: [
-      { title: "Cross-Platform Efficiency", desc: "Single codebase for iOS and Android reduces cost and time" },
-      { title: "Native Performance", desc: "Smooth animations and responsive interactions" },
-      { title: "Offline Support", desc: "Apps work even without internet connectivity" },
-      { title: "Secure by Design", desc: "Built-in authentication and data protection" },
-      { title: "Easy Updates", desc: "Over-the-air updates without app store delays" },
+      {
+        title: "Cross-Platform Efficiency",
+        desc: "Single codebase for iOS and Android reduces cost and time",
+      },
+      {
+        title: "Native Performance",
+        desc: "Smooth animations and responsive interactions",
+      },
+      {
+        title: "Offline Support",
+        desc: "Apps work even without internet connectivity",
+      },
+      {
+        title: "Secure by Design",
+        desc: "Built-in authentication and data protection",
+      },
+      {
+        title: "Easy Updates",
+        desc: "Over-the-air updates without app store delays",
+      },
       { title: "User Delight", desc: "Intuitive UX that keeps users engaged" },
     ],
     revenueImpact: [
@@ -694,9 +911,18 @@ export const serviceDetails: ServiceDetail[] = [
       "Cross-platform → faster launch → earlier market entry",
       "Performance optimization → smooth experience → loyal users",
     ],
-    revenueClosing: "Your app becomes a direct channel to customers that drives engagement and loyalty.",
-    highlightCTA: "Let's create a high-performance mobile app that delights your users.",
-    technologies: ["React Native", "Flutter", "Swift", "Kotlin", "Node.js", "Firebase"],
+    revenueClosing:
+      "Your app becomes a direct channel to customers that drives engagement and loyalty.",
+    highlightCTA:
+      "Let's create a high-performance mobile app that delights your users.",
+    technologies: [
+      "React Native",
+      "Flutter",
+      "Swift",
+      "Kotlin",
+      "Node.js",
+      "Firebase",
+    ],
   },
 ];
 
@@ -710,9 +936,22 @@ export const products: Product[] = [
     icon: "users",
     desc: "Comprehensive HRMS with advanced attendance tracking, idle detection, suspicious activity monitoring, payroll processing, and project management.",
     gradient: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
-    features: ["Attendance Tracking", "Payroll", "Project Management", "Role-based Access"],
-    technologies: ["Next.js 15", "Prisma", "PostgreSQL", "JWT Auth", "Tailwind CSS", "Radix UI"],
-    highlights: "Dual-heartbeat attendance, bot detection, printable payslips, role-based access",
+    features: [
+      "Attendance Tracking",
+      "Payroll",
+      "Project Management",
+      "Role-based Access",
+    ],
+    technologies: [
+      "Next.js 15",
+      "Prisma",
+      "PostgreSQL",
+      "JWT Auth",
+      "Tailwind CSS",
+      "Radix UI",
+    ],
+    highlights:
+      "Dual-heartbeat attendance, bot detection, printable payslips, role-based access",
     demoUrl: "https://hrmsdemo-beta.vercel.app",
   },
   {
@@ -723,8 +962,20 @@ export const products: Product[] = [
     icon: "store",
     desc: "Enterprise-grade B2B marketplace for commodity trading with producer management, tokenization, escrow payments, and blockchain integration.",
     gradient: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
-    features: ["Tokenization", "Escrow Payments", "Blockchain", "Multi-currency"],
-    technologies: ["Next.js", "Prisma", "PostgreSQL", "Blockchain", "AWS", "Stripe"],
+    features: [
+      "Tokenization",
+      "Escrow Payments",
+      "Blockchain",
+      "Multi-currency",
+    ],
+    technologies: [
+      "Next.js",
+      "Prisma",
+      "PostgreSQL",
+      "Blockchain",
+      "AWS",
+      "Stripe",
+    ],
     highlights: "Multi-role access, tokenization, insurance & hedging modules",
   },
   {
@@ -736,7 +987,14 @@ export const products: Product[] = [
     desc: "Comprehensive multi-tenant accounting solution with double-entry bookkeeping, inventory management, HR & payroll, GST compliance, and financial reporting.",
     gradient: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)",
     features: ["Double-entry", "Multi-tenant", "Payroll", "Inventory"],
-    technologies: ["Next.js", "Prisma", "PostgreSQL", "Zustand", "Recharts", "Zod"],
+    technologies: [
+      "Next.js",
+      "Prisma",
+      "PostgreSQL",
+      "Zustand",
+      "Recharts",
+      "Zod",
+    ],
     highlights: "57 database models, 70+ permissions, full audit trail",
     demoUrl: "https://accubook.infinititechpartners.com",
   },
@@ -749,7 +1007,14 @@ export const products: Product[] = [
     desc: "End-to-end school management platform covering admissions, academics, attendance, fee management, transport, library, and parent communication.",
     gradient: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
     features: ["Admissions", "Academics", "Fees", "Transport"],
-    technologies: ["Next.js", "Node.js", "PostgreSQL", "Redis", "Socket.io", "AWS"],
+    technologies: [
+      "Next.js",
+      "Node.js",
+      "PostgreSQL",
+      "Redis",
+      "Socket.io",
+      "AWS",
+    ],
     highlights: "Multi-branch support, real-time notifications, mobile apps",
     demoUrl: "https://school.infinititechpartners.com",
   },
@@ -762,7 +1027,14 @@ export const products: Product[] = [
     desc: "Comprehensive fleet tracking solution with real-time GPS, ELD compliance, driver management, incident tracking, geofencing, and advanced analytics.",
     gradient: "linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)",
     features: ["GPS Tracking", "ELD Compliance", "Driver Mgmt", "Analytics"],
-    technologies: ["Next.js", "Prisma", "Leaflet.js", "Recharts", "NextAuth", "PostgreSQL"],
+    technologies: [
+      "Next.js",
+      "Prisma",
+      "Leaflet.js",
+      "Recharts",
+      "NextAuth",
+      "PostgreSQL",
+    ],
     highlights: "DOT compliance, 8 user roles, live GPS tracking",
     demoUrl: "https://telematics.infinititechpartners.com",
   },
@@ -774,8 +1046,20 @@ export const products: Product[] = [
     icon: "building-2",
     desc: "Advanced real estate platform with property listings, agent management, membership subscriptions, and comprehensive search similar to leading property portals.",
     gradient: "linear-gradient(135deg, #ec4899 0%, #db2777 100%)",
-    features: ["Property Listings", "Agent Management", "Memberships", "Advanced Search"],
-    technologies: ["Next.js 16", "Prisma", "PostgreSQL", "NextAuth", "Stripe", "Cloudinary"],
+    features: [
+      "Property Listings",
+      "Agent Management",
+      "Memberships",
+      "Advanced Search",
+    ],
+    technologies: [
+      "Next.js 16",
+      "Prisma",
+      "PostgreSQL",
+      "NextAuth",
+      "Stripe",
+      "Cloudinary",
+    ],
     highlights: "Multi-role access, membership plans, SMS & email integration",
   },
   {
@@ -786,9 +1070,22 @@ export const products: Product[] = [
     icon: "utensils-crossed",
     desc: "Comprehensive hyperlocal delivery platform for food, groceries, and services with vendor management, rider logistics, party mode, and restaurant management system.",
     gradient: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
-    features: ["Vendor Management", "Rider Logistics", "Real-time Tracking", "RMS"],
-    technologies: ["Next.js 16", "Prisma", "PostgreSQL", "Socket.io", "Razorpay", "Leaflet.js"],
-    highlights: "100+ database models, 4 user portals, real-time tracking, RMS built-in",
+    features: [
+      "Vendor Management",
+      "Rider Logistics",
+      "Real-time Tracking",
+      "RMS",
+    ],
+    technologies: [
+      "Next.js 16",
+      "Prisma",
+      "PostgreSQL",
+      "Socket.io",
+      "Razorpay",
+      "Leaflet.js",
+    ],
+    highlights:
+      "100+ database models, 4 user portals, real-time tracking, RMS built-in",
     demoUrl: "https://drop-three-dun.vercel.app",
   },
   {
@@ -800,9 +1097,90 @@ export const products: Product[] = [
     desc: "Full-featured Uber-like ride-hailing solution with rider/driver mobile apps, admin dashboard, real-time GPS tracking, payments, and driver management.",
     gradient: "linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)",
     features: ["Mobile Apps", "GPS Tracking", "Payments", "Driver Management"],
-    technologies: ["Next.js", "React Native", "Node.js", "PostgreSQL", "Socket.io", "Stripe"],
-    highlights: "Mobile apps for iOS/Android, real-time tracking, 22 database models",
+    technologies: [
+      "Next.js",
+      "React Native",
+      "Node.js",
+      "PostgreSQL",
+      "Socket.io",
+      "Stripe",
+    ],
+    highlights:
+      "Mobile apps for iOS/Android, real-time tracking, 22 database models",
     demoUrl: "https://rideon-admin.vercel.app",
+  },
+  {
+    slug: "netwatch",
+    name: "NetWatch",
+    tagline: "Employee Monitoring Platform",
+    category: "Enterprise / Security / Monitoring",
+    icon: "monitor",
+    desc: "Comprehensive employee monitoring solution with real-time screen monitoring, activity tracking, remote management, website/app blocking, and detailed productivity analytics.",
+    gradient: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
+    features: [
+      "Screen Monitoring",
+      "Activity Tracking",
+      "Remote Mgmt",
+      "Analytics",
+    ],
+    technologies: [
+      "Next.js 16",
+      "React 19",
+      "Prisma",
+      "PostgreSQL",
+      "Socket.io",
+      "Electron",
+    ],
+    highlights:
+      "Cross-platform agent, real-time screenshots, encrypted keylogging, remote desktop",
+    demoUrl: "https://netwatch-nu.vercel.app",
+  },
+  {
+    slug: "xfer",
+    name: "Xfer",
+    tagline: "Digital Payment Platform",
+    category: "Fintech / Payments / Banking",
+    icon: "credit-card",
+    desc: "PayPal-like payment platform with multi-currency wallets, P2P transfers, KYC verification, fraud detection, vendor payments, and comprehensive admin controls.",
+    gradient: "linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)",
+    features: ["Multi-currency", "P2P Transfers", "KYC/AML", "Fraud Detection"],
+    technologies: [
+      "Next.js 16",
+      "Prisma 7",
+      "PostgreSQL",
+      "Stripe",
+      "Plaid",
+      "Resend",
+    ],
+    highlights:
+      "100+ database models, 4 user roles, KYC/AML compliance, fraud detection",
+    demoUrl: "https://xfer.vercel.app",
+  },
+  {
+    slug: "sparking",
+    name: "Sparking",
+    tagline: "AI-Powered Smart Parking",
+    category: "IoT / AI / Smart City",
+    icon: "parking-circle",
+    desc: "AI-powered parking management system with real-time vehicle detection, automatic license plate recognition, digital payments, and hardware integration for gates and displays.",
+    gradient: "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
+    features: [
+      "ANPR",
+      "Real-time Detection",
+      "Digital Payments",
+      "Hardware Control",
+    ],
+    technologies: [
+      "Next.js 16",
+      "Prisma",
+      "PostgreSQL",
+      "Python",
+      "YOLOv8",
+      "Stripe",
+    ],
+    highlights:
+      "ANPR with <100ms latency, hardware control, predictive analytics, multi-tenant",
+    demoUrl: "https://smart-parking-xi-pearl.vercel.app",
   },
 ];
 
@@ -811,163 +1189,1094 @@ export const productDetails: ProductDetail[] = [
   {
     slug: "hrms",
     heroTitle: "HRMS Platform",
-    heroSubtitle: "Complete Human Resource Management System for modern businesses",
-    heroDescription: "Streamline employee management, attendance, payroll, projects, and more—all in one powerful platform",
+    heroSubtitle:
+      "Complete Human Resource Management System for modern businesses",
+    heroDescription:
+      "Streamline employee management, attendance, payroll, projects, and more—all in one powerful platform",
     modules: [
-      { icon: "users", title: "Employee Management", description: "Complete employee profiles with KYC documents, department tracking, reporting hierarchy, and onboarding/offboarding workflows." },
-      { icon: "clock", title: "Advanced Attendance", description: "Dual-heartbeat system with idle time detection, real-time activity monitoring, break tracking, and IP address logging." },
-      { icon: "shield", title: "Suspicious Activity Detection", description: "Identifies bot/automation tools including mouse jigglers, auto-typers, and macros. Keystroke and mouse pattern analysis." },
-      { icon: "trending-up", title: "Payroll Management", description: "Automated salary calculations with component-based structure (Basic, HRA, Medical), tax calculations, and printable payslips." },
-      { icon: "briefcase", title: "Project & Task Management", description: "Project creation with milestones, task assignment, Azure DevOps & Asana integrations, and work item synchronization." },
-      { icon: "check", title: "Sales CRM", description: "Lead management with pipeline stages, conversion tracking, sales target monitoring, and commission calculations." },
+      {
+        icon: "users",
+        title: "Employee Management",
+        description:
+          "Complete employee profiles with KYC documents, department tracking, reporting hierarchy, and onboarding/offboarding workflows.",
+      },
+      {
+        icon: "clock",
+        title: "Advanced Attendance",
+        description:
+          "Dual-heartbeat system with idle time detection, real-time activity monitoring, break tracking, and IP address logging.",
+      },
+      {
+        icon: "shield",
+        title: "Suspicious Activity Detection",
+        description:
+          "Identifies bot/automation tools including mouse jigglers, auto-typers, and macros. Keystroke and mouse pattern analysis.",
+      },
+      {
+        icon: "trending-up",
+        title: "Payroll Management",
+        description:
+          "Automated salary calculations with component-based structure (Basic, HRA, Medical), tax calculations, and printable payslips.",
+      },
+      {
+        icon: "briefcase",
+        title: "Project & Task Management",
+        description:
+          "Project creation with milestones, task assignment, Azure DevOps & Asana integrations, and work item synchronization.",
+      },
+      {
+        icon: "check",
+        title: "Sales CRM",
+        description:
+          "Lead management with pipeline stages, conversion tracking, sales target monitoring, and commission calculations.",
+      },
     ],
     portals: [
-      { title: "Admin Portal", description: "Complete control over the entire organization", features: ["Manage all employees and departments", "Process payroll and generate payslips", "Track attendance and approve leaves", "Manage projects and tasks", "Financial reporting and analytics"] },
-      { title: "Manager Portal", description: "Oversee your team and projects effectively", features: ["View team attendance and performance", "Approve/reject leave requests", "Assign and track project tasks", "Monitor team productivity", "Access team reports"] },
-      { title: "Employee Portal", description: "Self-service portal for day-to-day tasks", features: ["Mark daily attendance", "Apply for leaves", "View payslips and salary details", "Track assigned tasks", "Update personal information"] },
+      {
+        title: "Admin Portal",
+        description: "Complete control over the entire organization",
+        features: [
+          "Manage all employees and departments",
+          "Process payroll and generate payslips",
+          "Track attendance and approve leaves",
+          "Manage projects and tasks",
+          "Financial reporting and analytics",
+        ],
+      },
+      {
+        title: "Manager Portal",
+        description: "Oversee your team and projects effectively",
+        features: [
+          "View team attendance and performance",
+          "Approve/reject leave requests",
+          "Assign and track project tasks",
+          "Monitor team productivity",
+          "Access team reports",
+        ],
+      },
+      {
+        title: "Employee Portal",
+        description: "Self-service portal for day-to-day tasks",
+        features: [
+          "Mark daily attendance",
+          "Apply for leaves",
+          "View payslips and salary details",
+          "Track assigned tasks",
+          "Update personal information",
+        ],
+      },
     ],
-    completeFeatures: ["Employee Onboarding", "Attendance Tracking", "Leave Management", "Payroll Processing", "Project Management", "Task Assignment", "Sales CRM", "Expense Tracking", "Document Management", "Role-based Access", "Audit Logging", "Report Generation"],
+    completeFeatures: [
+      "Employee Onboarding",
+      "Attendance Tracking",
+      "Leave Management",
+      "Payroll Processing",
+      "Project Management",
+      "Task Assignment",
+      "Sales CRM",
+      "Expense Tracking",
+      "Document Management",
+      "Role-based Access",
+      "Audit Logging",
+      "Report Generation",
+    ],
   },
   {
     slug: "accubooks",
     heroTitle: "Accubooks",
     heroSubtitle: "Enterprise Accounting Platform",
-    heroDescription: "A comprehensive multi-tenant accounting solution built for modern businesses with double-entry bookkeeping, inventory, HR & payroll, and GST compliance",
+    heroDescription:
+      "A comprehensive multi-tenant accounting solution built for modern businesses with double-entry bookkeeping, inventory, HR & payroll, and GST compliance",
     modules: [
-      { icon: "briefcase", title: "Chart of Accounts", description: "Complete ledger management with hierarchical groups, opening balances, and multi-level account structure." },
-      { icon: "check", title: "Voucher Management", description: "Double-entry journal system with payment, receipt, contra, and journal vouchers with auto-numbering." },
-      { icon: "trending-up", title: "Financial Reports", description: "Profit & Loss, Balance Sheet, Cash Flow, Trial Balance, and Aging reports with drill-down." },
-      { icon: "building-2", title: "Inventory Control", description: "Multi-warehouse stock management with batch tracking, FIFO/LIFO/Weighted Average valuation." },
-      { icon: "users", title: "HR & Payroll", description: "Employee management, attendance tracking, leave management, salary structures, and payslip generation." },
-      { icon: "shield", title: "GST & Taxation", description: "Indian GST compliance with GSTR-1, GSTR-3B filing, TDS/TCS management, and tax reports." },
+      {
+        icon: "briefcase",
+        title: "Chart of Accounts",
+        description:
+          "Complete ledger management with hierarchical groups, opening balances, and multi-level account structure.",
+      },
+      {
+        icon: "check",
+        title: "Voucher Management",
+        description:
+          "Double-entry journal system with payment, receipt, contra, and journal vouchers with auto-numbering.",
+      },
+      {
+        icon: "trending-up",
+        title: "Financial Reports",
+        description:
+          "Profit & Loss, Balance Sheet, Cash Flow, Trial Balance, and Aging reports with drill-down.",
+      },
+      {
+        icon: "building-2",
+        title: "Inventory Control",
+        description:
+          "Multi-warehouse stock management with batch tracking, FIFO/LIFO/Weighted Average valuation.",
+      },
+      {
+        icon: "users",
+        title: "HR & Payroll",
+        description:
+          "Employee management, attendance tracking, leave management, salary structures, and payslip generation.",
+      },
+      {
+        icon: "shield",
+        title: "GST & Taxation",
+        description:
+          "Indian GST compliance with GSTR-1, GSTR-3B filing, TDS/TCS management, and tax reports.",
+      },
     ],
-    completeFeatures: ["Double-entry Bookkeeping", "Multi-tenant Architecture", "Chart of Accounts", "Voucher Management", "Sales & Purchase Invoices", "Inventory Management", "HR & Payroll", "GST Compliance", "Financial Reports", "Bank Reconciliation", "Audit Trail", "Role-based Access"],
-    stats: [{ label: "Database Models", value: "57" }, { label: "API Endpoints", value: "50+" }, { label: "Permissions", value: "70+" }, { label: "Report Types", value: "15+" }],
+    completeFeatures: [
+      "Double-entry Bookkeeping",
+      "Multi-tenant Architecture",
+      "Chart of Accounts",
+      "Voucher Management",
+      "Sales & Purchase Invoices",
+      "Inventory Management",
+      "HR & Payroll",
+      "GST Compliance",
+      "Financial Reports",
+      "Bank Reconciliation",
+      "Audit Trail",
+      "Role-based Access",
+    ],
+    stats: [
+      { label: "Database Models", value: "57" },
+      { label: "API Endpoints", value: "50+" },
+      { label: "Permissions", value: "70+" },
+      { label: "Report Types", value: "15+" },
+    ],
   },
   {
     slug: "school-erp",
     heroTitle: "School ERP",
     heroSubtitle: "Complete School Management System",
-    heroDescription: "End-to-end school management platform that streamlines every aspect of educational institution operations",
+    heroDescription:
+      "End-to-end school management platform that streamlines every aspect of educational institution operations",
     modules: [
-      { icon: "users", title: "Student Management", description: "Complete student lifecycle from admission to alumni. Profiles, documents, academic history, and family information." },
-      { icon: "briefcase", title: "Academic Management", description: "Class scheduling, subject allocation, exam management, grading system, and report card generation." },
-      { icon: "clock", title: "Attendance System", description: "Daily attendance tracking with biometric/RFID integration, leave management, and automated parent alerts." },
-      { icon: "check", title: "Fee Management", description: "Fee structure setup, invoice generation, payment gateway integration, and receipt management." },
-      { icon: "truck", title: "Transport Management", description: "Route planning, vehicle tracking, driver management, and pickup/drop notifications." },
-      { icon: "zap", title: "Communication Hub", description: "SMS, email, and push notifications for parents. Announcements, circulars, and event updates." },
+      {
+        icon: "users",
+        title: "Student Management",
+        description:
+          "Complete student lifecycle from admission to alumni. Profiles, documents, academic history, and family information.",
+      },
+      {
+        icon: "briefcase",
+        title: "Academic Management",
+        description:
+          "Class scheduling, subject allocation, exam management, grading system, and report card generation.",
+      },
+      {
+        icon: "clock",
+        title: "Attendance System",
+        description:
+          "Daily attendance tracking with biometric/RFID integration, leave management, and automated parent alerts.",
+      },
+      {
+        icon: "check",
+        title: "Fee Management",
+        description:
+          "Fee structure setup, invoice generation, payment gateway integration, and receipt management.",
+      },
+      {
+        icon: "truck",
+        title: "Transport Management",
+        description:
+          "Route planning, vehicle tracking, driver management, and pickup/drop notifications.",
+      },
+      {
+        icon: "zap",
+        title: "Communication Hub",
+        description:
+          "SMS, email, and push notifications for parents. Announcements, circulars, and event updates.",
+      },
     ],
     portals: [
-      { title: "Admin Portal", features: ["Complete system configuration", "User management", "Reports & analytics", "Fee structure management", "Staff management"] },
-      { title: "Teacher Portal", features: ["Class management", "Attendance marking", "Grade entry", "Assignment creation", "Student progress tracking"] },
-      { title: "Parent Portal", features: ["Child's attendance & grades", "Fee payment", "Communication with teachers", "Event calendar", "Transport tracking"] },
-      { title: "Student Portal", features: ["Timetable view", "Assignment submission", "Exam results", "Library access", "Notifications"] },
+      {
+        title: "Admin Portal",
+        features: [
+          "Complete system configuration",
+          "User management",
+          "Reports & analytics",
+          "Fee structure management",
+          "Staff management",
+        ],
+      },
+      {
+        title: "Teacher Portal",
+        features: [
+          "Class management",
+          "Attendance marking",
+          "Grade entry",
+          "Assignment creation",
+          "Student progress tracking",
+        ],
+      },
+      {
+        title: "Parent Portal",
+        features: [
+          "Child's attendance & grades",
+          "Fee payment",
+          "Communication with teachers",
+          "Event calendar",
+          "Transport tracking",
+        ],
+      },
+      {
+        title: "Student Portal",
+        features: [
+          "Timetable view",
+          "Assignment submission",
+          "Exam results",
+          "Library access",
+          "Notifications",
+        ],
+      },
     ],
-    completeFeatures: ["Multi-branch Support", "Online Admission Portal", "Document Management", "Timetable Scheduler", "Exam & Grade Management", "Report Card Generator", "Library Management", "Hostel Management", "Inventory & Assets", "HR & Payroll for Staff", "Online Fee Payment", "Mobile Apps (iOS & Android)"],
-    stats: [{ label: "User Roles", value: "10+" }, { label: "Modules", value: "25+" }, { label: "Reports", value: "50+" }, { label: "API Endpoints", value: "100+" }],
+    completeFeatures: [
+      "Multi-branch Support",
+      "Online Admission Portal",
+      "Document Management",
+      "Timetable Scheduler",
+      "Exam & Grade Management",
+      "Report Card Generator",
+      "Library Management",
+      "Hostel Management",
+      "Inventory & Assets",
+      "HR & Payroll for Staff",
+      "Online Fee Payment",
+      "Mobile Apps (iOS & Android)",
+    ],
+    stats: [
+      { label: "User Roles", value: "10+" },
+      { label: "Modules", value: "25+" },
+      { label: "Reports", value: "50+" },
+      { label: "API Endpoints", value: "100+" },
+    ],
   },
   {
     slug: "fleet-management",
     heroTitle: "Fleet Management",
     heroSubtitle: "Enterprise Telematics Platform",
-    heroDescription: "Comprehensive, enterprise-grade telematics platform designed for fleet management companies with DOT-compliant ELD",
+    heroDescription:
+      "Comprehensive, enterprise-grade telematics platform designed for fleet management companies with DOT-compliant ELD",
     modules: [
-      { icon: "map-pin", title: "Live GPS Tracking", description: "Real-time vehicle positions on interactive maps with speed, heading, and driver assignment visibility." },
-      { icon: "clock", title: "ELD Compliance", description: "DOT-compliant Hours of Service tracking with 11-hour driving limit, break requirements, and violation alerts." },
-      { icon: "users", title: "Driver Management", description: "Complete driver profiles with CDL tracking, medical certification, safety scores, and trip statistics." },
-      { icon: "zap", title: "Incident Management", description: "Accident/breakdown reporting with severity classification, status workflow, and video evidence linking." },
-      { icon: "shield", title: "Geofencing", description: "Circle and polygon zone creation with entry/exit alerts, color-coded visualization, and alert history." },
-      { icon: "trending-up", title: "Analytics Dashboard", description: "Trip statistics, fuel efficiency metrics, driver performance rankings, and fleet utilization reports." },
+      {
+        icon: "map-pin",
+        title: "Live GPS Tracking",
+        description:
+          "Real-time vehicle positions on interactive maps with speed, heading, and driver assignment visibility.",
+      },
+      {
+        icon: "clock",
+        title: "ELD Compliance",
+        description:
+          "DOT-compliant Hours of Service tracking with 11-hour driving limit, break requirements, and violation alerts.",
+      },
+      {
+        icon: "users",
+        title: "Driver Management",
+        description:
+          "Complete driver profiles with CDL tracking, medical certification, safety scores, and trip statistics.",
+      },
+      {
+        icon: "zap",
+        title: "Incident Management",
+        description:
+          "Accident/breakdown reporting with severity classification, status workflow, and video evidence linking.",
+      },
+      {
+        icon: "shield",
+        title: "Geofencing",
+        description:
+          "Circle and polygon zone creation with entry/exit alerts, color-coded visualization, and alert history.",
+      },
+      {
+        icon: "trending-up",
+        title: "Analytics Dashboard",
+        description:
+          "Trip statistics, fuel efficiency metrics, driver performance rankings, and fleet utilization reports.",
+      },
     ],
-    completeFeatures: ["Vehicle Management", "IoT Device Assignment", "Odometer Tracking", "Service Scheduling", "Real-time GPS", "Interactive Map Dashboard", "Geofence Management", "Entry/Exit Alerts", "Driver Profiles", "CDL Expiry Alerts", "Safety Score Calculation", "Trip Statistics", "Incident Reporting", "Fuel Efficiency Metrics", "Fleet Utilization Reports"],
-    stats: [{ label: "Database Models", value: "20+" }, { label: "User Roles", value: "8" }, { label: "API Endpoints", value: "30+" }, { label: "ELD Rules", value: "4" }],
+    completeFeatures: [
+      "Vehicle Management",
+      "IoT Device Assignment",
+      "Odometer Tracking",
+      "Service Scheduling",
+      "Real-time GPS",
+      "Interactive Map Dashboard",
+      "Geofence Management",
+      "Entry/Exit Alerts",
+      "Driver Profiles",
+      "CDL Expiry Alerts",
+      "Safety Score Calculation",
+      "Trip Statistics",
+      "Incident Reporting",
+      "Fuel Efficiency Metrics",
+      "Fleet Utilization Reports",
+    ],
+    stats: [
+      { label: "Database Models", value: "20+" },
+      { label: "User Roles", value: "8" },
+      { label: "API Endpoints", value: "30+" },
+      { label: "ELD Rules", value: "4" },
+    ],
   },
   {
     slug: "drop",
     heroTitle: "Drop Platform",
     heroSubtitle: "Multi-Sided Delivery & Commerce Platform",
-    heroDescription: "Complete hyperlocal marketplace for food, groceries, alcohol, and services—with dedicated portals for customers, vendors, riders, and admins",
+    heroDescription:
+      "Complete hyperlocal marketplace for food, groceries, alcohol, and services—with dedicated portals for customers, vendors, riders, and admins",
     modules: [
-      { icon: "store", title: "Multi-Vendor Marketplace", description: "Support restaurants, grocery stores, pharmacies, wine shops, and more. Complete vendor onboarding and management." },
-      { icon: "map-pin", title: "Real-Time Tracking", description: "Live GPS tracking for deliveries with Socket.io, rider location updates, and accurate ETA calculations." },
-      { icon: "users", title: "Party Mode", description: "Collaborative group ordering with split billing (equal, by item, by seat, custom), shared carts, and party scheduling." },
-      { icon: "check", title: "Advanced Payments", description: "Razorpay integration with cards, UPI, wallets, COD, and gift cards. Subscription plans and loyalty points." },
-      { icon: "truck", title: "Rider Management", description: "Complete rider portal with earnings tracking, document verification, zone assignments, and performance analytics." },
-      { icon: "zap", title: "Smart Notifications", description: "Push, email, and SMS notifications via Twilio and SendGrid. Real-time order updates and promotional campaigns." },
+      {
+        icon: "store",
+        title: "Multi-Vendor Marketplace",
+        description:
+          "Support restaurants, grocery stores, pharmacies, wine shops, and more. Complete vendor onboarding and management.",
+      },
+      {
+        icon: "map-pin",
+        title: "Real-Time Tracking",
+        description:
+          "Live GPS tracking for deliveries with Socket.io, rider location updates, and accurate ETA calculations.",
+      },
+      {
+        icon: "users",
+        title: "Party Mode",
+        description:
+          "Collaborative group ordering with split billing (equal, by item, by seat, custom), shared carts, and party scheduling.",
+      },
+      {
+        icon: "check",
+        title: "Advanced Payments",
+        description:
+          "Razorpay integration with cards, UPI, wallets, COD, and gift cards. Subscription plans and loyalty points.",
+      },
+      {
+        icon: "truck",
+        title: "Rider Management",
+        description:
+          "Complete rider portal with earnings tracking, document verification, zone assignments, and performance analytics.",
+      },
+      {
+        icon: "zap",
+        title: "Smart Notifications",
+        description:
+          "Push, email, and SMS notifications via Twilio and SendGrid. Real-time order updates and promotional campaigns.",
+      },
     ],
     portals: [
-      { title: "Customer Portal", description: "Complete shopping experience for end users", features: ["Browse restaurants, grocery, pharmacy", "Real-time order tracking with GPS", "Multiple payment methods and wallet", "Party mode for group orders", "Loyalty points and subscriptions"] },
-      { title: "Vendor Portal", description: "Powerful tools for merchants", features: ["Order management", "Menu and product management", "Multi-outlet support", "Inventory tracking", "Kitchen Display System (KDS)"] },
-      { title: "Rider Portal", description: "Efficient delivery management", features: ["Accept/reject deliveries", "GPS navigation", "Earnings tracking", "Document verification", "Performance metrics"] },
-      { title: "Admin Dashboard", description: "Complete platform control", features: ["Real-time metrics", "Vendor/rider approval", "Zone and pricing config", "Marketing campaigns", "Financial reports"] },
+      {
+        title: "Customer Portal",
+        description: "Complete shopping experience for end users",
+        features: [
+          "Browse restaurants, grocery, pharmacy",
+          "Real-time order tracking with GPS",
+          "Multiple payment methods and wallet",
+          "Party mode for group orders",
+          "Loyalty points and subscriptions",
+        ],
+      },
+      {
+        title: "Vendor Portal",
+        description: "Powerful tools for merchants",
+        features: [
+          "Order management",
+          "Menu and product management",
+          "Multi-outlet support",
+          "Inventory tracking",
+          "Kitchen Display System (KDS)",
+        ],
+      },
+      {
+        title: "Rider Portal",
+        description: "Efficient delivery management",
+        features: [
+          "Accept/reject deliveries",
+          "GPS navigation",
+          "Earnings tracking",
+          "Document verification",
+          "Performance metrics",
+        ],
+      },
+      {
+        title: "Admin Dashboard",
+        description: "Complete platform control",
+        features: [
+          "Real-time metrics",
+          "Vendor/rider approval",
+          "Zone and pricing config",
+          "Marketing campaigns",
+          "Financial reports",
+        ],
+      },
     ],
-    completeFeatures: ["Multi-Vendor Support", "Real-time Tracking", "Party Mode", "Split Billing", "Razorpay Integration", "Wallet System", "Loyalty Points", "Genie Service", "Zone Pricing", "Surge Pricing", "Kitchen Display", "Inventory Control", "Staff Management", "Push Notifications", "SMS & Email Alerts"],
-    stats: [{ label: "Database Models", value: "100+" }, { label: "User Portals", value: "4" }, { label: "Payment Methods", value: "5+" }, { label: "Notification Types", value: "3" }],
+    completeFeatures: [
+      "Multi-Vendor Support",
+      "Real-time Tracking",
+      "Party Mode",
+      "Split Billing",
+      "Razorpay Integration",
+      "Wallet System",
+      "Loyalty Points",
+      "Genie Service",
+      "Zone Pricing",
+      "Surge Pricing",
+      "Kitchen Display",
+      "Inventory Control",
+      "Staff Management",
+      "Push Notifications",
+      "SMS & Email Alerts",
+    ],
+    stats: [
+      { label: "Database Models", value: "100+" },
+      { label: "User Portals", value: "4" },
+      { label: "Payment Methods", value: "5+" },
+      { label: "Notification Types", value: "3" },
+    ],
   },
   {
     slug: "rideon",
     heroTitle: "RideOn Platform",
     heroSubtitle: "Complete Ride-Hailing Solution",
-    heroDescription: "Launch your own Uber-like service with mobile apps for riders and drivers, real-time tracking, payments, and a powerful admin dashboard",
+    heroDescription:
+      "Launch your own Uber-like service with mobile apps for riders and drivers, real-time tracking, payments, and a powerful admin dashboard",
     modules: [
-      { icon: "map-pin", title: "Real-Time GPS Tracking", description: "Live driver location streaming with accurate ETAs, route visualization, and geospatial queries powered by PostGIS." },
-      { icon: "smartphone", title: "Native Mobile Apps", description: "React Native apps for both riders and drivers with Expo, supporting iOS and Android with push notifications." },
-      { icon: "check", title: "Stripe Payments", description: "Secure payment processing with card tokenization, 3D Secure, multiple payment methods, and automatic refunds." },
-      { icon: "users", title: "Driver Management", description: "Complete driver lifecycle from onboarding to payouts. Document verification, performance tracking, and earnings management." },
-      { icon: "zap", title: "Smart Notifications", description: "Push notifications for mobile apps, email via SendGrid, and SMS via Twilio. Real-time ride status updates." },
-      { icon: "trending-up", title: "Surge Pricing", description: "Dynamic pricing based on demand with manual and automatic surge controls. Zone-based pricing configuration." },
+      {
+        icon: "map-pin",
+        title: "Real-Time GPS Tracking",
+        description:
+          "Live driver location streaming with accurate ETAs, route visualization, and geospatial queries powered by PostGIS.",
+      },
+      {
+        icon: "smartphone",
+        title: "Native Mobile Apps",
+        description:
+          "React Native apps for both riders and drivers with Expo, supporting iOS and Android with push notifications.",
+      },
+      {
+        icon: "check",
+        title: "Stripe Payments",
+        description:
+          "Secure payment processing with card tokenization, 3D Secure, multiple payment methods, and automatic refunds.",
+      },
+      {
+        icon: "users",
+        title: "Driver Management",
+        description:
+          "Complete driver lifecycle from onboarding to payouts. Document verification, performance tracking, and earnings management.",
+      },
+      {
+        icon: "zap",
+        title: "Smart Notifications",
+        description:
+          "Push notifications for mobile apps, email via SendGrid, and SMS via Twilio. Real-time ride status updates.",
+      },
+      {
+        icon: "trending-up",
+        title: "Surge Pricing",
+        description:
+          "Dynamic pricing based on demand with manual and automatic surge controls. Zone-based pricing configuration.",
+      },
     ],
     portals: [
-      { title: "Rider Mobile App", description: "React Native / Expo", features: ["One-tap ride booking", "Real-time driver tracking", "Fare estimation", "Multiple payment methods", "Trip history and receipts"] },
-      { title: "Driver Mobile App", description: "React Native / Expo", features: ["Accept/decline requests", "Turn-by-turn navigation", "Earnings tracking", "Online/offline toggle", "Document management"] },
-      { title: "Admin Dashboard", description: "Next.js", features: ["Real-time metrics", "Driver verification", "Trip monitoring", "Pricing config", "Support tickets"] },
-      { title: "Backend API", description: "Node.js / Express", features: ["22 database models", "Socket.io real-time", "Stripe integration", "PostGIS geospatial", "Redis caching"] },
+      {
+        title: "Rider Mobile App",
+        description: "React Native / Expo",
+        features: [
+          "One-tap ride booking",
+          "Real-time driver tracking",
+          "Fare estimation",
+          "Multiple payment methods",
+          "Trip history and receipts",
+        ],
+      },
+      {
+        title: "Driver Mobile App",
+        description: "React Native / Expo",
+        features: [
+          "Accept/decline requests",
+          "Turn-by-turn navigation",
+          "Earnings tracking",
+          "Online/offline toggle",
+          "Document management",
+        ],
+      },
+      {
+        title: "Admin Dashboard",
+        description: "Next.js",
+        features: [
+          "Real-time metrics",
+          "Driver verification",
+          "Trip monitoring",
+          "Pricing config",
+          "Support tickets",
+        ],
+      },
+      {
+        title: "Backend API",
+        description: "Node.js / Express",
+        features: [
+          "22 database models",
+          "Socket.io real-time",
+          "Stripe integration",
+          "PostGIS geospatial",
+          "Redis caching",
+        ],
+      },
     ],
-    completeFeatures: ["Rider Mobile App", "Driver Mobile App", "Web Booking", "Admin Dashboard", "Real-time Tracking", "Stripe Payments", "Driver Verification", "Surge Pricing", "Promo Codes", "Support System", "Push Notifications", "Email & SMS Alerts"],
-    stats: [{ label: "Database Models", value: "22" }, { label: "Mobile Apps", value: "2" }, { label: "Web Apps", value: "3" }, { label: "Real-time Events", value: "10+" }],
+    completeFeatures: [
+      "Rider Mobile App",
+      "Driver Mobile App",
+      "Web Booking",
+      "Admin Dashboard",
+      "Real-time Tracking",
+      "Stripe Payments",
+      "Driver Verification",
+      "Surge Pricing",
+      "Promo Codes",
+      "Support System",
+      "Push Notifications",
+      "Email & SMS Alerts",
+    ],
+    stats: [
+      { label: "Database Models", value: "22" },
+      { label: "Mobile Apps", value: "2" },
+      { label: "Web Apps", value: "3" },
+      { label: "Real-time Events", value: "10+" },
+    ],
   },
   {
     slug: "marketplace",
     heroTitle: "B2B Marketplace",
     heroSubtitle: "Enterprise Commodity Trading Platform",
-    heroDescription: "A comprehensive B2B marketplace for commodity trading with producer management, tokenization, escrow payments, and blockchain integration for secure, transparent transactions",
+    heroDescription:
+      "A comprehensive B2B marketplace for commodity trading with producer management, tokenization, escrow payments, and blockchain integration for secure, transparent transactions",
     modules: [
-      { icon: "store", title: "Producer Management", description: "Complete producer onboarding, verification, and management with KYC compliance and document tracking." },
-      { icon: "coins", title: "Tokenization Engine", description: "Commodity tokenization for fractional ownership, enabling smaller investors to participate in commodity trading." },
-      { icon: "shield", title: "Escrow Payments", description: "Secure escrow system ensuring safe transactions between buyers and sellers with dispute resolution." },
-      { icon: "blocks", title: "Blockchain Integration", description: "Immutable transaction records and smart contracts for automated compliance and transparent trading." },
-      { icon: "globe", title: "Multi-Currency Support", description: "Support for multiple currencies and payment methods including wire transfers, crypto, and trade finance." },
-      { icon: "trending-up", title: "Insurance & Hedging", description: "Integrated insurance products and hedging instruments to manage commodity price risks." },
+      {
+        icon: "store",
+        title: "Producer Management",
+        description:
+          "Complete producer onboarding, verification, and management with KYC compliance and document tracking.",
+      },
+      {
+        icon: "coins",
+        title: "Tokenization Engine",
+        description:
+          "Commodity tokenization for fractional ownership, enabling smaller investors to participate in commodity trading.",
+      },
+      {
+        icon: "shield",
+        title: "Escrow Payments",
+        description:
+          "Secure escrow system ensuring safe transactions between buyers and sellers with dispute resolution.",
+      },
+      {
+        icon: "blocks",
+        title: "Blockchain Integration",
+        description:
+          "Immutable transaction records and smart contracts for automated compliance and transparent trading.",
+      },
+      {
+        icon: "globe",
+        title: "Multi-Currency Support",
+        description:
+          "Support for multiple currencies and payment methods including wire transfers, crypto, and trade finance.",
+      },
+      {
+        icon: "trending-up",
+        title: "Insurance & Hedging",
+        description:
+          "Integrated insurance products and hedging instruments to manage commodity price risks.",
+      },
     ],
     portals: [
-      { title: "Producer Portal", description: "For commodity producers and suppliers", features: ["Product listing management", "Order fulfillment tracking", "Payment reconciliation", "Analytics dashboard", "Document management"] },
-      { title: "Buyer Portal", description: "For commodity buyers and traders", features: ["Browse and search commodities", "Place orders and negotiate", "Track shipments", "Payment management", "Contract management"] },
-      { title: "Admin Dashboard", description: "Platform administration", features: ["User verification", "Transaction monitoring", "Dispute resolution", "Platform analytics", "Compliance reporting"] },
+      {
+        title: "Producer Portal",
+        description: "For commodity producers and suppliers",
+        features: [
+          "Product listing management",
+          "Order fulfillment tracking",
+          "Payment reconciliation",
+          "Analytics dashboard",
+          "Document management",
+        ],
+      },
+      {
+        title: "Buyer Portal",
+        description: "For commodity buyers and traders",
+        features: [
+          "Browse and search commodities",
+          "Place orders and negotiate",
+          "Track shipments",
+          "Payment management",
+          "Contract management",
+        ],
+      },
+      {
+        title: "Admin Dashboard",
+        description: "Platform administration",
+        features: [
+          "User verification",
+          "Transaction monitoring",
+          "Dispute resolution",
+          "Platform analytics",
+          "Compliance reporting",
+        ],
+      },
     ],
-    completeFeatures: ["Multi-role Access", "Commodity Tokenization", "Escrow Payments", "Blockchain Ledger", "Smart Contracts", "KYC/AML Compliance", "Insurance Integration", "Hedging Tools", "Multi-currency", "Trade Finance", "Shipment Tracking", "Document Management"],
-    stats: [{ label: "Database Models", value: "45+" }, { label: "User Roles", value: "5" }, { label: "Payment Methods", value: "6+" }, { label: "API Endpoints", value: "60+" }],
+    completeFeatures: [
+      "Multi-role Access",
+      "Commodity Tokenization",
+      "Escrow Payments",
+      "Blockchain Ledger",
+      "Smart Contracts",
+      "KYC/AML Compliance",
+      "Insurance Integration",
+      "Hedging Tools",
+      "Multi-currency",
+      "Trade Finance",
+      "Shipment Tracking",
+      "Document Management",
+    ],
+    stats: [
+      { label: "Database Models", value: "45+" },
+      { label: "User Roles", value: "5" },
+      { label: "Payment Methods", value: "6+" },
+      { label: "API Endpoints", value: "60+" },
+    ],
   },
   {
     slug: "realestate",
     heroTitle: "Real Estate Platform",
     heroSubtitle: "Property Listing & Management Solution",
-    heroDescription: "An advanced real estate platform with comprehensive property listings, agent management, membership subscriptions, and powerful search capabilities similar to leading property portals",
+    heroDescription:
+      "An advanced real estate platform with comprehensive property listings, agent management, membership subscriptions, and powerful search capabilities similar to leading property portals",
     modules: [
-      { icon: "building-2", title: "Property Listings", description: "Rich property listings with multiple images, virtual tours, floor plans, and detailed specifications." },
-      { icon: "users", title: "Agent Management", description: "Complete agent onboarding, verification, commission tracking, and performance analytics." },
-      { icon: "shield", title: "Membership Plans", description: "Flexible subscription plans for agents and builders with featured listings and premium placement." },
-      { icon: "search", title: "Advanced Search", description: "Powerful search with filters for location, price, amenities, property type, and proximity to landmarks." },
-      { icon: "mail", title: "Lead Management", description: "Integrated CRM for lead capture, follow-up automation, and conversion tracking." },
-      { icon: "trending-up", title: "Analytics Dashboard", description: "Property performance metrics, market trends, and agent productivity reports." },
+      {
+        icon: "building-2",
+        title: "Property Listings",
+        description:
+          "Rich property listings with multiple images, virtual tours, floor plans, and detailed specifications.",
+      },
+      {
+        icon: "users",
+        title: "Agent Management",
+        description:
+          "Complete agent onboarding, verification, commission tracking, and performance analytics.",
+      },
+      {
+        icon: "shield",
+        title: "Membership Plans",
+        description:
+          "Flexible subscription plans for agents and builders with featured listings and premium placement.",
+      },
+      {
+        icon: "search",
+        title: "Advanced Search",
+        description:
+          "Powerful search with filters for location, price, amenities, property type, and proximity to landmarks.",
+      },
+      {
+        icon: "mail",
+        title: "Lead Management",
+        description:
+          "Integrated CRM for lead capture, follow-up automation, and conversion tracking.",
+      },
+      {
+        icon: "trending-up",
+        title: "Analytics Dashboard",
+        description:
+          "Property performance metrics, market trends, and agent productivity reports.",
+      },
     ],
     portals: [
-      { title: "Public Portal", description: "Property search for buyers and renters", features: ["Browse all listings", "Advanced search filters", "Save favorites", "Contact agents", "Schedule viewings"] },
-      { title: "Agent Portal", description: "Tools for real estate agents", features: ["Manage listings", "Lead management", "Commission tracking", "Performance analytics", "Client communication"] },
-      { title: "Builder Portal", description: "For property developers", features: ["Project management", "Bulk listings", "Inventory tracking", "Sales analytics", "Marketing tools"] },
-      { title: "Admin Dashboard", description: "Platform management", features: ["User management", "Listing moderation", "Subscription management", "Revenue analytics", "Support tickets"] },
+      {
+        title: "Public Portal",
+        description: "Property search for buyers and renters",
+        features: [
+          "Browse all listings",
+          "Advanced search filters",
+          "Save favorites",
+          "Contact agents",
+          "Schedule viewings",
+        ],
+      },
+      {
+        title: "Agent Portal",
+        description: "Tools for real estate agents",
+        features: [
+          "Manage listings",
+          "Lead management",
+          "Commission tracking",
+          "Performance analytics",
+          "Client communication",
+        ],
+      },
+      {
+        title: "Builder Portal",
+        description: "For property developers",
+        features: [
+          "Project management",
+          "Bulk listings",
+          "Inventory tracking",
+          "Sales analytics",
+          "Marketing tools",
+        ],
+      },
+      {
+        title: "Admin Dashboard",
+        description: "Platform management",
+        features: [
+          "User management",
+          "Listing moderation",
+          "Subscription management",
+          "Revenue analytics",
+          "Support tickets",
+        ],
+      },
     ],
-    completeFeatures: ["Property Listings", "Virtual Tours", "Agent Verification", "Membership Plans", "Featured Listings", "Advanced Search", "Map Integration", "Lead Capture", "SMS & Email Alerts", "Commission Management", "Analytics Reports", "Mobile Responsive"],
-    stats: [{ label: "Database Models", value: "35+" }, { label: "User Roles", value: "6" }, { label: "Search Filters", value: "20+" }, { label: "API Endpoints", value: "50+" }],
+    completeFeatures: [
+      "Property Listings",
+      "Virtual Tours",
+      "Agent Verification",
+      "Membership Plans",
+      "Featured Listings",
+      "Advanced Search",
+      "Map Integration",
+      "Lead Capture",
+      "SMS & Email Alerts",
+      "Commission Management",
+      "Analytics Reports",
+      "Mobile Responsive",
+    ],
+    stats: [
+      { label: "Database Models", value: "35+" },
+      { label: "User Roles", value: "6" },
+      { label: "Search Filters", value: "20+" },
+      { label: "API Endpoints", value: "50+" },
+    ],
+  },
+  {
+    slug: "netwatch",
+    heroTitle: "NetWatch Pro",
+    heroSubtitle: "Enterprise Employee Monitoring Platform",
+    heroDescription:
+      "Monitor employee productivity with real-time screen capture, activity tracking, remote management, and comprehensive reporting—all with enterprise-grade security",
+    modules: [
+      {
+        icon: "monitor",
+        title: "Real-Time Screen Monitoring",
+        description:
+          "Live view of all connected computers with automatic and on-demand screenshot capture. Full-screen viewer with zoom capabilities.",
+      },
+      {
+        icon: "camera",
+        title: "Screen Recording",
+        description:
+          "Record screen activity with playback support. Store recordings with configurable retention periods for compliance.",
+      },
+      {
+        icon: "trending-up",
+        title: "Activity Tracking",
+        description:
+          "Track application usage, websites visited, and idle time. Detailed productivity analytics with categorization.",
+      },
+      {
+        icon: "shield",
+        title: "Keystroke Logging",
+        description:
+          "Encrypted keystroke logging with search and export capabilities. AES-256-GCM encryption for data at rest.",
+      },
+      {
+        icon: "briefcase",
+        title: "Remote Desktop",
+        description:
+          "View and control remote computers in real-time. SSH-like terminal access for advanced management.",
+      },
+      {
+        icon: "globe",
+        title: "Website & App Blocking",
+        description:
+          "Block access to websites by URL patterns. Prevent specific applications from running with quick rules.",
+      },
+    ],
+    portals: [
+      {
+        title: "Admin Dashboard",
+        description: "Next.js 16 / React 19",
+        features: [
+          "Real-time computer monitoring",
+          "Screenshot and recording viewer",
+          "Activity reports and analytics",
+          "Policy configuration",
+          "User and role management",
+          "Audit logging",
+        ],
+      },
+      {
+        title: "Desktop Agent",
+        description: "Electron 28",
+        features: [
+          "Auto-start on boot",
+          "Stealth mode operation",
+          "Screenshot capture",
+          "Activity logging",
+          "Keystroke recording",
+          "Remote command execution",
+        ],
+      },
+      {
+        title: "Socket.io Server",
+        description: "Node.js",
+        features: [
+          "WebSocket connections",
+          "Real-time data streaming",
+          "Scalable architecture",
+          "Auto-reconnection",
+          "Event broadcasting",
+          "Connection management",
+        ],
+      },
+    ],
+    completeFeatures: [
+      "Real-Time Screen Monitoring",
+      "Screen Recording",
+      "Activity Tracking",
+      "Keystroke Logging",
+      "Clipboard Monitoring",
+      "Remote Desktop",
+      "File Transfer",
+      "Website & App Blocking",
+      "Real-Time Alerts",
+      "AES-256 Encryption",
+      "PBKDF2 Password Hashing",
+      "Role-Based Access Control",
+    ],
+    stats: [
+      { label: "Components", value: "3" },
+      { label: "User Roles", value: "3" },
+      { label: "Security Features", value: "6" },
+      { label: "Monitoring Capabilities", value: "9" },
+    ],
+  },
+  {
+    slug: "xfer",
+    heroTitle: "Xfer Payment Platform",
+    heroSubtitle: "Complete Digital Payment Solution",
+    heroDescription:
+      "Launch your own PayPal-like payment service with multi-currency wallets, P2P transfers, KYC/AML compliance, fraud detection, and comprehensive merchant tools",
+    modules: [
+      {
+        icon: "wallet",
+        title: "Multi-Currency Wallets",
+        description:
+          "Create and manage wallets in multiple currencies including USD, EUR, GBP, and more. Real-time balance tracking with ledger entries.",
+      },
+      {
+        icon: "send",
+        title: "P2P Transfers",
+        description:
+          "Send money instantly to other users via email or phone. Low fees, real-time delivery, and complete transaction history.",
+      },
+      {
+        icon: "credit-card",
+        title: "Stripe Payments",
+        description:
+          "Seamless card payments with 3D Secure, saved cards, and automatic retry logic. PCI DSS compliant infrastructure.",
+      },
+      {
+        icon: "shield",
+        title: "KYC Verification",
+        description:
+          "Complete identity verification workflow with document upload, liveness detection, and sanctions screening.",
+      },
+      {
+        icon: "shield",
+        title: "Fraud Detection",
+        description:
+          "AI-powered fraud scoring based on velocity, device fingerprint, geolocation, and behavioral patterns.",
+      },
+      {
+        icon: "building-2",
+        title: "Vendor Payments",
+        description:
+          "Complete merchant solution with invoicing, checkout flows, and automatic payouts to vendor accounts.",
+      },
+    ],
+    portals: [
+      {
+        title: "User Dashboard",
+        description: "Standard user features for managing personal finances",
+        features: [
+          "Wallet management",
+          "Send and receive money",
+          "Transaction history",
+          "Payment methods",
+          "Profile settings",
+          "KYC submission",
+        ],
+      },
+      {
+        title: "Vendor Portal",
+        description: "Merchant features for business accounts",
+        features: [
+          "Product catalog",
+          "Order management",
+          "Invoice generation",
+          "Payout settings",
+          "API integration",
+          "Business analytics",
+        ],
+      },
+      {
+        title: "Admin Dashboard",
+        description: "User, KYC, and dispute management",
+        features: [
+          "User management",
+          "KYC review queue",
+          "Dispute resolution",
+          "Transaction monitoring",
+          "Risk assessment",
+          "Activity logs",
+        ],
+      },
+      {
+        title: "Super Admin",
+        description: "Full system configuration and control",
+        features: [
+          "System configuration",
+          "Fee structures",
+          "User role management",
+          "Platform analytics",
+          "API management",
+          "Audit logs",
+        ],
+      },
+    ],
+    completeFeatures: [
+      "Multi-Currency Wallets",
+      "P2P Transfers",
+      "Stripe Payments",
+      "KYC Verification",
+      "Fraud Detection",
+      "Vendor Payments",
+      "Dispute Management",
+      "Real-Time Notifications",
+      "Analytics Dashboard",
+      "Double-Entry Ledger",
+      "Bank Connectivity (Plaid)",
+      "Auto Withdrawals",
+    ],
+    stats: [
+      { label: "Database Models", value: "100+" },
+      { label: "User Roles", value: "4" },
+      { label: "Payment Methods", value: "5+" },
+      { label: "Integrations", value: "3" },
+    ],
+  },
+  {
+    slug: "sparking",
+    heroTitle: "Sparking Platform",
+    heroSubtitle: "AI-Powered Smart Parking Management",
+    heroDescription:
+      "Transform your parking operations with real-time vehicle detection, automatic license plate recognition, digital payments, and intelligent hardware control",
+    modules: [
+      {
+        icon: "car",
+        title: "Vehicle Detection",
+        description:
+          "YOLOv8-based real-time vehicle detection with less than 100ms latency. Automatic entry/exit tracking without human intervention.",
+      },
+      {
+        icon: "camera",
+        title: "License Plate Recognition",
+        description:
+          "Automatic Number Plate Recognition (ANPR) using Intel OpenVINO for high-accuracy plate reading in all conditions.",
+      },
+      {
+        icon: "wallet",
+        title: "Digital Wallet",
+        description:
+          "Built-in wallet system for contactless payments. Top-up via cards, auto-deduct parking fees, and transfer between users.",
+      },
+      {
+        icon: "parking-circle",
+        title: "Gate Control",
+        description:
+          "Automatic gate operation based on vehicle detection. Support for HTTP, RS485, and Modbus protocols.",
+      },
+      {
+        icon: "trending-up",
+        title: "Predictive Analytics",
+        description:
+          "AI-powered occupancy prediction, revenue forecasting, and peak hour analysis for better planning.",
+      },
+      {
+        icon: "map-pin",
+        title: "Multi-Tenant Support",
+        description:
+          "Manage multiple parking lots from a single dashboard. Zone and slot management with custom pricing.",
+      },
+    ],
+    portals: [
+      {
+        title: "Admin Dashboard",
+        description: "Next.js 16",
+        features: [
+          "Real-time occupancy monitoring",
+          "Camera stream management",
+          "Token and slot tracking",
+          "Payment and wallet management",
+          "Analytics and reporting",
+          "Hardware configuration",
+        ],
+      },
+      {
+        title: "AI Pipeline",
+        description: "Python / YOLOv8",
+        features: [
+          "RTSP stream processing",
+          "Real-time vehicle detection",
+          "License plate recognition",
+          "Multi-camera support",
+          "Mock mode for testing",
+          "Event publishing to API",
+        ],
+      },
+      {
+        title: "Self-Service Kiosk",
+        description: "Next.js PWA",
+        features: [
+          "QR code scanning",
+          "Payment processing",
+          "Receipt printing",
+          "Slot reservation",
+          "Find My Car feature",
+          "Wallet top-up",
+        ],
+      },
+    ],
+    completeFeatures: [
+      "Vehicle Detection",
+      "License Plate Recognition",
+      "Digital Wallet",
+      "Gate Control",
+      "Predictive Analytics",
+      "Multi-Tenant Support",
+      "Stripe Payments",
+      "Real-Time Notifications",
+      "PDF Reports",
+      "LED Display Control",
+      "Ticket Printers",
+      "Find My Car",
+    ],
+    stats: [
+      { label: "Detection Latency", value: "<100ms" },
+      { label: "User Portals", value: "3" },
+      { label: "Hardware Protocols", value: "3" },
+      { label: "AI Models", value: "2" },
+    ],
   },
 ];
 
@@ -978,7 +2287,14 @@ export const projects: Project[] = [
     category: "IoT / Animal Health / AgriTech",
     title: "Pigeon Pulse",
     desc: "Intelligent Avian Health Monitoring System using lightweight IoT devices to track vitals, detect early symptoms, and enable real-time care for pigeons and poultry.",
-    tech: ["IoT Sensors", "MQTT", "AWS IoT Core", "React Native", "Python", "DynamoDB"],
+    tech: [
+      "IoT Sensors",
+      "MQTT",
+      "AWS IoT Core",
+      "React Native",
+      "Python",
+      "DynamoDB",
+    ],
     gradient: "linear-gradient(135deg, #00ffcc 0%, #00ccff 100%)",
   },
   {
@@ -994,7 +2310,14 @@ export const projects: Project[] = [
     category: "Urban Tech / IoT / Public Infrastructure",
     title: "SmartCity Platform",
     desc: "Unified command dashboard consolidating surveillance, traffic flow, emergency response, and environmental monitoring—enabling real-time decision-making for city operations.",
-    tech: ["Microservices", "Kubernetes", "Kafka", "AI/ML", "React", "PostgreSQL"],
+    tech: [
+      "Microservices",
+      "Kubernetes",
+      "Kafka",
+      "AI/ML",
+      "React",
+      "PostgreSQL",
+    ],
     gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
   },
   {
@@ -1016,15 +2339,29 @@ export const projectDetails: ProjectDetail[] = [
     category: "IoT / Animal Health / AgriTech",
     timeline: "6-8 Months",
     teamSize: "4-6 Engineers",
-    heroDescription: "Smart health-monitoring ecosystem for pigeons using lightweight IoT devices to track vitals, detect early symptoms of illness, and enable real-time care decisions in large aviaries.",
-    challenge: "Aviary caretakers lacked systematic methods for early disease detection. The operation relied entirely on manual observation—inconsistent and often too late to prevent flock-wide spread. No digital infrastructure existed; everything was logged manually with spotty documentation.",
-    mission: "The team aimed to automate health tracking, identify anomalies early, and provide real-time visibility into individual bird status.",
+    heroDescription:
+      "Smart health-monitoring ecosystem for pigeons using lightweight IoT devices to track vitals, detect early symptoms of illness, and enable real-time care decisions in large aviaries.",
+    challenge:
+      "Aviary caretakers lacked systematic methods for early disease detection. The operation relied entirely on manual observation—inconsistent and often too late to prevent flock-wide spread. No digital infrastructure existed; everything was logged manually with spotty documentation.",
+    mission:
+      "The team aimed to automate health tracking, identify anomalies early, and provide real-time visibility into individual bird status.",
     missionPoints: [
       "Reduce mortality rates through early detection",
       "Improve early diagnosis capabilities",
       "Create a data-driven care model",
     ],
-    technologies: ["IoT Sensors", "MQTT", "Python", "Node.js", "AWS IoT Core", "DynamoDB", "React Native", "Flutter", "Grafana", "BLE Modules"],
+    technologies: [
+      "IoT Sensors",
+      "MQTT",
+      "Python",
+      "Node.js",
+      "AWS IoT Core",
+      "DynamoDB",
+      "React Native",
+      "Flutter",
+      "Grafana",
+      "BLE Modules",
+    ],
     deliverables: [
       "Wearable IoT sensors for pigeons",
       "Gateway-based data collection system",
@@ -1047,11 +2384,13 @@ export const projectDetails: ProjectDetail[] = [
       },
       {
         challenge: "Battery Life Issues",
-        solution: "Custom firmware with advanced sleep modes—300% battery extension",
+        solution:
+          "Custom firmware with advanced sleep modes—300% battery extension",
       },
       {
         challenge: "No Historical Datasets",
-        solution: "Crowdsourced baseline model using aggregated multi-aviary data",
+        solution:
+          "Crowdsourced baseline model using aggregated multi-aviary data",
       },
     ],
     results: [
@@ -1062,7 +2401,8 @@ export const projectDetails: ProjectDetail[] = [
       "Real-time visibility across multiple locations",
     ],
     testimonial: {
-      quote: "The client reported higher survival rates and more predictable care cycles, transforming how they manage aviary health.",
+      quote:
+        "The client reported higher survival rates and more predictable care cycles, transforming how they manage aviary health.",
       author: "Aviary Operations Manager",
       role: "Client",
     },
@@ -1074,16 +2414,27 @@ export const projectDetails: ProjectDetail[] = [
     category: "Telemedicine / Rural Healthcare",
     timeline: "4-6 Months",
     teamSize: "5-7 Engineers",
-    heroDescription: "Digital network connecting livestock owners to trained para-vets and veterinary doctors, enabling remote triage, location-aware case assignment, and transparent field-to-cloud healthcare delivery.",
-    challenge: "The livestock healthcare sector lacked unified systems. Bookings, case logs, and field reports were scattered across WhatsApp groups and handwritten notebooks, creating chaotic service delivery with no tracking capability and minimal accountability.",
-    mission: "Digitize the field-veterinary ecosystem through a structured platform enabling remote triage and consultation, location-aware vet assignment, transparent pricing and service records, and improved service availability in rural areas.",
+    heroDescription:
+      "Digital network connecting livestock owners to trained para-vets and veterinary doctors, enabling remote triage, location-aware case assignment, and transparent field-to-cloud healthcare delivery.",
+    challenge:
+      "The livestock healthcare sector lacked unified systems. Bookings, case logs, and field reports were scattered across WhatsApp groups and handwritten notebooks, creating chaotic service delivery with no tracking capability and minimal accountability.",
+    mission:
+      "Digitize the field-veterinary ecosystem through a structured platform enabling remote triage and consultation, location-aware vet assignment, transparent pricing and service records, and improved service availability in rural areas.",
     missionPoints: [
       "Remote triage and consultation",
       "Location-aware vet assignment",
       "Transparent pricing and service records",
       "Improved service availability in rural areas",
     ],
-    technologies: ["Android (Java/Kotlin)", "Node.js", "Python", "Firebase", "AWS", "Google Maps API", "SMS Gateway"],
+    technologies: [
+      "Android (Java/Kotlin)",
+      "Node.js",
+      "Python",
+      "Firebase",
+      "AWS",
+      "Google Maps API",
+      "SMS Gateway",
+    ],
     deliverables: [
       "Mobile app with registration & vet discovery",
       "Case logging & documentation system",
@@ -1097,20 +2448,27 @@ export const projectDetails: ProjectDetail[] = [
     ],
     painPoints: [
       {
-        challenge: "Low Network Bandwidth - Rural areas had extremely limited connectivity",
-        solution: "Offline-First Architecture - Smart local storage with intelligent background syncing",
+        challenge:
+          "Low Network Bandwidth - Rural areas had extremely limited connectivity",
+        solution:
+          "Offline-First Architecture - Smart local storage with intelligent background syncing",
       },
       {
         challenge: "Tech-Unfamiliar User Base - Minimal smartphone experience",
-        solution: "Icon-Based Workflows - Simplified UI with large icons, minimal text, and guided flows",
+        solution:
+          "Icon-Based Workflows - Simplified UI with large icons, minimal text, and guided flows",
       },
       {
-        challenge: "Inconsistent Documentation - Vets documented cases differently",
-        solution: "Standardized Digital Forms - Structured forms with pre-filled options and mandatory fields",
+        challenge:
+          "Inconsistent Documentation - Vets documented cases differently",
+        solution:
+          "Standardized Digital Forms - Structured forms with pre-filled options and mandatory fields",
       },
       {
-        challenge: "Language Barriers - Multiple local languages needed support",
-        solution: "Multilingual UI Layers - Comprehensive language support with region-specific translations",
+        challenge:
+          "Language Barriers - Multiple local languages needed support",
+        solution:
+          "Multilingual UI Layers - Comprehensive language support with region-specific translations",
       },
     ],
     results: [
@@ -1121,7 +2479,8 @@ export const projectDetails: ProjectDetail[] = [
       "Smoother operations and resource allocation",
     ],
     testimonial: {
-      quote: "Client feedback highlighted smoother operations, easier audit trails, and a dramatic improvement in service delivery to remote areas.",
+      quote:
+        "Client feedback highlighted smoother operations, easier audit trails, and a dramatic improvement in service delivery to remote areas.",
       author: "Healthcare Administrator",
       role: "Client",
     },
@@ -1133,16 +2492,30 @@ export const projectDetails: ProjectDetail[] = [
     category: "Urban Tech / IoT / Public Infrastructure",
     timeline: "10-12 Months",
     teamSize: "8-12 Engineers",
-    heroDescription: "Unified command dashboard consolidating surveillance, traffic flow, emergency response, and environmental monitoring—enabling real-time decision-making for city operations.",
-    challenge: "Before implementation, city departments operated in silos. Traffic control, surveillance, and emergency services each used separate systems. Data was fragmented, response coordination was slow, and real-time decision-making was nearly impossible.",
-    mission: "Create a unified command center consolidating all monitoring and analytics systems while enabling real-time decision-making through analytics.",
+    heroDescription:
+      "Unified command dashboard consolidating surveillance, traffic flow, emergency response, and environmental monitoring—enabling real-time decision-making for city operations.",
+    challenge:
+      "Before implementation, city departments operated in silos. Traffic control, surveillance, and emergency services each used separate systems. Data was fragmented, response coordination was slow, and real-time decision-making was nearly impossible.",
+    mission:
+      "Create a unified command center consolidating all monitoring and analytics systems while enabling real-time decision-making through analytics.",
     missionPoints: [
       "Enable real-time decision-making through analytics",
       "Enhance public safety and traffic efficiency",
       "Improve emergency response times",
       "Centralize previously siloed departmental operations",
     ],
-    technologies: ["Microservices (Node.js/Go)", "Kubernetes", "Docker", "Kafka Streams", "CCTV/RTSP Integration", "GIS Dashboards", "AI/ML Anomaly Detection", "React", "PostgreSQL", "Redis"],
+    technologies: [
+      "Microservices (Node.js/Go)",
+      "Kubernetes",
+      "Docker",
+      "Kafka Streams",
+      "CCTV/RTSP Integration",
+      "GIS Dashboards",
+      "AI/ML Anomaly Detection",
+      "React",
+      "PostgreSQL",
+      "Redis",
+    ],
     deliverables: [
       "Multi-module command center platform",
       "CCTV ingestion & RTSP video wall",
@@ -1182,7 +2555,8 @@ export const projectDetails: ProjectDetail[] = [
       "Achieved single pane of glass for city-wide monitoring",
     ],
     testimonial: {
-      quote: "The client praised the system for centralizing what used to be chaotic siloed operations into a unified, intelligent command center.",
+      quote:
+        "The client praised the system for centralizing what used to be chaotic siloed operations into a unified, intelligent command center.",
       author: "City Administrator",
       role: "Municipal Government",
     },
@@ -1194,16 +2568,29 @@ export const projectDetails: ProjectDetail[] = [
     category: "Data Centers / IT Infrastructure",
     timeline: "8-10 Months",
     teamSize: "6-8 Engineers",
-    heroDescription: "Full-stack monitoring and automation platform for modular data centers—tracking power, cooling, rack health, security access, and predictive maintenance with real-time visibility.",
-    challenge: "The client's data center operations were fragmented across multiple disconnected tools—each system (power, cooling, security) operated independently. This separation prevented unified visibility, delayed fault detection, and required excessive manual intervention with no predictive maintenance capabilities.",
-    mission: "Consolidate all sensors and equipment controllers into a single dashboard while enabling intelligent automation.",
+    heroDescription:
+      "Full-stack monitoring and automation platform for modular data centers—tracking power, cooling, rack health, security access, and predictive maintenance with real-time visibility.",
+    challenge:
+      "The client's data center operations were fragmented across multiple disconnected tools—each system (power, cooling, security) operated independently. This separation prevented unified visibility, delayed fault detection, and required excessive manual intervention with no predictive maintenance capabilities.",
+    mission:
+      "Consolidate all sensors and equipment controllers into a single dashboard while enabling intelligent automation.",
     missionPoints: [
       "Improve system uptime through proactive monitoring",
       "Enable automated alerting and rapid response",
       "Reduce dependency on manual operations",
       "Enable predictive failure detection",
     ],
-    technologies: ["Python", "Node.js", "SNMP", "Modbus/TCP", "InfluxDB", "Grafana", "Docker", "MQTT", "Power/Energy APIs"],
+    technologies: [
+      "Python",
+      "Node.js",
+      "SNMP",
+      "Modbus/TCP",
+      "InfluxDB",
+      "Grafana",
+      "Docker",
+      "MQTT",
+      "Power/Energy APIs",
+    ],
     deliverables: [
       "Hardware integration layer (SNMP/Modbus protocols)",
       "Backend for time-series data processing",
@@ -1220,19 +2607,23 @@ export const projectDetails: ProjectDetail[] = [
     painPoints: [
       {
         challenge: "Protocol Inconsistency",
-        solution: "Built a universal adapter framework normalizing SNMP, Modbus, and custom protocols into standard formats",
+        solution:
+          "Built a universal adapter framework normalizing SNMP, Modbus, and custom protocols into standard formats",
       },
       {
         challenge: "Time-Series Load Spikes",
-        solution: "Implemented InfluxDB with buffered collectors to gracefully handle massive ingestion spikes",
+        solution:
+          "Implemented InfluxDB with buffered collectors to gracefully handle massive ingestion spikes",
       },
       {
         challenge: "Corrupted Edge Packets",
-        solution: "Created intelligent packet validation with automatic retry mechanisms and error logging",
+        solution:
+          "Created intelligent packet validation with automatic retry mechanisms and error logging",
       },
       {
         challenge: "Mission-Critical Sensitivity",
-        solution: "Deployed redundant monitoring nodes with health-check heartbeats and automatic failover",
+        solution:
+          "Deployed redundant monitoring nodes with health-check heartbeats and automatic failover",
       },
     ],
     results: [
@@ -1243,7 +2634,8 @@ export const projectDetails: ProjectDetail[] = [
       "Became a core operational asset for the client",
     ],
     testimonial: {
-      quote: "The MDC System became a core operational asset, enabling the client to scale their data center operations without scaling manpower proportionally.",
+      quote:
+        "The MDC System became a core operational asset, enabling the client to scale their data center operations without scaling manpower proportionally.",
       author: "Data Center Operations Manager",
       role: "Enterprise Client",
     },
@@ -1256,19 +2648,34 @@ export const processSteps: ProcessStep[] = [
     num: "01",
     title: "Discovery",
     desc: "We get on a Teams call to understand your business module, end users, user personas, and your unique value proposition.",
-    points: ["Business Analysis", "User Research", "Problem Definition", "USP Identification"],
+    points: [
+      "Business Analysis",
+      "User Research",
+      "Problem Definition",
+      "USP Identification",
+    ],
   },
   {
     num: "02",
     title: "Scope of Work",
     desc: "Comprehensive project planning with clear timelines, milestones, and success criteria.",
-    points: ["Timeline Planning", "Milestone Definition", "Acceptance Criteria", "Tech Stack"],
+    points: [
+      "Timeline Planning",
+      "Milestone Definition",
+      "Acceptance Criteria",
+      "Tech Stack",
+    ],
   },
   {
     num: "03",
     title: "Design",
     desc: "Iterative design process ensuring your vision comes to life perfectly.",
-    points: ["UI/UX Design", "Prototype Creation", "Design Reviews", "Final Approval"],
+    points: [
+      "UI/UX Design",
+      "Prototype Creation",
+      "Design Reviews",
+      "Final Approval",
+    ],
   },
   {
     num: "04",
@@ -1338,10 +2745,6 @@ export const team: TeamMember[] = [
 ];
 
 // About page content
-export interface AboutClientReason {
-  text: string;
-}
-
 export const aboutFounderStory = [
   `Infiniti Tech Partners was founded by <span class="text-primary font-semibold">Sudipto</span>, a technologist who has spent his career inside the engine rooms of enterprise systems — building architectures, securing environments, scaling platforms, and leading high-impact technology transformations. Over the years, he worked across modernization, cloud engineering, cybersecurity, networking, and automation, eventually developing a reputation for solving problems that other teams labeled <span class="text-primary font-semibold">"too complex."</span>`,
   `Infiniti Tech Partners grew from that mindset: <span class="font-semibold text-white">engineering-first, execution-driven</span>, and built for organizations that expect reliability, speed, and long-term scalability.`,
@@ -1355,6 +2758,7 @@ export const aboutServicesExpanded: string[] = [
   "AI/ML-powered automation and intelligent decisioning",
   "Blockchain development & secure distributed systems",
   "High-performance websites and mobile applications",
+  "Low Latecy, high throughput systems",
 ];
 
 export const aboutOperatingPrinciples: string[] = [
@@ -1363,20 +2767,57 @@ export const aboutOperatingPrinciples: string[] = [
   "Rapid deployment frameworks",
   "Vendor-agnostic solutions",
   "Rigorous testing and optimization cycles",
+  "Fast paced high quality delivery",
 ];
 
 export const aboutClientReasons: AboutClientReason[] = [
-  { text: "Deep technical capability across modern, emerging, and enterprise tech" },
-  { text: "Architecture frameworks built for security, automation, and uptime" },
-  { text: "Ability to take end-to-end ownership — from design to deployment to maintenance" },
-  { text: "Experience across cloud providers, complex networks, and multi-vendor infrastructure" },
-  { text: "A team that responds fast, executes cleanly, and understands real operational constraints" },
+  {
+    text: "Deep technical capability across modern, emerging, and enterprise tech",
+  },
+  {
+    text: "Architecture frameworks built for security, automation, and uptime",
+  },
+  {
+    text: "Ability to take end-to-end ownership — from design to deployment to maintenance",
+  },
+  {
+    text: "Experience across cloud providers, complex networks, and multi-vendor infrastructure",
+  },
+  {
+    text: "A team that responds fast, executes cleanly, and understands real operational constraints",
+  },
+  {
+    text: "A team that ships fast and delivers measurable business impact",
+  },
 ];
 
-export const aboutMotto = "Build systems that last, secure them by design, automate everything possible, and keep scaling forward.";
+export const aboutMotto =
+  "Build systems that last, secure them by design, automate everything possible, and keep scaling forward.";
 
-export const aboutVision = "To engineer the systems that power the next generation of digital infrastructure—secure, automated, intelligent, and built for scale.";
+export const aboutVision =
+  "To engineer the systems that power the next generation of digital infrastructure—secure, automated, intelligent, and built for scale.";
 
-export const aboutCommitment = "We don't sell shortcuts. We deliver systems engineered with precision, built to perform, and designed to evolve as your business grows.";
+export const aboutCommitment =
+  "We don't sell shortcuts. We deliver systems engineered with precision, built to perform, and designed to evolve as your business grows.";
 
-export const aboutClosingStatement = "Infiniti Tech Partners exists for companies that want their technology to be an advantage, not a liability.";
+export const aboutClosingStatement =
+  "Infiniti Tech Partners exists for companies that want their technology to be an advantage, not a liability.";
+
+// Previous Versions
+export const versions: Version[] = [
+  {
+    version: "v2.0",
+    header: "Current Version - Enhanced Performance & New Features",
+    description:
+      "Major redesign with improved animations, enhanced user experience, new constellation effects, and optimized performance. Added custom cursor, parallax effects, and modernized component architecture.",
+    link: "/", // Current version - redirects to home
+    isLatest: true,
+  },
+  {
+    version: "v1.0",
+    header: "Initial Release - Foundation Build",
+    description:
+      "Initial launch featuring core sections including home, services, products, portfolio, team, and contact. Implemented particle effects, aurora background, and basic navigation system.",
+    link: "https://v1.infinititechpartners.com", // Update with actual v1.0 URL
+  },
+];

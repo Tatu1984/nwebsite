@@ -1,5 +1,16 @@
-import { ParallaxLayer, SplitText, TiltCard, MagneticButton } from "@/components/ui";
+import {
+  ParallaxLayer,
+  SplitText,
+  TiltCard,
+  MagneticButton,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui";
 import { projects } from "@/data/data";
+import { Link } from "react-router-dom";
 
 export const PortfolioSection = () => {
   return (
@@ -11,43 +22,56 @@ export const PortfolioSection = () => {
             <h2 className="section-title">
               <SplitText text="Featured" />
               <br />
-              <SplitText text="Projects" className="accent" delay={0.2} />
+              <SplitText text="Projects" className="accent" />
             </h2>
           </div>
         </ParallaxLayer>
 
-        <div className="portfolio-grid">
-          {projects.map((project, i) => (
-            <ParallaxLayer key={i} speed={0.12 + i * 0.04}>
-              <TiltCard className="portfolio-card">
-                <div className="portfolio-image" style={{ background: project.gradient }}>
-                  <div className="portfolio-overlay">
-                    <span className="portfolio-category">{project.category}</span>
-                  </div>
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full mx-auto mb-10"
+        >
+          <CarouselContent>
+            {projects.map((project, i) => (
+              <CarouselItem key={i} className="md:basis-1/2 lg:basis-1/3 gap-6">
+                <div className="mx-4">
+                  <TiltCard className="portfolio-card m-2">
+                    <Link to={`/portfolio/${project.slug}`}>
+                      <>
+                        <div
+                          className="portfolio-image"
+                          style={{ background: project.gradient }}
+                        >
+                          <div className="portfolio-overlay">
+                            <span className="portfolio-category">
+                              {project.category}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="portfolio-content">
+                          <h3 className="portfolio-title">{project.title}</h3>
+                          <p className="portfolio-desc">{project.desc}</p>
+                          <div className="portfolio-tech"></div>
+                        </div>
+                      </>
+                    </Link>
+                  </TiltCard>
                 </div>
-                <div className="portfolio-content">
-                  <h3 className="portfolio-title">{project.title}</h3>
-                  <p className="portfolio-desc">{project.desc}</p>
-                  <div className="portfolio-tech">
-                    {project.tech.map((t, j) => (
-                      <span key={j} className="tech-tag">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </TiltCard>
-            </ParallaxLayer>
-          ))}
-        </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="bg-transparent" />
+          <CarouselNext className="bg-transparent" />
+        </Carousel>
 
-        <ParallaxLayer speed={0.15}>
-          <div className="portfolio-cta">
-            <MagneticButton href="#contact" className="btn-primary">
-              View All Projects
-            </MagneticButton>
-          </div>
-        </ParallaxLayer>
+        <div className="portfolio-cta mt-20">
+          <MagneticButton href="/products" className="btn-primary">
+            View All Projects
+          </MagneticButton>
+        </div>
       </div>
     </section>
   );

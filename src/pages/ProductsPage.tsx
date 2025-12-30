@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { PageLayout } from "@/components/common/PageLayout";
 import { FloatingConstellation } from "@/components/effects";
-import { TiltCard, MagneticButton, Icon, type IconName } from "@/components/ui";
+import { TiltCard, MagneticButton, Icon, ParallaxLayer, type IconName } from "@/components/ui";
 import { products } from "@/data/data";
 
 export const ProductsPage = () => {
@@ -19,7 +19,10 @@ export const ProductsPage = () => {
             <div className="products-grid-full">
               {products.map((product, i) => (
                 <TiltCard key={i} className="product-card-full">
-                  <Link to={`/products/${product.slug}`} className="product-card-link">
+                  <Link
+                    to={`/products/${product.slug}`}
+                    className="product-card-link"
+                  >
                     <div
                       className="product-visual-full"
                       style={{ background: product.gradient }}
@@ -27,7 +30,9 @@ export const ProductsPage = () => {
                       <div className="product-icon-wrapper">
                         <Icon name={product.icon as IconName} size={48} />
                       </div>
-                      <span className="product-category">{product.category}</span>
+                      <span className="product-category">
+                        {product.category}
+                      </span>
                     </div>
                     <div className="product-content-full">
                       <span className="product-tagline">{product.tagline}</span>
@@ -54,12 +59,6 @@ export const ProductsPage = () => {
                           </span>
                         ))}
                       </div>
-                      <div className="product-view-details">
-                        View Product Details
-                        <svg viewBox="0 0 24 24" className="arrow-icon">
-                          <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" fill="none" />
-                        </svg>
-                      </div>
                     </div>
                   </Link>
                 </TiltCard>
@@ -68,15 +67,20 @@ export const ProductsPage = () => {
           </div>
 
           <div className="page-section page-cta-section">
-            <div className="page-cta-content">
-              <h2 className="page-cta-title">Ready to Transform Your Business?</h2>
-              <p className="page-cta-desc">
-                Our products are production-ready and can be customized to fit your specific needs.
-              </p>
-              <MagneticButton href="/contact" className="btn-primary large">
-                Get in Touch
-              </MagneticButton>
-            </div>
+            <ParallaxLayer speed={0.1}>
+              <div className="page-cta-content">
+                <h2 className="page-cta-title">
+                  Ready to Transform Your Business?
+                </h2>
+                <p className="page-cta-desc">
+                  Our products are production-ready and can be customized to fit
+                  your specific needs.
+                </p>
+                <MagneticButton href="/contact" className="btn-primary large">
+                  Get in Touch
+                </MagneticButton>
+              </div>
+            </ParallaxLayer>
           </div>
         </div>
       </PageLayout>

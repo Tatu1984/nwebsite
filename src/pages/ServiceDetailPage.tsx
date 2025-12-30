@@ -1,6 +1,11 @@
 import { useParams, Link } from "react-router-dom";
 import { FloatingConstellation } from "@/components/effects";
-import { MagneticButton, Icon, type IconName } from "@/components/ui";
+import {
+  MagneticButton,
+  Icon,
+  ParallaxLayer,
+  type IconName,
+} from "@/components/ui";
 import { services, serviceDetails } from "@/data/data";
 import { ArrowLeft, CheckCircle, TrendingUp } from "lucide-react";
 
@@ -33,10 +38,12 @@ export const ServiceDetailPage = () => {
         {/* Back Navigation */}
         <section className="service-back-nav">
           <div className="section-container">
-            <Link to="/services" className="back-link">
-              <ArrowLeft size={20} />
-              <span>Back to Services</span>
-            </Link>
+            <ParallaxLayer speed={0.05}>
+              <Link to="/services" className="back-link">
+                <ArrowLeft size={20} />
+                <span>Back to Services</span>
+              </Link>
+            </ParallaxLayer>
           </div>
         </section>
 
@@ -49,16 +56,25 @@ export const ServiceDetailPage = () => {
                   <Icon name={service.icon as IconName} size={48} />
                 </div>
               </div>
-              <h1 className="service-hero-title">{details.heroTitle}</h1>
-              <div className="service-hero-descriptions">
-                <p className="service-hero-desc">{details.heroDescription}</p>
-                {details.heroDescription2 && (
-                  <p className="service-hero-desc">{details.heroDescription2}</p>
-                )}
-              </div>
+
+              <ParallaxLayer speed={0.05}>
+                <p className="service-hero-title">{details.heroTitle}</p>
+              </ParallaxLayer>
+              <ParallaxLayer speed={0.05}>
+                <div className="service-hero-descriptions">
+                  <p className="service-hero-desc">{details.heroDescription}</p>
+                  {details.heroDescription2 && (
+                    <p className="service-hero-desc">
+                      {details.heroDescription2}
+                    </p>
+                  )}
+                </div>
+              </ParallaxLayer>
               <div className="service-hero-features">
                 {service.features.map((feature, i) => (
-                  <span key={i} className="service-hero-feature">{feature}</span>
+                  <span key={i} className="service-hero-feature">
+                    {feature}
+                  </span>
                 ))}
               </div>
               <div className="service-hero-actions">
@@ -71,11 +87,17 @@ export const ServiceDetailPage = () => {
         </section>
 
         {/* Why It Matters Section */}
-        <section className="service-detail-section">
+        <section className="my-20">
           <div className="section-container">
-            <h2 className="service-section-title">{details.whyMattersTitle}</h2>
+            <ParallaxLayer speed={0.05}>
+              <h2 className="service-section-title">
+                {details.whyMattersTitle}
+              </h2>
+            </ParallaxLayer>
             <div className="service-why-matters">
-              <p className="service-why-intro">{details.whyMattersIntro}</p>
+              <ParallaxLayer speed={0.08}>
+                <p className="service-why-intro">{details.whyMattersIntro}</p>
+              </ParallaxLayer>
 
               <div className="service-benefits-grid">
                 {details.benefits.map((benefit, i) => (
@@ -86,22 +108,34 @@ export const ServiceDetailPage = () => {
                 ))}
               </div>
 
-              <p className="service-why-closing">{details.whyMattersClosing}</p>
+              <ParallaxLayer speed={0.08}>
+                <p className="service-why-closing">
+                  {details.whyMattersClosing}
+                </p>
+              </ParallaxLayer>
             </div>
           </div>
         </section>
 
         {/* Capabilities Section */}
-        <section className="service-detail-section alt">
-          <div className="section-container">
-            <h2 className="service-section-title">How We Build Solutions</h2>
-            <div className="service-capabilities-wrapper">
-              <p className="service-capabilities-intro">{details.capabilitiesIntro}</p>
+        <section className="my-20 w-full">
+          <div className="section-container w-full">
+            <ParallaxLayer speed={0.05}>
+              <h2 className="service-section-title">How We Build Solutions</h2>
+            </ParallaxLayer>
+            <div className="service-capabilities-wrapper w-full! max-w-7xl!">
+              <ParallaxLayer speed={0.08}>
+                <p className="service-capabilities-intro">
+                  {details.capabilitiesIntro}
+                </p>
+              </ParallaxLayer>
               <div className="service-capabilities-box">
-                <h3 className="service-capabilities-heading">Our Capabilities</h3>
-                <div className="service-capabilities-grid">
+                <h3 className="service-capabilities-heading">
+                  Our Capabilities
+                </h3>
+                <div className="w-full max-w-7xl! flex justify-center flex-wrap gap-6">
                   {details.capabilities.map((capability, i) => (
-                    <div key={i} className="service-capability-item">
+                    <div key={i} className="service-capability-item w-[30%]!">
                       <CheckCircle size={20} className="capability-icon" />
                       <span>{capability}</span>
                     </div>
@@ -113,9 +147,11 @@ export const ServiceDetailPage = () => {
         </section>
 
         {/* Revenue Impact Section */}
-        <section className="service-detail-section">
+        <section className="my-20">
           <div className="section-container">
-            <h2 className="service-section-title">Business Impact</h2>
+            <ParallaxLayer speed={0.05}>
+              <h2 className="service-section-title">Business Impact</h2>
+            </ParallaxLayer>
             <div className="service-impact-wrapper">
               <div className="service-impact-grid">
                 {details.revenueImpact.map((impact, i) => (
@@ -126,29 +162,39 @@ export const ServiceDetailPage = () => {
                 ))}
               </div>
               {details.revenueClosing && (
-                <p className="service-impact-closing">{details.revenueClosing}</p>
+                <ParallaxLayer speed={0.08}>
+                  <p className="service-impact-closing">
+                    {details.revenueClosing}
+                  </p>
+                </ParallaxLayer>
               )}
             </div>
           </div>
         </section>
 
         {/* Highlight CTA Section */}
-        <section className="service-highlight-section">
+        <section className="my-20">
           <div className="section-container">
-            <div className="service-highlight-card">
-              <p className="service-highlight-text">{details.highlightCTA}</p>
-            </div>
+            <ParallaxLayer speed={0.1}>
+              <div className="service-highlight-card">
+                <p className="service-highlight-text">{details.highlightCTA}</p>
+              </div>
+            </ParallaxLayer>
           </div>
         </section>
 
         {/* Technologies Section */}
         {details.technologies && (
-          <section className="service-detail-section alt">
+          <section className="py-20 alt">
             <div className="section-container">
-              <h2 className="service-section-title">Technologies We Use</h2>
+              <ParallaxLayer speed={0.05}>
+                <h2 className="service-section-title">Technologies We Use</h2>
+              </ParallaxLayer>
               <div className="service-tech-list">
                 {details.technologies.map((tech, i) => (
-                  <span key={i} className="service-tech-item">{tech}</span>
+                  <span key={i} className="service-tech-item">
+                    {tech}
+                  </span>
                 ))}
               </div>
             </div>
@@ -156,19 +202,22 @@ export const ServiceDetailPage = () => {
         )}
 
         {/* CTA Section */}
-        <section className="service-detail-cta">
+        <section className="my-20">
           <div className="section-container">
-            <div className="service-cta-content">
-              <h2 className="service-cta-title">Ready to Get Started?</h2>
-              <p className="service-cta-desc">
-                Let's discuss how our {service.title.toLowerCase()} services can help your business.
-              </p>
-              <div className="service-cta-actions">
-                <MagneticButton href="/contact" className="btn-primary large">
-                  Get in Touch
-                </MagneticButton>
+            <ParallaxLayer speed={0.1}>
+              <div className="service-cta-content">
+                <h2 className="service-cta-title">Ready to Get Started?</h2>
+                <p className="service-cta-desc">
+                  Let's discuss how our {service.title.toLowerCase()} services
+                  can help your business.
+                </p>
+                <div className="service-cta-actions">
+                  <MagneticButton href="/contact" className="btn-primary large">
+                    Get in Touch
+                  </MagneticButton>
+                </div>
               </div>
-            </div>
+            </ParallaxLayer>
           </div>
         </section>
       </div>

@@ -8,3 +8,4 @@ export { PortfolioPage } from "./PortfolioPage";
 export { PortfolioDetailPage } from "./PortfolioDetailPage";
 export { TeamPage } from "./TeamPage";
 export { ContactPage } from "./ContactPage";
+export { PreviousVersionsPage } from "./PreviousVersionsPage";

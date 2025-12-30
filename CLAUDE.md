@@ -62,6 +62,7 @@ npm run preview  # Preview prod build
 - Use `SplitText` with `className="accent"` for gradient-colored text
 - Wrap content in `ParallaxLayer` with `speed` prop for scroll parallax
 - Text starts invisible (`opacity: 0`) and animates in via `useInView` hook
+- **CRITICAL:** Page CTA sections (`.page-cta-section`) MUST wrap content in `<ParallaxLayer speed={0.1}>` - without it, text elements won't render. Use `<h2>` for title, not `<p>`
 
 ### Data
 

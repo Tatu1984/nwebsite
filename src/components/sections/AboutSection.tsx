@@ -1,12 +1,23 @@
 import { useInView } from "@/hooks";
-import { ParallaxLayer, SplitText, TiltCard, AnimatedCounter, Icon, type IconName } from "@/components/ui";
+import {
+  ParallaxLayer,
+  SplitText,
+  TiltCard,
+  AnimatedCounter,
+  Icon,
+  type IconName,
+} from "@/components/ui";
 import { values, stats } from "@/data/data";
 
 export const AboutSection = () => {
   const [ref, inView] = useInView(0.2);
 
   return (
-    <section id="about" className="about" ref={ref as React.RefObject<HTMLElement>}>
+    <section
+      id="about"
+      className="about"
+      ref={ref as React.RefObject<HTMLElement>}
+    >
       <div className="section-container">
         <ParallaxLayer speed={-0.2}>
           <div className="section-header">
@@ -14,7 +25,7 @@ export const AboutSection = () => {
             <h2 className="section-title">
               <SplitText text="Bridging Technology" />
               <br />
-              <SplitText text="& Business Needs" className="accent" delay={0.3} />
+              <SplitText text="& Business Needs" className="accent" />
             </h2>
           </div>
         </ParallaxLayer>
@@ -31,15 +42,15 @@ export const AboutSection = () => {
             </div>
           </ParallaxLayer>
 
-          <div className="about-values">
+          <div className="flex flex-wrap justify-center gap-6">
             {values.map((value, i) => (
-              <ParallaxLayer key={i} speed={0.15 + i * 0.05}>
-                <TiltCard className="value-card">
-                  <span className="value-icon"><Icon name={value.icon as IconName} /></span>
-                  <h3 className="value-title">{value.title}</h3>
-                  <p className="value-desc">{value.desc}</p>
-                </TiltCard>
-              </ParallaxLayer>
+              <TiltCard key={i} className="value-card w-[32%]">
+                <span className="value-icon">
+                  <Icon name={value.icon as IconName} />
+                </span>
+                <h3 className="value-title">{value.title}</h3>
+                <p className="value-desc">{value.desc}</p>
+              </TiltCard>
             ))}
           </div>
 

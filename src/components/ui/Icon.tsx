@@ -32,6 +32,12 @@ import {
   Car,
   Coins,
   Search,
+  Monitor,
+  CreditCard,
+  ParkingCircle,
+  Camera,
+  Wallet,
+  Send,
   type LucideProps,
 } from "lucide-react";
 
@@ -69,6 +75,12 @@ const iconMap = {
   car: Car,
   coins: Coins,
   search: Search,
+  monitor: Monitor,
+  "credit-card": CreditCard,
+  "parking-circle": ParkingCircle,
+  camera: Camera,
+  wallet: Wallet,
+  send: Send,
 } as const;
 
 export type IconName = keyof typeof iconMap;

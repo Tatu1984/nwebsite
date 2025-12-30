@@ -12,6 +12,7 @@ import {
   PortfolioDetailPage,
   TeamPage,
   ContactPage,
+  PreviousVersionsPage,
 } from "@/pages";
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
             <Route path="/portfolio" element={<PortfolioPage />} />
             <Route path="/portfolio/:slug" element={<PortfolioDetailPage />} />
             <Route path="/team" element={<TeamPage />} />
+            <Route path="/previous-versions" element={<PreviousVersionsPage />} />
             <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </main>
