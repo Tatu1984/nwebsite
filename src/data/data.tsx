@@ -1117,7 +1117,12 @@ export const products: Product[] = [
     icon: "monitor",
     desc: "Comprehensive employee monitoring solution with real-time screen monitoring, activity tracking, remote management, website/app blocking, and detailed productivity analytics.",
     gradient: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
-    features: ["Screen Monitoring", "Activity Tracking", "Remote Mgmt", "Analytics"],
+    features: [
+      "Screen Monitoring",
+      "Activity Tracking",
+      "Remote Mgmt",
+      "Analytics",
+    ],
     technologies: [
       "Next.js 16",
       "React 19",
@@ -1159,7 +1164,12 @@ export const products: Product[] = [
     icon: "parking-circle",
     desc: "AI-powered parking management system with real-time vehicle detection, automatic license plate recognition, digital payments, and hardware integration for gates and displays.",
     gradient: "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
-    features: ["ANPR", "Real-time Detection", "Digital Payments", "Hardware Control"],
+    features: [
+      "ANPR",
+      "Real-time Detection",
+      "Digital Payments",
+      "Hardware Control",
+    ],
     technologies: [
       "Next.js 16",
       "Prisma",
@@ -2808,6 +2818,6 @@ export const versions: Version[] = [
     header: "Initial Release - Foundation Build",
     description:
       "Initial launch featuring core sections including home, services, products, portfolio, team, and contact. Implemented particle effects, aurora background, and basic navigation system.",
-    link: "https://infinititechpartners.com", // Update with actual v1.0 URL
+    link: "https://v1.infinititechpartners.com", // Update with actual v1.0 URL
   },
 ];
