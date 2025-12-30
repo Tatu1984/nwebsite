@@ -7,7 +7,7 @@ import { versions } from "@/data/data";
 export const PreviousVersionsPage = () => {
   return (
     <>
-      <FloatingConstellation name="andromeda" />
+      <FloatingConstellation name="orion" />
       <PageLayout
         tag="Version History"
         title="Previous"
@@ -15,7 +15,7 @@ export const PreviousVersionsPage = () => {
         description="Track the evolution of our website through different versions and updates."
       >
         <div className="section-container">
-          <div className="page-section">
+          <div className="page-section m-0">
             <div className="versions-grid">
               {versions.map((version, i) => {
                 const CardContent = (
@@ -34,10 +34,10 @@ export const PreviousVersionsPage = () => {
                 return (
                   <TiltCard
                     key={i}
-                    className={`version-card ${version.isLatest ? 'latest-version' : ''}`}
+                    className={`version-card ${version.isLatest ? "latest-version" : ""}`}
                   >
                     {version.link ? (
-                      version.link.startsWith('http') ? (
+                      version.link.startsWith("http") ? (
                         <a
                           href={version.link}
                           target="_blank"
@@ -52,9 +52,7 @@ export const PreviousVersionsPage = () => {
                         </Link>
                       )
                     ) : (
-                      <div className="version-card-content">
-                        {CardContent}
-                      </div>
+                      <div className="version-card-content">{CardContent}</div>
                     )}
                   </TiltCard>
                 );
@@ -69,7 +67,8 @@ export const PreviousVersionsPage = () => {
                   Ready to Build Something Great?
                 </h2>
                 <p className="page-cta-desc">
-                  We continuously improve and evolve. Let's discuss your next project.
+                  We continuously improve and evolve. Let's discuss your next
+                  project.
                 </p>
                 <MagneticButton href="/contact" className="btn-primary large">
                   Get in Touch

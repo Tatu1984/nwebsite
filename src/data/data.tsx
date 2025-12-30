@@ -1109,6 +1109,69 @@ export const products: Product[] = [
       "Mobile apps for iOS/Android, real-time tracking, 22 database models",
     demoUrl: "https://rideon-admin.vercel.app",
   },
+  {
+    slug: "netwatch",
+    name: "NetWatch",
+    tagline: "Employee Monitoring Platform",
+    category: "Enterprise / Security / Monitoring",
+    icon: "monitor",
+    desc: "Comprehensive employee monitoring solution with real-time screen monitoring, activity tracking, remote management, website/app blocking, and detailed productivity analytics.",
+    gradient: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
+    features: ["Screen Monitoring", "Activity Tracking", "Remote Mgmt", "Analytics"],
+    technologies: [
+      "Next.js 16",
+      "React 19",
+      "Prisma",
+      "PostgreSQL",
+      "Socket.io",
+      "Electron",
+    ],
+    highlights:
+      "Cross-platform agent, real-time screenshots, encrypted keylogging, remote desktop",
+    demoUrl: "https://netwatch-nu.vercel.app",
+  },
+  {
+    slug: "xfer",
+    name: "Xfer",
+    tagline: "Digital Payment Platform",
+    category: "Fintech / Payments / Banking",
+    icon: "credit-card",
+    desc: "PayPal-like payment platform with multi-currency wallets, P2P transfers, KYC verification, fraud detection, vendor payments, and comprehensive admin controls.",
+    gradient: "linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)",
+    features: ["Multi-currency", "P2P Transfers", "KYC/AML", "Fraud Detection"],
+    technologies: [
+      "Next.js 16",
+      "Prisma 7",
+      "PostgreSQL",
+      "Stripe",
+      "Plaid",
+      "Resend",
+    ],
+    highlights:
+      "100+ database models, 4 user roles, KYC/AML compliance, fraud detection",
+    demoUrl: "https://xfer.vercel.app",
+  },
+  {
+    slug: "sparking",
+    name: "Sparking",
+    tagline: "AI-Powered Smart Parking",
+    category: "IoT / AI / Smart City",
+    icon: "parking-circle",
+    desc: "AI-powered parking management system with real-time vehicle detection, automatic license plate recognition, digital payments, and hardware integration for gates and displays.",
+    gradient: "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
+    features: ["ANPR", "Real-time Detection", "Digital Payments", "Hardware Control"],
+    technologies: [
+      "Next.js 16",
+      "Prisma",
+      "PostgreSQL",
+      "Python",
+      "YOLOv8",
+      "Stripe",
+    ],
+    highlights:
+      "ANPR with <100ms latency, hardware control, predictive analytics, multi-tenant",
+    demoUrl: "https://smart-parking-xi-pearl.vercel.app",
+  },
 ];
 
 // Product Details
@@ -1882,6 +1945,327 @@ export const productDetails: ProductDetail[] = [
       { label: "User Roles", value: "6" },
       { label: "Search Filters", value: "20+" },
       { label: "API Endpoints", value: "50+" },
+    ],
+  },
+  {
+    slug: "netwatch",
+    heroTitle: "NetWatch Pro",
+    heroSubtitle: "Enterprise Employee Monitoring Platform",
+    heroDescription:
+      "Monitor employee productivity with real-time screen capture, activity tracking, remote management, and comprehensive reporting—all with enterprise-grade security",
+    modules: [
+      {
+        icon: "monitor",
+        title: "Real-Time Screen Monitoring",
+        description:
+          "Live view of all connected computers with automatic and on-demand screenshot capture. Full-screen viewer with zoom capabilities.",
+      },
+      {
+        icon: "camera",
+        title: "Screen Recording",
+        description:
+          "Record screen activity with playback support. Store recordings with configurable retention periods for compliance.",
+      },
+      {
+        icon: "trending-up",
+        title: "Activity Tracking",
+        description:
+          "Track application usage, websites visited, and idle time. Detailed productivity analytics with categorization.",
+      },
+      {
+        icon: "shield",
+        title: "Keystroke Logging",
+        description:
+          "Encrypted keystroke logging with search and export capabilities. AES-256-GCM encryption for data at rest.",
+      },
+      {
+        icon: "briefcase",
+        title: "Remote Desktop",
+        description:
+          "View and control remote computers in real-time. SSH-like terminal access for advanced management.",
+      },
+      {
+        icon: "globe",
+        title: "Website & App Blocking",
+        description:
+          "Block access to websites by URL patterns. Prevent specific applications from running with quick rules.",
+      },
+    ],
+    portals: [
+      {
+        title: "Admin Dashboard",
+        description: "Next.js 16 / React 19",
+        features: [
+          "Real-time computer monitoring",
+          "Screenshot and recording viewer",
+          "Activity reports and analytics",
+          "Policy configuration",
+          "User and role management",
+          "Audit logging",
+        ],
+      },
+      {
+        title: "Desktop Agent",
+        description: "Electron 28",
+        features: [
+          "Auto-start on boot",
+          "Stealth mode operation",
+          "Screenshot capture",
+          "Activity logging",
+          "Keystroke recording",
+          "Remote command execution",
+        ],
+      },
+      {
+        title: "Socket.io Server",
+        description: "Node.js",
+        features: [
+          "WebSocket connections",
+          "Real-time data streaming",
+          "Scalable architecture",
+          "Auto-reconnection",
+          "Event broadcasting",
+          "Connection management",
+        ],
+      },
+    ],
+    completeFeatures: [
+      "Real-Time Screen Monitoring",
+      "Screen Recording",
+      "Activity Tracking",
+      "Keystroke Logging",
+      "Clipboard Monitoring",
+      "Remote Desktop",
+      "File Transfer",
+      "Website & App Blocking",
+      "Real-Time Alerts",
+      "AES-256 Encryption",
+      "PBKDF2 Password Hashing",
+      "Role-Based Access Control",
+    ],
+    stats: [
+      { label: "Components", value: "3" },
+      { label: "User Roles", value: "3" },
+      { label: "Security Features", value: "6" },
+      { label: "Monitoring Capabilities", value: "9" },
+    ],
+  },
+  {
+    slug: "xfer",
+    heroTitle: "Xfer Payment Platform",
+    heroSubtitle: "Complete Digital Payment Solution",
+    heroDescription:
+      "Launch your own PayPal-like payment service with multi-currency wallets, P2P transfers, KYC/AML compliance, fraud detection, and comprehensive merchant tools",
+    modules: [
+      {
+        icon: "wallet",
+        title: "Multi-Currency Wallets",
+        description:
+          "Create and manage wallets in multiple currencies including USD, EUR, GBP, and more. Real-time balance tracking with ledger entries.",
+      },
+      {
+        icon: "send",
+        title: "P2P Transfers",
+        description:
+          "Send money instantly to other users via email or phone. Low fees, real-time delivery, and complete transaction history.",
+      },
+      {
+        icon: "credit-card",
+        title: "Stripe Payments",
+        description:
+          "Seamless card payments with 3D Secure, saved cards, and automatic retry logic. PCI DSS compliant infrastructure.",
+      },
+      {
+        icon: "shield",
+        title: "KYC Verification",
+        description:
+          "Complete identity verification workflow with document upload, liveness detection, and sanctions screening.",
+      },
+      {
+        icon: "shield",
+        title: "Fraud Detection",
+        description:
+          "AI-powered fraud scoring based on velocity, device fingerprint, geolocation, and behavioral patterns.",
+      },
+      {
+        icon: "building-2",
+        title: "Vendor Payments",
+        description:
+          "Complete merchant solution with invoicing, checkout flows, and automatic payouts to vendor accounts.",
+      },
+    ],
+    portals: [
+      {
+        title: "User Dashboard",
+        description: "Standard user features for managing personal finances",
+        features: [
+          "Wallet management",
+          "Send and receive money",
+          "Transaction history",
+          "Payment methods",
+          "Profile settings",
+          "KYC submission",
+        ],
+      },
+      {
+        title: "Vendor Portal",
+        description: "Merchant features for business accounts",
+        features: [
+          "Product catalog",
+          "Order management",
+          "Invoice generation",
+          "Payout settings",
+          "API integration",
+          "Business analytics",
+        ],
+      },
+      {
+        title: "Admin Dashboard",
+        description: "User, KYC, and dispute management",
+        features: [
+          "User management",
+          "KYC review queue",
+          "Dispute resolution",
+          "Transaction monitoring",
+          "Risk assessment",
+          "Activity logs",
+        ],
+      },
+      {
+        title: "Super Admin",
+        description: "Full system configuration and control",
+        features: [
+          "System configuration",
+          "Fee structures",
+          "User role management",
+          "Platform analytics",
+          "API management",
+          "Audit logs",
+        ],
+      },
+    ],
+    completeFeatures: [
+      "Multi-Currency Wallets",
+      "P2P Transfers",
+      "Stripe Payments",
+      "KYC Verification",
+      "Fraud Detection",
+      "Vendor Payments",
+      "Dispute Management",
+      "Real-Time Notifications",
+      "Analytics Dashboard",
+      "Double-Entry Ledger",
+      "Bank Connectivity (Plaid)",
+      "Auto Withdrawals",
+    ],
+    stats: [
+      { label: "Database Models", value: "100+" },
+      { label: "User Roles", value: "4" },
+      { label: "Payment Methods", value: "5+" },
+      { label: "Integrations", value: "3" },
+    ],
+  },
+  {
+    slug: "sparking",
+    heroTitle: "Sparking Platform",
+    heroSubtitle: "AI-Powered Smart Parking Management",
+    heroDescription:
+      "Transform your parking operations with real-time vehicle detection, automatic license plate recognition, digital payments, and intelligent hardware control",
+    modules: [
+      {
+        icon: "car",
+        title: "Vehicle Detection",
+        description:
+          "YOLOv8-based real-time vehicle detection with less than 100ms latency. Automatic entry/exit tracking without human intervention.",
+      },
+      {
+        icon: "camera",
+        title: "License Plate Recognition",
+        description:
+          "Automatic Number Plate Recognition (ANPR) using Intel OpenVINO for high-accuracy plate reading in all conditions.",
+      },
+      {
+        icon: "wallet",
+        title: "Digital Wallet",
+        description:
+          "Built-in wallet system for contactless payments. Top-up via cards, auto-deduct parking fees, and transfer between users.",
+      },
+      {
+        icon: "parking-circle",
+        title: "Gate Control",
+        description:
+          "Automatic gate operation based on vehicle detection. Support for HTTP, RS485, and Modbus protocols.",
+      },
+      {
+        icon: "trending-up",
+        title: "Predictive Analytics",
+        description:
+          "AI-powered occupancy prediction, revenue forecasting, and peak hour analysis for better planning.",
+      },
+      {
+        icon: "map-pin",
+        title: "Multi-Tenant Support",
+        description:
+          "Manage multiple parking lots from a single dashboard. Zone and slot management with custom pricing.",
+      },
+    ],
+    portals: [
+      {
+        title: "Admin Dashboard",
+        description: "Next.js 16",
+        features: [
+          "Real-time occupancy monitoring",
+          "Camera stream management",
+          "Token and slot tracking",
+          "Payment and wallet management",
+          "Analytics and reporting",
+          "Hardware configuration",
+        ],
+      },
+      {
+        title: "AI Pipeline",
+        description: "Python / YOLOv8",
+        features: [
+          "RTSP stream processing",
+          "Real-time vehicle detection",
+          "License plate recognition",
+          "Multi-camera support",
+          "Mock mode for testing",
+          "Event publishing to API",
+        ],
+      },
+      {
+        title: "Self-Service Kiosk",
+        description: "Next.js PWA",
+        features: [
+          "QR code scanning",
+          "Payment processing",
+          "Receipt printing",
+          "Slot reservation",
+          "Find My Car feature",
+          "Wallet top-up",
+        ],
+      },
+    ],
+    completeFeatures: [
+      "Vehicle Detection",
+      "License Plate Recognition",
+      "Digital Wallet",
+      "Gate Control",
+      "Predictive Analytics",
+      "Multi-Tenant Support",
+      "Stripe Payments",
+      "Real-Time Notifications",
+      "PDF Reports",
+      "LED Display Control",
+      "Ticket Printers",
+      "Find My Car",
+    ],
+    stats: [
+      { label: "Detection Latency", value: "<100ms" },
+      { label: "User Portals", value: "3" },
+      { label: "Hardware Protocols", value: "3" },
+      { label: "AI Models", value: "2" },
     ],
   },
 ];
